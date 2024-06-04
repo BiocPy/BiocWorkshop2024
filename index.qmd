@@ -1,0 +1,32 @@
+# Welcome
+
+The BiocPy project aims to facilitate development of Bioconductor workflows in Python. 
+
+This tutorial for the workshop will provide an overview of the core data structures implemented in BiocPy 
+(e.g., `GenomicRanges`, `SummarizedExperiment`) that were ported from R. 
+Participants will be guided through two Bioconductor-derived workflows in Python. 
+The first will involve reading an RDS file containing genomic ranges and performing 
+downstream range-based analyses. 
+The second will use the `scRNAseq` package to access public single-cell RNA-seq datasets, 
+followed by cell type annotation using the `SinglePy` package. 
+Attendees will learn how to represent and manipulate their datasets in Python in the 
+same manner as in R/Bioconductor. 
+
+All packages in BiocPy are published to PyPI, and code is open-source on [GitHub](https://github.com/BiocPy).
+
+
+### Core contributors
+
+- [Jayaram Kancherla](https://github.com/jkanche)
+- [Aaron Lun](https://github.com/LTLA)
+
+----
+
+## Other resources
+
+- A more detailed tutorial on BiocPy representations is available [here](https://biocpy.github.io/tutorial/).
+- Check out all the package in the BiocPy ecosystem on [GitHub](https://github.com/biocpy).
+
+## Developer notes
+
+This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [Reproduce me](./chapters/sessioninfo.qmd) for more information.

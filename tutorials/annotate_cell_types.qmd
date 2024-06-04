@@ -1,0 +1,256 @@
+# Tutorial 2: Access single-cell datasets from `scRNAseq` collection and annotate cell types
+
+Welcome to this tutorial on accessing public single-cell datasets using `scRNAseq` and language-agnostic representations from `ArtifactDB`. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets. Let's dive into the process!
+
+
+## Introduction
+
+The [scRNAseq](https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor packages and workflows. This package has been updated to store datasets in language-agnostic representations described in [ArtifactDB](https://github.com/artifactdb), enabling easy access to datasets and analysis results across multiple programming languages such as R and Python.
+
+The Python equivalent of the package is available [here](https://github.com/BiocPy/scrnaseq).
+
+## Installation
+
+Install the package from Bioconductor for R or from PyPI for Python:
+
+::: {.panel-tabset}
+
+## R
+```r
+BiocManager::install("scRNAseq", repos='http://cran.us.r-project.org')
+```
+
+## Python (shell)
+```sh
+pip install scrnaseq
+```
+
+:::
+
+## Find Datasets
+
+Each dataset is decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let's see how we can list and search for datasets.
+
+<a name="list-all-datasets"></a>
+### List All Datasets
+
+The `list_datasets()` function in Python or `surveyDatasets()` in R will display all available datasets along with their metadata.
+
+::: {.panel-tabset}
+
+## R
+```{r}
+suppressWarnings(library(scRNAseq))
+all_ds <- surveyDatasets()
+head(all_ds[, c("name", "title", "version")], 3)
+```
+
+## Python
+```{python}
+import scrnaseq
+datasets = scrnaseq.list_datasets()
+datasets[["name", "title", "version"]].head(3)
+```
+
+:::
+
+### Search for Datasets
+
+You can also search for datasets based on metadata using `search_datasets()` in Python or `searchDatasets()` in R. This supports both simple text queries and complex boolean expressions.
+
+::: {.panel-tabset}
+
+## R
+```{r}
+pancreas_ds <- searchDatasets("pancreas")
+head(pancreas_ds[, c("name", "title", "version")], 3)
+```
+
+## Python
+```{python}
+import scrnaseq
+
+pancreas_datasets = scrnaseq.search_datasets("pancreas")
+pancreas_datasets[["name", "title", "version"]].head(3)
+```
+
+:::
+
+#### Advanced Searches
+
+For more complex searches involving boolean operations, use `define_text_query()` in Python or `defineTextQuery()` in R. Here’s an example to find datasets using the mouse reference genome (`GRCm38`) and containing the words `neuro` or `pancrea`.
+
+::: {.callout-tip}
+The `define_text_query()` function in Python or its equivalent `defineTextQuery()` in R helps us define complex queries. Check out the reference manual for more details.
+:::
+
+::: {.panel-tabset}
+
+## R
+```{r}
+suppressWarnings(library(gypsum))
+res <- searchDatasets(
+    defineTextQuery("GRCm38", field="genome") &
+    (defineTextQuery("neuro%", partial=TRUE) | 
+     defineTextQuery("pancrea%", partial=TRUE))
+)
+head(res[,c("name", "title", "version")], 3)
+```
+
+## Python
+```{python}
+from gypsum_client import define_text_query
+import scrnaseq
+
+res = scrnaseq.search_datasets(
+     define_text_query("GRCm38", field="genome")
+     & (
+          define_text_query("neuro%", partial=True)
+          | define_text_query("pancrea%", partial=True)
+     )
+)
+res[["name", "title", "version"]].head(3)
+```
+
+:::
+
+::: {.callout-important}
+Once a dataset is identified, always list the name and version of the dataset in your scripts for reproducibility.
+:::
+
+## Fetch a Dataset
+
+After identifying a dataset of interest, use `fetch_dataset()` in Python or `fetchDataset()` in R to download the dataset. This will load the dataset as a `SingleCellExperiment` object.
+
+::: {.callout-note}
+R/Bioconductor users might already be familiar with the [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class. BiocPy also provides the same implementation in the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) package.
+:::
+
+For this tutorial, let's download the `zeisel-brain` dataset:
+
+::: {.panel-tabset}
+
+## R
+```{r}
+sce <- fetchDataset("zeisel-brain-2015", "2023-12-14")
+sce
+```
+
+## Python
+```{python}
+import scrnaseq
+sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14")
+print(sce)
+```
+
+:::
+
+### Side-quest on SingleCellExperiment in Python
+
+The Python version of the `SingleCellExperiment` class adheres to Bioconductor's specification and offers similar methods. Our goal is to make it simple for analysts to switch between R and Python. Key differences include a shift from functional to object-oriented paradigms.
+
+::: {.callout-note}
+For more details on the design, refer to the [BiocPy developer guide](https://github.com/BiocPy/developer_guide) or the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) documentation.
+:::
+
+```{python}
+## repeated because quarto's build does not keep state of python snippets across the notebook.
+import scrnaseq
+sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14")
+
+print("assays: ", sce.get_assay_names()) # or sce.assay_names
+
+print("column names: ", sce.get_column_names()) # or sce.column_names
+
+print("column metadata:", sce.get_column_data()) # or sce.column_data
+
+print("access counts ", sce.assays["counts"]) # or # sce.assay("counts")
+
+print("coerce to AnnData", sce.to_anndata())
+```
+
+## Annotate Cell Types
+
+We can now annotate cell types by using reference datasets and matching cells based on their expression profiles. In this tutorial, we will use [singleR](https://github.com/SingleR-inc/SingleR) in R or its Python equivalent [singler](https://github.com/BiocPy/singler).
+
+Before running the singler algorithm, we need to fetch reference datasets from the `celldex` package.
+
+## Access Reference Datasets from `celldex`
+
+Similar to `scRNAseq`, the `celldex` references are converted into language-agnostic representations for use in downstream analyses.
+
+::: {.callout-note}
+The `celldex` package is available on [R/Bioconductor](https://bioconductor.org/packages/devel/data/experiment/html/celldex.html) and [PyPI](https://github.com/BiocPy/celldex).
+:::
+
+For this tutorial, let's download the Human Primary Cell Atlas reference from `celldex` using `fetch_reference()` in Python or `fetchReference()` in R.
+
+::: {.panel-tabset}
+
+## R
+```{r}
+suppressWarnings(library(celldex))
+immgen_ref <- fetchReference("immgen", "2024-02-26")
+immgen_ref
+```
+
+## Python
+```{python}
+import celldex
+
+immgen_ref = celldex.fetch_reference("immgen", "2024-02-26")
+print(immgen_ref)
+```
+
+:::
+
+Now, let's identify cells from the `zeisel-brain` dataset using the `immgen` reference dataset.
+
+::: {.panel-tabset}
+
+## R
+```{r}
+suppressWarnings(library(SingleR))
+sce <- scuttle::logNormCounts(sce)
+cell_labels <- SingleR(test = sce, ref = immgen_ref, labels = immgen_ref$label.main)
+
+table(cell_labels$labels)
+
+cell_labels[]
+```
+
+## Python
+```{python}
+import singler
+
+import scrnaseq
+sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14")
+
+import scranpy
+options = scranpy.LogNormCountsOptions(with_size_factors=False)
+
+# convert counts to scipy sparse
+mat = sce.assays["counts"]
+import delayedarray as da
+mat_csc = da.to_scipy_sparse_matrix(mat, "csc")
+log_normed_sce = scranpy.log_norm_counts(mat_csc, options=options)
+
+import celldex
+immgen_ref = celldex.fetch_reference("immgen", "2024-02-26")
+log_ref_csc = da.to_dense_array(immgen_ref.assays["logcounts"])
+
+matches = singler.annotate_single(
+    test_data=log_normed_sce, 
+    test_features=sce.get_row_names(), 
+    ref_data = log_ref_csc,
+    ref_labels = immgen_ref.get_column_data().column("label.main"),
+    ref_features= immgen_ref.get_row_names())
+
+import pandas as pd
+
+pd.Series(matches["best"]).value_counts()
+```
+
+:::
+
+Congratulations! You have now completed the tutorial on accessing single-cell datasets using `scRNAseq` and `ArtifactDB`, and annotating cell types using reference datasets from `celldex`. For more detailed usage and advanced analyses, refer to the respective documentation of these packages.

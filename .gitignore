@@ -1,0 +1,9 @@
+/.quarto/
+/_site/
+docs
+_freeze
+.jupyter_cache/
+
+chapters/zilinois_lung_with_celltypist/
+*whee.h5
+*.tiledb
