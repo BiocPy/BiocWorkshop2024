@@ -79,15 +79,16 @@ jobs:
         working-directory: sqlite-autoconf-3450300
 
       - name: Render
-        uses: quarto-dev/quarto-actions/render@v2
-        with:
-          to: html
+        run: |
+          quarto render --execute --to html --output-dir public
         env:
           LD_LIBRARY_PATH: /usr/local/lib
 
-      - name: Publish to GH Pages
-        if: github.ref == 'refs/heads/master'
-        uses: quarto-dev/quarto-actions/publish@v2
+      - run: touch ./docs/_build/html/.nojekyll
+
+      - name: GH Pages Deployment
+        uses: JamesIves/github-pages-deploy-action@4.1.3
         with:
-          target: gh-pages # The branch the action should deploy to.
-          render: false
+          branch: gh-pages # The branch the action should deploy to.
+          folder: public
+          clean: true # Automatically remove deleted files from the deploy branch
