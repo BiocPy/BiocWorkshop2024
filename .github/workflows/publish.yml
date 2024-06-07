@@ -30,6 +30,9 @@ jobs:
       # - run: source .venv/bin/activate
       - run: pip install -r requirements.txt
 
+      - name: Install R packages
+        run: Rscript rpackages.R
+
       - name: Render
         uses: quarto-dev/quarto-actions/render@v2
         with:
