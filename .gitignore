@@ -7,3 +7,4 @@ _freeze
 chapters/zilinois_lung_with_celltypist/
 *whee.h5
 *.tiledb
+*_cache

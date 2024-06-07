@@ -1,51 +1,102 @@
+name: Quarto Publish
+
 on:
-    push:
-      branches:
-        - master
-      tags:
-        - "*"
-    pull_request:
-  
-  name: Quarto Publish
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
-  jobs:
-    build-deploy:
-      runs-on: ubuntu-latest
+jobs:
+  build-deploy:
+    container:
+        image: bioconductor/bioconductor_docker:devel
       
-      permissions:
-        contents: write
-      
-        steps:
-        - name: Check out repository
-          uses: actions/checkout@v4
-  
-        - name: Set up Quarto
-          uses: quarto-dev/quarto-actions/setup@v2
-          with:
-            version: release
-            tinytex: true
-  
-        - name: Install Python and Dependencies
-          uses: actions/setup-python@v4
-          with:
-            python-version: '3.9'
-            cache: 'pip'
-        # - run: pip install uv
-        # - run: uv venv
-        # - run: source .venv/bin/activate
-        - run: pip install -r requirements.txt
+    runs-on: ubuntu-latest
 
-        - name: Install R packages
-          run: Rscript rpackages.R
-  
-        - name: Render
-          uses: quarto-dev/quarto-actions/render@v2
-          with:
-            to: html
-  
-        - name: Publish to GH Pages
-          if: github.ref == 'refs/heads/master'
-          uses: quarto-dev/quarto-actions/publish@v2
-          with:
-            target: gh-pages # The branch the action should deploy to.
-            render: false
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install rsync
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rsync
+
+      # - name: Install curl
+      #   run: |
+      #     sudo apt-get install libcurl4-openssl-dev
+
+      # - name: Setup Quarto
+      #   uses: quarto-dev/quarto-actions/setup@v2
+      #   with:
+      #     tinytex: true
+
+      - name: Setup Quarto
+        run: |
+          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.43/quarto-1.5.43-linux-amd64.deb && \
+          dpkg -i quarto-1.5.43-linux-amd64.deb && \
+          rm quarto-1.5.43-linux-amd64.deb
+
+      - name: Setup tinytex
+        run: quarto install tinytex
+
+      # - name: Setup Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.9'
+      #     cache: 'pip'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      
+      # - name: Setup R
+      #   uses: r-lib/actions/setup-r@v2
+      #   with:
+      #     r-version: '4.4.0'
+
+      - name: Set directories
+        run: |
+          echo "R_PKG_DIR=${R_HOME}/site-library" >> $GITHUB_ENV
+
+      - name: Restore the package directory
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_PKG_DIR }}
+          key: check-packages
+
+      - name: Install R packages
+        run: Rscript rpackages.R
+
+      # build SQLite from source, because I need 3.35<=
+      - name: Download SQLite3
+        run: |
+          wget https://www.sqlite.org/2024/sqlite-autoconf-3450300.tar.gz
+          tar -xvf sqlite-autoconf-3450300.tar.gz
+
+      - name: Install SQLite3
+        run: |
+          cd sqlite-autoconf-3450300
+          ./configure
+          make
+          sudo make install
+          export PATH="/usr/local/lib:$PATH"
+          cd ..
+
+      - name: Quarto render
+        run: |
+          quarto render --execute --to html --output-dir ./build
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib
+
+      - name: Create nojekyll
+        run: touch ./build/.nojekyll
+
+      - name: GH Pages Deployment
+        if: github.ref == 'refs/heads/master'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./build
+          clean: true # Automatically remove deleted files from the deploy branch
