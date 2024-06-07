@@ -6,7 +6,7 @@ genomicranges
 biocutils>=0.1.5
 rds2py>=0.4.0
 scranpy
-singler
+singler>=0.2.0
 numpy
 scipy
 pandas
