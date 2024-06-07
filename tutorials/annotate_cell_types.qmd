@@ -132,14 +132,14 @@ For this tutorial, let's download the `zeisel-brain` dataset:
 
 ## R
 ```{r}
-sce <- fetchDataset("zeisel-brain-2015", "2023-12-14")
+sce <- fetchDataset("zeisel-brain-2015", "2023-12-14", realize.assays=TRUE)
 sce
 ```
 
 ## Python
 ```{python}
 import scrnaseq
-sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14")
+sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14", realize_assays=True)
 print(sce)
 ```
 
@@ -190,7 +190,7 @@ For this tutorial, let's download the Human Primary Cell Atlas reference from `c
 ## R
 ```{r}
 suppressWarnings(library(celldex))
-immgen_ref <- fetchReference("immgen", "2024-02-26")
+immgen_ref <- fetchReference("immgen", "2024-02-26", realize.assays=TRUE)
 immgen_ref
 ```
 
@@ -198,7 +198,7 @@ immgen_ref
 ```{python}
 import celldex
 
-immgen_ref = celldex.fetch_reference("immgen", "2024-02-26")
+immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True)
 print(immgen_ref)
 ```
 
@@ -212,7 +212,7 @@ Now, let's identify cells from the `zeisel-brain` dataset using the `immgen` ref
 ```{r}
 suppressWarnings(library(SingleR))
 # sce <- scuttle::logNormCounts(sce)
-cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
+cell_labels <- SingleR(test = assay(sce, "counts")[,1:100], ref = immgen_ref, labels = immgen_ref$label.main)
 
 table(cell_labels$labels)
 ```
@@ -234,7 +234,7 @@ import celldex
 immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True)
 
 matches = singler.annotate_single(
-    test_data=sce, 
+    test_data=sce[:, :100], 
     ref_data = immgen_ref,
     ref_labels = "label.main"
 )
