@@ -84,7 +84,7 @@ jobs:
         env:
           LD_LIBRARY_PATH: /usr/local/lib
 
-      - run: touch ./docs/_build/html/.nojekyll
+      - run: touch public/.nojekyll
 
       - name: GH Pages Deployment
         uses: JamesIves/github-pages-deploy-action@4.1.3
