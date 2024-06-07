@@ -72,23 +72,26 @@ jobs:
 
       - name: Install SQLite3
         run: |
+          cd sqlite-autoconf-3450300
           ./configure
           make
           sudo make install
           export PATH="/usr/local/lib:$PATH"
-        working-directory: sqlite-autoconf-3450300
+          cd ..
 
-      - name: Render
+      - name: Quarto render
         run: |
-          quarto render --execute --to html --output-dir public
+          quarto render --execute --to html --output-dir ./build
         env:
           LD_LIBRARY_PATH: /usr/local/lib
 
-      - run: touch public/.nojekyll
+      - name: Create nojekyll
+        run: touch ./build/.nojekyll
 
       - name: GH Pages Deployment
-        uses: JamesIves/github-pages-deploy-action@4.1.3
+        # if: github.ref == 'refs/heads/master'
+        uses: JamesIves/github-pages-deploy-action@4.6.1
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: public
+          folder: ./build
           clean: true # Automatically remove deleted files from the deploy branch
