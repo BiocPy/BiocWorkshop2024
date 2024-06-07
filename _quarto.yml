@@ -1,41 +1,59 @@
 project:
-  type: book
+  type: website
   output-dir: docs
 
 execute:
   freeze: auto
   cache: true
 
-book:
+website:
   title: "Bioc2024: Interoperability between R and Python using BiocPy"
-  author: "[Jayaram Kancherla](mailto:jayaram.kancherla@gmail.com)"
-  contributor: "[Aaron Lun](mailto:infinite.monkeys.with.keys@gmail.com)"
-  favicon: ./assets/short.png
-  site-url: https://biocpy.github.io/tutorial
-  date: "5/31/2024"
-  search: true
-  repo-url: https://github.com/BiocPy/tutorial
-  repo-actions: [issue]
-  # downloads: [pdf, epub]
-  sharing: [twitter]
-  twitter-card: true
-  cover-image: ./assets/full.png
-  page-footer:
-    center: 
-      - text: "(c) BiocPy core contributors"
-        # href: chapters/summary.qmd
   sidebar:
-    style: docked
-    background: light
-  chapters:
-    - index.qmd
-    - tutorials/annotate_cell_types.qmd
-    - tutorials/sessioninfo.qmd
-    # - chapters/references.qmd
+    # search: true
+    contents:
+      - index.qmd
+      - section: "Tutorials"
+        contents:
+          - tutorials/annotate_cell_types.qmd
+          - tutorials/sessioninfo
+
+  # navbar:
+  #   left:
+  #     - href: index.qmd
+  #       text: Home
+  #     - tutorials/annotate_cell_types.qmd
+  #     - tutorials/sessioninfo
+
+# book:
+#   title: "Bioc2024: Interoperability between R and Python using BiocPy"
+#   author: "[Jayaram Kancherla](mailto:jayaram.kancherla@gmail.com)"
+#   contributor: "[Aaron Lun](mailto:infinite.monkeys.with.keys@gmail.com)"
+#   favicon: ./assets/short.png
+#   site-url: https://biocpy.github.io/tutorial
+#   date: "5/31/2024"
+#   search: true
+#   repo-url: https://github.com/BiocPy/tutorial
+#   repo-actions: [issue]
+#   # downloads: [pdf, epub]
+#   sharing: [twitter]
+#   twitter-card: true
+#   cover-image: ./assets/full.png
+#   page-footer:
+#     center: 
+#       - text: "(c) BiocPy core contributors"
+#         # href: chapters/summary.qmd
+#   sidebar:
+#     style: docked
+#     background: light
+#   chapters:
+#     - index.qmd
+#     - tutorials/annotate_cell_types.qmd
+#     - tutorials/sessioninfo.qmd
+#     # - chapters/references.qmd
 
 format:
   html:
-    theme: cosmo
+    theme: sandstone
     number-sections: false
     code-link: true
     toc: true

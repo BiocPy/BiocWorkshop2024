@@ -19,3 +19,5 @@ session-info
 celldex
 scrnaseq
 anndata
+matplotlib
+scanpy
