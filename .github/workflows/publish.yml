@@ -15,20 +15,24 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Quarto
+      - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true
 
-      - name: Install Python and Dependencies
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
           cache: 'pip'
-      # - run: pip install uv
-      # - run: uv venv
-      # - run: source .venv/bin/activate
-      - run: pip install -r requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.4.0'
 
       - name: Install R packages
         run: Rscript rpackages.R
