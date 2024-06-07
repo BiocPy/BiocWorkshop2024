@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://biocpy.github.io/tutorial/index.html</loc>
+    <lastmod>2024-06-07T20:13:49.017Z</lastmod>
+  </url>
+  <url>
+    <loc>https://biocpy.github.io/tutorial/tutorials/annotate_cell_types.html</loc>
+    <lastmod>2024-06-07T20:13:49.017Z</lastmod>
+  </url>
+  <url>
+    <loc>https://biocpy.github.io/tutorial/tutorials/sessioninfo.html</loc>
+    <lastmod>2024-06-07T20:13:49.017Z</lastmod>
+  </url>
+</urlset>
