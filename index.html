@@ -6,8 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Jayaram Kancherla">
-<meta name="dcterms.date" content="2024-05-31">
 
 <title>Bioc2024: Interoperability between R and Python using BiocPy</title>
 <style>
@@ -32,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./tutorials/annotate_cell_types.html" rel="next">
-<link href="././assets/short.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -72,12 +68,9 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta name="twitter:title" content="Bioc2024: Interoperability between R and Python using BiocPy">
-<meta name="twitter:description" content="">
-<meta name="twitter:card" content="summary">
 </head>
 
-<body class="nav-sidebar docked">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -86,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-title">Welcome</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,14 +91,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioc2024: Interoperability between R and Python using BiocPy</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/BiocPy/tutorial" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -117,20 +106,30 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Welcome</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/annotate_cell_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</span></a>
+  <a href="./tutorials/annotate_cell_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/sessioninfo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reproduce me!</span></a>
-  </div>
-</li>
+          <li class="sidebar-item">
+ <span class="menu-text">tutorials/sessioninfo</span>
+  </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -138,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
   <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a>
@@ -148,48 +147,23 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#developer-notes" id="toc-developer-notes" class="nav-link" data-scroll-target="#developer-notes">Developer notes</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/BiocPy/tutorial/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Bioc2024: Interoperability between R and Python using BiocPy</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p><a href="mailto:jayaram.kancherla@gmail.com">Jayaram Kancherla</a> </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">May 31, 2024</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-
-</header>
 
 
 
 <section id="welcome" class="level1">
-<h1>Welcome</h1><p><img src="./assets/full.png" title="Bioc2024: Interoperability between R and Python using BiocPy" class="quarto-cover-image img-fluid"></p>
-<p>The BiocPy project aims to facilitate development of Bioconductor workflows in Python.</p>
-<p>This tutorial for the workshop will provide an overview of the core data structures implemented in BiocPy (e.g., <code>GenomicRanges</code>, <code>SummarizedExperiment</code>) that were ported from R. Participants will be guided through two Bioconductor-derived workflows in Python. The first will involve reading an RDS file containing genomic ranges and performing downstream range-based analyses. The second will use the <code>scRNAseq</code> package to access public single-cell RNA-seq datasets, followed by cell type annotation using the <code>SinglePy</code> package. Attendees will learn how to represent and manipulate their datasets in Python in the same manner as in R/Bioconductor.</p>
-<p>All packages in BiocPy are published to PyPI, and code is open-source on <a href="https://github.com/BiocPy">GitHub</a>.</p>
+<h1>Welcome</h1>
+<p>Welcome to our workshop on exploring the data structures and packages available in <a href="https://github.com/biocpy">BiocPy</a>, a project that brings the power of Bioconductor to Python.</p>
+<p>In this workshop, we will focus on interoperability between R and Python, covering two main topics:</p>
+<ul>
+<li>Reading an RDS file containing <code>GenomicRanges</code> and performing downstream range-based analyses.</li>
+<li>Annotating single-cell RNA-seq data analysis using the <a href="https://github.com/biocpy/scrnaseq">scrnaseq</a> package.</li>
+</ul>
+<p>Attendees will learn how to represent and manipulate their datasets in Python in the same manner as in R/Bioconductor. All packages in BiocPy are published to PyPI, and the code is open-source on <a href="https://github.com/BiocPy">GitHub</a>.</p>
 <section id="core-contributors" class="level3">
 <h3 class="anchored" data-anchor-id="core-contributors">Core contributors</h3>
 <ul>
@@ -306,7 +280,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/biocpy\.github\.io\/tutorial");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -634,33 +608,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./tutorials/annotate_cell_types.html" class="pagination-link" aria-label="Tutorial 2: Access single-cell datasets from `scRNAseq` collection and annotate cell types">
-        <span class="nav-page-text"><span class="chapter-title">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-      &nbsp;
-    </div>   
-    <div class="nav-footer-center">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item">
- (c) BiocPy core contributors
-  </li>  
-</ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BiocPy/tutorial/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
-    <div class="nav-footer-right">
-      &nbsp;
-    </div>
-  </div>
-</footer>
 
 
 
