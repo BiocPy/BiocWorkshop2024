@@ -46,10 +46,10 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
       
-      - name: Setup R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: '4.4.0'
+      # - name: Setup R
+      #   uses: r-lib/actions/setup-r@v2
+      #   with:
+      #     r-version: '4.4.0'
 
       - name: Set directories
         run: |
@@ -65,18 +65,18 @@ jobs:
         run: Rscript rpackages.R
 
       # build SQLite from source, because I need 3.35<=
-      - name: Download SQLite3
-        run: |
-          wget https://www.sqlite.org/2024/sqlite-autoconf-3450300.tar.gz
-          tar -xvf sqlite-autoconf-3450300.tar.gz
+      # - name: Download SQLite3
+      #   run: |
+      #     wget https://www.sqlite.org/2024/sqlite-autoconf-3450300.tar.gz
+      #     tar -xvf sqlite-autoconf-3450300.tar.gz
 
-      - name: Install SQLite3
-        run: |
-          ./configure
-          make
-          sudo make install
-          export PATH="/usr/local/lib:$PATH"
-        working-directory: sqlite-autoconf-3450300
+      # - name: Install SQLite3
+      #   run: |
+      #     ./configure
+      #     make
+      #     sudo make install
+      #     export PATH="/usr/local/lib:$PATH"
+      #   working-directory: sqlite-autoconf-3450300
 
       - name: Render
         run: |
