@@ -215,8 +215,6 @@ suppressWarnings(library(SingleR))
 cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
 
 table(cell_labels$labels)
-
-cell_labels[]
 ```
 
 ## Python
@@ -236,7 +234,7 @@ import celldex
 immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True)
 
 matches = singler.annotate_single(
-    test_data=sce.assays["counts"], 
+    test_data=sce, 
     ref_data = immgen_ref,
     ref_labels = "label.main"
 )
