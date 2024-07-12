@@ -14,8 +14,9 @@ website:
       - index.qmd
       - section: "Tutorials"
         contents:
+          - tutorials/genomic_ranges.qmd
           - tutorials/annotate_cell_types.qmd
-          - tutorials/sessioninfo
+      - tutorials/sessioninfo.qmd
 
   # navbar:
   #   left:

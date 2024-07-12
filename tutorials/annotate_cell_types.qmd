@@ -1,6 +1,6 @@
 # Tutorial 2: Access single-cell datasets from `scRNAseq` collection and annotate cell types
 
-Welcome to this tutorial on annotating single-cell datasets with reference collections. The **scRNAseq** ([R/Bioc](https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html), [Python](https://github.com/BiocPy/scrnaseq)) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor/BiocPy packages and workflows. These datasets are stored in language agnostic representations described in [ArtifactDB](https://github.com/artifactdb), enabling easy access to datasets and analysis results across multiple programming languages such as R and Python. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets. 
+Welcome to this tutorial on annotating single-cell datasets with reference collections. The **scRNAseq** ([R/Bioc](https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html), [Python](https://github.com/BiocPy/scrnaseq)) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor/BiocPy packages and workflows. These datasets are stored in language-agnostic representations described in [ArtifactDB](https://github.com/artifactdb), enabling easy access to datasets and analysis results across multiple programming languages such as R and Python. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets. 
 
 ## Outline
 
@@ -8,7 +8,7 @@ In this tutorial, you will learn how to:
 
 - Install and set up BiocPy packages in your Python environment.
 - Explore the `scrnaseq` package and access public single-cell RNA-seq datasets.
-- Perform basic operations on `SingleCellExperiment` objects, the core data structure for single-cell data analysis.
+- Perform basic operations on `SingleCellExperiment` objects, the core data structure for single-cell data.
 - Annotate cell types using reference datasets from the `celldex` package.
 - Understand the design principles behind BiocPy.
 
@@ -48,11 +48,11 @@ This will install the `scrnaseq`, `celldex`, `singler` packages from PyPI.
 
 ## Accessing and Exploring Single-Cell Datasets
 
-Now that we have the necessary packages installed, let's explore the `scrnaseq` package and learn how to access public single-cell RNA-seq datasets. Dataset published to the `scrnaseq` package is decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let's see how we can list and search for datasets.
+Now that we have the necessary packages installed, let's explore the `scrnaseq` package and learn how to access public single-cell RNA-seq datasets. Datasets published to the `scrnaseq` package are decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let's see how we can list and search for datasets.
 
 ### List All Datasets
 
-The `list_datasets()` function in Python or `surveyDatasets()` in R will display all available datasets published to the `scRNAseq` repository along with their metadata.
+The `list_datasets()` function in Python or `surveyDatasets()` in R will display all available datasets published to the `scRNAseq` collection along with their metadata.
 
 ::: {.panel-tabset}
 
@@ -72,7 +72,7 @@ datasets[["name", "title", "version"]].head(3)
 
 :::
 
-This R|Python code lists all available datasets in the scrnaseq package and displays their names, titles, and versions.
+This R|Python code lists all available datasets in the `scrnaseq` package and displays their names, titles, and versions.
 
 ### Search for Datasets
 
@@ -103,7 +103,7 @@ This R|Python code searches for datasets containing the term "pancreas" and disp
 For more complex searches involving boolean operations, use `define_text_query()` in Python or `defineTextQuery()` in R. Here’s an example to find datasets using the mouse reference genome (`GRCm38`) and containing the words `neuro` or `pancrea`.
 
 ::: {.callout-tip}
-The `define_text_query()` function in Python or its equivalent `defineTextQuery()` in R helps us define complex queries. Check out the reference manual for more details.
+Check out the reference manual for more details and usage of these functions.
 :::
 
 ::: {.panel-tabset}
@@ -136,7 +136,7 @@ res[["name", "title", "version"]].head(3)
 
 :::
 
-This R|Python code performs a complex search to find datasets using the mouse reference genome and containing the words "neuro" or "pancrea".
+This R|Python code performs a complex search to find datasets tagged as "mouse" in the reference genome field and containing the keywords "neuro" or "pancrea".
 
 ::: {.callout-important}
 Once a dataset is identified, always list the name and version of the dataset in your scripts for reproducibility.
@@ -169,15 +169,15 @@ print(sce)
 
 :::
 
-### Side-quest on SingleCellExperiment in Python
+### Side-quest on `SingleCellExperiment` in Python
 
-The Python implementation of the `SingleCellExperiment` class adheres to Bioconductor's specification and offers similar interface and methods. Our goal is to make it simple for analysts to switch between R and Python. Key differences include a shift from functional to object-oriented paradigms.
+The Python implementation of the `SingleCellExperiment` class adheres to Bioconductor's specification and offers similar interface and methods. Our goal is to make it simple for analysts to switch between R and Python. A key difference is the shift from functional to an object-oriented paradigm.
 
 ::: {.callout-note}
 For more details on the design, refer to the [BiocPy developer guide](https://github.com/BiocPy/developer_guide) or the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) documentation.
 :::
 
-This Python code demonstrates basic operations on a `SingleCellExperiment` object, including retrieving assay names, column names, column metadata, accessing counts, and coercing to an `AnnData` object.
+This Python code demonstrates basic operations on a `SingleCellExperiment` object, including retrieving assay names, column names, column metadata, accessing counts, and coercing to an `AnnData` object for interoperability with existing analysis ready eco-systems in Python.
 
 ```{python}
 ## repeated because quarto's build does not keep state of python snippets across the notebook.
@@ -199,17 +199,17 @@ print("coerce to AnnData", sce.to_anndata())
 
 We can now annotate cell types by using reference datasets and matching cells based on their expression profiles. In this tutorial, we will use [singleR](https://github.com/SingleR-inc/SingleR) in R or its Python equivalent [singler](https://github.com/BiocPy/singler).
 
-Before running the `singler` algorithm, we need to fetch reference datasets from the `celldex` package.
+Before running the `singler` algorithm, we need to download an appropriate reference dataset from the `celldex` package.
 
 ### Access Reference Datasets from `celldex`
 
-Similar to the `scRNAseq` package, the `celldex` package provides access to reference datasets in language-agnostic representations for use in downstream analyses.
+Similar to the `scRNAseq` package, the `celldex` package provides access to the collection of reference expression datasets with curated cell type labels, for use in procedures like automated annotation of single-cell data or deconvolution of bulk RNA-seq to reference datasets. These datasets are also stored in language-agnostic representations for use in downstream analyses.
 
 ::: {.callout-note}
 The `celldex` package is available on [R/Bioconductor](https://bioconductor.org/packages/devel/data/experiment/html/celldex.html) and [PyPI](https://github.com/BiocPy/celldex).
 :::
 
-For this tutorial, let's download the [Immunological Genome Project](https://www.immgen.org/) reference from `celldex` using `fetch_reference()` in Python or `fetchReference()` in R.
+For this tutorial, let's download the [Immunological Genome Project (immgen)](https://www.immgen.org/) reference from `celldex` using `fetch_reference()` in Python or `fetchReference()` in R.
 
 ::: {.panel-tabset}
 
@@ -263,8 +263,7 @@ import pandas as pd
 pd.Series(matches["best"]).value_counts()
 ```
 
-Note: Since the python snippets use reticulate when built through Quarto, it does keep the history. Hence the code chunk
-is longer.
+Note: Since the python snippets use reticulate when built through Quarto, it does not keep the objects from prior code-blocks. Hence the code chunk is longer.
 :::
 
 ## Visualizing Single-Cell Data
@@ -352,11 +351,12 @@ matches = singler.annotate_single(
 )
 
 # Prepare the data
-adata = sce.to_anndata()
+adata, _ = sce.to_anndata()
 adata.obs['labels'] = matches["best"]
+adata.X = sc.pp.normalize_total(adata, target_sum=1e4, inplace=False)['X']
 
 # Perform differential expression analysis
-sc.tl.rank_genes_groups(adata, groupby='labels', method='t-test')
+sc.tl.rank_genes_groups(adata, groupby='labels')
 sc.pl.rank_genes_groups(adata, n_genes=20, sharey=False)
 ```
 

@@ -1,0 +1,180 @@
+# Tutorial 1: `GenomicRanges` and range-based analyses
+
+Welcome to this tutorial on reading RDS files containing Bioconductor data objects in Python. The **rds2py** [Python](https://github.com/BiocPy/rds2py) allows us to parse, extract and create equivalent representations in Python for objects stored in these files. This eliminates the need for additional data conversion tools or intermediate formats, streamlining the transition between Python and R for seamless analysis.
+
+What sets `rds2py` apart from other similar tools is its capability to read **S4** classes. This unique feature allows the parsing of Bioconductor data types directly from R into Python. The package implements bindings to Aaron's [rds2cpp library](https://github.com/LTLA/rds2cpp), that does most of the heavy lifting.
+
+:::{.callout-tip}
+This tutorial is inspired by 
+
+- GRanges section from [Computational Genomics in R](https://compgenomr.github.io/book/operations-on-genomic-intervals-with-genomicranges-package.html#how-to-create-and-manipulate-a-granges-object) book.
+:::
+
+## Outline
+
+In this tutorial, you will learn how to:
+
+- Install and set up relevant BiocPy packages in your Python environment.
+- Reading an RDS object contaning a `GenomicRanges` object.
+- Exploring methods available in `GenomicRanges` in Python.
+
+Let's dive into the process!
+
+## Prerequisites
+
+Before we begin, please ensure that you have the following prerequisites installed:
+
+- Python 3.8 or later with dependencies listed [here]([../requirements.txt](https://github.com/BiocPy/BiocWorkshop2024/blob/master/requirements.txt)).
+- R 4.4.0 and Bioconductor packages listed [here]([../rpackages.R](https://github.com/BiocPy/BiocWorkshop2024/blob/master/rpackages.R)).
+
+## Installation
+
+Let's start by installing the required packages.
+
+## Save objects from AnnotationHub
+```r
+BiocManager::install(c("AnnotationHub", "TxDb.Hsapiens.UCSC.hg38.refGene"), 
+     repos='http://cran.us.r-project.org')
+```
+
+For the purpose of the workshop, we’ll use `AnnotationHub` to get the full set of CpG islands from UCSC in a `GRanges` object. 
+
+```r
+suppressMessages(library(AnnotationHub))
+ahub <- AnnotationHub()
+cpgs <- ahub[["AH5086"]]
+```
+
+We will then save this object as RDS file, for the purpose of the tutorial, lets limit the ranges to keep only "chr22":
+
+```r
+# cpg_path <- tempfile("cpgislands", fileext = ".rds")
+keep.seqlevels <- c("chr22")
+filtered <- subset(cpgs, seqnames(cpgs) %in% keep.seqlevels)
+saveRDS(filtered, "./cpgislands.rds")
+```
+
+While we are still in the R session, lets download the human reference genome and extracting transcription start sites.
+We need do a bit of pre-processing to get this information.
+
+```r
+suppressMessages(library(TxDb.Hsapiens.UCSC.hg38.refGene))
+txpts <- transcripts(TxDb.Hsapiens.UCSC.hg38.refGene, columns=c("tx_id", "tx_name","gene_id"))
+
+keep.seqlevels <- c("chr22")
+filtered <- subset(txpts, seqnames(txpts) %in% keep.seqlevels)
+saveRDS(filtered, "./hg38_transcripts.rds")
+```
+
+Now that we have these objects saved as RDS files, we'll switch to Python for the rest of this tutorial.
+
+## Reading RDS files in Python
+
+Reading an RDS file in Python is a two-step process. First, we parse the serialized RDS into a readable Python object, typically a dictionary. This object contains both the data and relevant metadata about the structure and internal representation of the R object. Subsequently, we use one of the parser functions to convert this object into a Python representation.
+
+
+```{python}
+from rds2py import read_rds
+
+cpg_robject = read_rds("./cpgislands.rds")
+hg38_robject = read_rds("./hg38_transcripts.rds")
+
+from rds2py.granges import as_granges
+cpg_gr = as_granges(cpg_robject)
+hg38_gr = as_granges(hg38_robject)
+
+print("CpG Islands \n")
+print(cpg_gr)
+
+print("\nhg38 reference genome \n")
+print(hg38_gr)
+```
+
+### Usecase: Annotating peaks from a ChIP-seq experiment
+
+A common task I've seen folks perform is finding overlapping regions. e.g. to annotate binding sites with genomic annotations such as promoter, exon, intron and/or CpG islands, which are important for gene regulation.
+
+For the purpose of this tutorial, lets download a bed file containing peaks from a ChIP-seq experiments on human B cells run by ENCODE and catalogued in [bedbase.org](https://bedbase.org/bed/be4054acf6e3feeb4dc490e6430e358e).
+
+```{python}
+from geniml.bbclient import BBClient
+
+bbclient = BBClient(cache_folder="cache", bedbase_api="https://api.bedbase.org")
+bedfile_id = "be4054acf6e3feeb4dc490e6430e358e" 
+bedfile = bbclient.load_bed(bedfile_id)
+peaks = bedfile.to_granges()
+
+filter_chr22 = [x == "chr22" for x in peaks.get_seqnames()]
+peaks_chr22 = peaks[filter_chr22]
+
+print(peaks_chr22)
+```
+
+### Overlaps with Transcription Start Sites (TSS)
+
+Lets access the Transcription Start Sites (TSS) from the reference genome. This can be accomplished by resizing the object to one base:
+
+```{python}
+tss = hg38_gr.resize(width=1, fix="start")
+print(tss)
+```
+
+Now, lets annotate the peaks with TSS. This is accomplished by the `find_overlaps` method.
+
+::: {.panel-tabset}
+
+## Python (shell)
+
+```{python}
+overlaps = peaks.find_overlaps(tss)
+print(len(overlaps))
+```
+
+## R
+
+```r
+# R script to perform the same operation
+```
+
+:::
+
+:::{.callout-note}
+Find overlaps returns a `list` with the same length as TSS, indicating which indices from peaks overlap with each of the TSS. Ideally, we would want to return a `Hits` object similar to Bioconductor implementation.
+:::
+
+while finding overlaps returns indices to matching regions, a slightly better approach is to subset peaks that overlap with TSS using the `subset_by_overlaps` method:
+
+
+```{python}
+subsets = peaks.subset_by_overlaps(tss)
+print(subsets)
+```
+
+## Overlap with promoter regions
+
+::: {.panel-tabset}
+
+## Python (shell)
+
+```{python}
+by_gene = hg38_gr.split(hg38_gr.mcols["gene_id"])
+print(by_gene)
+```
+
+## R
+
+```r
+# R script to perform the same operation
+```
+
+:::
+
+introns and overlap
+
+intergenic regions and overlap
+
+fully contained within exonic 
+
+overlaps whether the first or the last exon
+
+are you peaks too wide?
