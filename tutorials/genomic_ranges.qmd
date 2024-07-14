@@ -137,7 +137,7 @@ Now, lets find peaks that overlap with TSS. This is accomplished by the `find_ov
 ## Python
 
 ```{python}
-overlaps = peaks.find_overlaps(tss)
+overlaps = peaks_chr22.find_overlaps(tss)
 print(len(overlaps))
 ```
 
@@ -151,7 +151,7 @@ we can iterate the indices from the object and filter the peaks that overlap wit
 import itertools
 
 all_indices = list(set(itertools.chain.from_iterable(overlaps)))
-peaks_with_tss = peaks[all_indices]
+peaks_with_tss = peaks_chr22[all_indices]
 print(peaks_with_tss)
 ```
 
@@ -170,7 +170,7 @@ Alternatively, one can subset peaks that overlap with TSS using the `subset_by_o
 ## Python
 
 ```{python}
-peaks_with_tss2 = peaks.subset_by_overlaps(tss)
+peaks_with_tss2 = peaks_chr22.subset_by_overlaps(tss)
 print(peaks_with_tss2)
 ```
 
@@ -184,13 +184,43 @@ print(peaks_with_tss2)
 
 ## Overlap with promoter regions
 
+To identify peaks that overlap with promoter regions, lets first compute promoter regions.
+
+The first step in this process is to extract the first exon from the genomic ranges list.
+
 ::: {.panel-tabset}
 
 ## Python (shell)
 
-```python
-by_gene = hg38_gr.split(hg38_gr.mcols["gene_id"])
-print(by_gene)
+```{python}
+all_first = []
+for txid, grl in hg38_grl:
+    strand = grl.get_strand(as_type = "list")[0]
+    if strand == "-":
+        all_first.append(grl.sort()[-1])
+    else:
+        all_first.append(grl.sort()[0])
+```
+
+Then we combine all the individual genomic elements. The `biocutils` package provides various generics that provide bioconductor-like functionality. 
+
+```{python}
+from biocutils import combine_sequences
+grs = combine_sequences(*all_first)
+```
+
+Now we can use the `promoters()` method to compute the promoter regions for each transcript
+
+```{python}
+promoters = grs.promoters()
+print(promoters)
+```
+
+We can then finally subset peaks that overlap with promoter regions
+
+```{python}
+peaks_with_promoters = peaks_chr22.subset_by_overlaps(promoters)
+print(peaks_with_promoters)
 ```
 
 ## R
@@ -201,16 +231,57 @@ print(by_gene)
 
 :::
 
-### introns and overlap
+### non-gene/transcipt regions 
 
-### intergenic regions and overlap
+In this example, lets compute non-gene regions and find peaks that overlap outside of genes
 
-add section on flanking regions; look to see if txdb has CDS, exon
+::: {.panel-tabset}
 
-### fully contained within exonic 
+## Python (shell)
 
-### overlaps whether the first or the last exon
+```{python}
+all_gr = hg38_grl.as_granges()
+non_gene_gr = all_gr.reduce().gaps()
+print(non_gene_gr)
+```
+
+We can then identify peaks that overlap with these regions
+
+```{python}
+peaks_with_promoters = peaks_chr22.subset_by_overlaps(non_gene_gr)
+print(peaks_with_promoters)
+```
+
+## R
+
+```r
+# R script to perform the same operation
+```
+
+:::
+
+:::{.callout-note}
+
+I wanted to show an example with finding overlaps with integenic regions, but the original object I used did not contain gene information. But this demonstrates some of the complex range based operations.
+:::
+
+### Peaks contained within regions
+
+```{python}
+peaks_with_promoters = peaks_chr22.subset_by_overlaps(non_gene_gr, query_type="within")
+print(peaks_with_promoters)
+```
 
 ### are you peaks too wide?
 
-### resize and shift
+```{python}
+narrow_peaks = peaks_chr22.narrow(start=10, width = 100)
+print(narrow_peaks)
+```
+
+#### resize and shift
+
+```{python}
+resized = peaks_chr22.resize(100).shift(10)
+print(resized)
+```
