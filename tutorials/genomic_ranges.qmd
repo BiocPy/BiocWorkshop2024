@@ -1,61 +1,42 @@
 # Tutorial 1: `GenomicRanges` and range-based analyses
 
-Welcome to this tutorial on reading RDS files containing Bioconductor data objects in Python. The **rds2py** [Python](https://github.com/BiocPy/rds2py) allows us to parse, extract and create equivalent representations in Python for objects stored in these files. This eliminates the need for additional data conversion tools or intermediate formats, streamlining the transition between Python and R for seamless analysis.
-
-What sets `rds2py` apart from other similar tools is its capability to read **S4** classes. This unique feature allows the parsing of Bioconductor data types directly from R into Python. The package implements bindings to Aaron's [rds2cpp library](https://github.com/LTLA/rds2cpp), that does most of the heavy lifting.
-
-:::{.callout-tip}
-This tutorial is inspired by 
-
-- GRanges section from [Computational Genomics in R](https://compgenomr.github.io/book/operations-on-genomic-intervals-with-genomicranges-package.html#how-to-create-and-manipulate-a-granges-object) book.
-:::
+Genomic range operations are fundamental to many bioinformatics analyses. They allow us to work with intervals of genomic coordinates, which is crucial for understanding the relationships between different genomic features such as genes, regulatory elements, and experimental data like ChIP-seq peaks. In this session, we'll explore how to work with genomic interval data using BiocPy packages, which provide Python implementations of popular Bioconductor tools.
 
 ## Outline
 
-In this tutorial, you will learn how to:
+In this workshop, we'll walk through several key aspects of working with genomic ranges in Python:
 
-- Install and set up relevant BiocPy packages in your Python environment.
-- Reading an RDS object contaning a `GenomicRanges` object.
-- Exploring methods available in `GenomicRanges` in Python.
-
-Let's dive into the process!
+1. Reading Genomic Data: We'll start by reading in genomic data from RDS files, including CpG islands and gene annotations.
+2. Basic Genomic Operations: We'll cover fundamental operations like finding transcription start sites (TSS) and promoter regions.
+3. Overlap Analysis: We'll learn how to find overlaps between different genomic features, a common task in many analyses.
+4. Advanced Operations: We'll explore more complex operations like finding peaks within specific regions and resizing genomic intervals.
 
 ## Prerequisites
 
-Before we begin, please ensure that you have the following prerequisites installed:
+Before we begin, please ensure that you have the following installed:
 
-- Python 3.8 or later with dependencies listed [here]([../requirements.txt](https://github.com/BiocPy/BiocWorkshop2024/blob/master/requirements.txt)).
-- R 4.4.0 and Bioconductor packages listed [here]([../rpackages.R](https://github.com/BiocPy/BiocWorkshop2024/blob/master/rpackages.R)).
 
-## Installation
+### Installation
 
-Let's start by installing the required packages.
+Let's start by installing the required packages for R and Python.
 
-## Save objects from AnnotationHub
 ```r
-BiocManager::install(c("AnnotationHub", "TxDb.Hsapiens.UCSC.hg38.refGene"), 
+BiocManager::install(c("TxDb.Hsapiens.UCSC.hg38.refGene"), 
      repos='http://cran.us.r-project.org')
 ```
 
-For the purpose of the workshop, we’ll use `AnnotationHub` to get the full set of CpG islands from UCSC in a `GRanges` object. 
+You can install the Python packages using pip:
 
-```r
-suppressMessages(library(AnnotationHub))
-ahub <- AnnotationHub()
-cpgs <- ahub[["AH5086"]]
+```bash
+pip install biocutils genomicranges rds2py numpy pandas
 ```
 
-We will then save this object as RDS file, for the purpose of the tutorial, lets limit the ranges to keep only "chr22":
+## 0. Save Annotations as RDS
 
-```r
-# cpg_path <- tempfile("cpgislands", fileext = ".rds")
-keep.seqlevels <- c("chr22")
-filtered <- subset(cpgs, seqnames(cpgs) %in% keep.seqlevels)
-saveRDS(filtered, "./cpgislands.rds")
-```
-
-While we are still in the R session, lets download the human reference genome and extracting transcription start sites.
+Lets download the human reference genome and save the exon positions group by transcripts.
 We need do a bit of pre-processing to get this information.
+
+For the purpose of the tutorial, we'll limit the exons to 'chromosome 22'.
 
 ```r
 suppressMessages(library(TxDb.Hsapiens.UCSC.hg38.refGene))
@@ -66,12 +47,20 @@ exons_hg38 <- exonsBy(genome, by = "tx")
 saveRDS(exons_hg38, "./hg38_exons_by_tx.rds")
 ```
 
-Now that we have these objects saved as RDS files, we'll switch to Python for the rest of this tutorial.
+## 1. Reading RDS files in Python
 
-## Reading RDS files in Python
+The [rds2py](https://github.com/biocpy/rds2py) Python package allows us to read RDS files and create equivalent Python representations of R objects. Key features include:
 
-Reading an RDS file in Python is a two-step process. First, we parse the serialized RDS into a readable Python object, typically a dictionary. This object contains both the data and relevant metadata about the structure and internal representation of the R object. Subsequently, we use one of the parser functions to convert this object into a Python representation.
+- Parsing common R objects into Python equivalents (e.g., matrices to NumPy arrays, data frames to Pandas DataFrames).
+- Unique ability to read S4 classes, enabling direct parsing of Bioconductor data types from R to Python.
+- Built on Aaron's [rds2cpp](https://github.com/LTLA/rds2cpp) library for efficient processing.
 
+Reading an RDS file with rds2py involves two steps:
+
+- Parse the RDS file into a Python dictionary containing data and metadata.
+- Convert this dictionary into a suitable Python object using specific parser functions.
+
+This process allows seamless transition between R and Python for bioinformatics analyses.
 
 ```{python}
 from rds2py import read_rds
@@ -86,11 +75,44 @@ print("\nhg38 genome exons by transcript \n")
 print(hg38_grl)
 ```
 
-### Usecase: Annotating peaks from a ChIP-seq experiment
 
-A common task I've seen folks perform is finding overlapping regions. e.g. to annotate binding sites with genomic annotations such as promoter, exon, intron and/or CpG islands, which are important for gene regulation.
+## 2. Basic Genomic Operations
 
-For the purpose of this tutorial, lets download a bed file containing peaks from a ChIP-seq experiments on human B cells run by ENCODE and catalogued in [bedbase.org](https://bedbase.org/bed/be4054acf6e3feeb4dc490e6430e358e).
+Now, let's perform some basic operations like finding transcription start sites (TSS) and promoter regions. These operations are fundamental in genomic analysis as they help us identify key regulatory regions of genes.
+
+### 2.1 Finding Transcription Start Sites (TSS)
+
+Transcription Start Sites (TSS) are the locations where transcription of a gene begins. Identifying TSS is crucial for understanding gene regulation, as many regulatory elements are located near the TSS. 
+
+```{python}
+tss = hg38_grl.range().as_genomic_ranges().resize(width=1, fix="start")
+
+print("Transcription Start Sites:")
+print(tss)
+```
+
+Here, we're using the `range()` method to get the full extent of each transcript, then resizing to a width of 1 base pair at the start of each range to pinpoint the TSS.
+
+### 2.2 Defining Promoter Regions
+
+Promoter regions are typically located upstream of the TSS and play a crucial role in regulating gene expression. Here, we're defining promoters as the region 2000 base pairs upstream to 200 base pairs downstream of each TSS. This definition can vary depending on the specific analysis, but this range often captures important regulatory elements.
+
+```{python}
+promoters = tss.promoters(upstream=2000, downstream=200)
+
+print("Promoter Regions:")
+print(promoters)
+```
+
+## 3. Overlap Analysis
+
+A common task in genomic analysis is finding overlaps between different genomic features. This helps us understand the relationships between various elements in the genome and can provide insights into gene regulation and function.
+
+### 3.1 Reading ChIP-seq Peaks
+
+ChIP-seq (Chromatin Immunoprecipitation followed by sequencing) is a method used to identify binding sites of DNA-associated proteins. The peaks represent regions where a protein of interest is likely bound to the DNA. We're focusing on chromosome 22 for this example to keep the dataset manageable.
+
+For the purpose of this tutorial, lets download a bed file containing peaks from a ChIP-seq experiments on "Human B cells" run by ENCODE and cataloged in [bedbase.org](https://bedbase.org/bed/be4054acf6e3feeb4dc490e6430e358e).
 
 ```{python}
 from geniml.bbclient import BBClient
@@ -106,38 +128,14 @@ peaks_chr22 = peaks[filter_chr22]
 print(peaks_chr22)
 ```
 
-### Overlaps with Transcription Start Sites (TSS)
+### 3.2 Finding Overlaps with TSS
 
-Lets access the Transcription Start Sites (TSS) from the reference genome. This can be accomplished by computing the ranges of each genomic element (in our case the GenomicRangesList is split by transcripts already) and resizing the object to one base:
-
-::: {.panel-tabset}
-
-## Python
-```{python}
-tss = hg38_grl \
-     .range() \
-     .as_genomic_ranges() \
-     .resize(width=1, fix="start")
-
-print(tss)
-```
-
-## R
-
-```r
-# R script to perform the same operation
-```
-
-:::
-
-Now, lets find peaks that overlap with TSS. This is accomplished by the `find_overlaps` method.
-
-::: {.panel-tabset}
-
-## Python
+Here, we're identifying ChIP-seq peaks that overlap with TSS. This analysis can help us understand if the protein of interest tends to bind near the start of genes, which could suggest a role in transcription initiation.
 
 ```{python}
 overlaps = peaks_chr22.find_overlaps(tss)
+
+print("Overlapping with TSS:")
 print(len(overlaps))
 ```
 
@@ -155,42 +153,91 @@ peaks_with_tss = peaks_chr22[all_indices]
 print(peaks_with_tss)
 ```
 
-## R
 
-```r
-# R script to perform the same operation
-```
-
+:::{.callout}
+uh oh, no overlaps? well, the `'peaks'` object does not contain any strand information. Lets fix this by ignoring strand information (`ignore_strand=True`).
 :::
+
+```{python}
+overlaps = peaks_chr22.find_overlaps(tss, ignore_strand=True)
+print(len(overlaps))
+all_indices = list(set(itertools.chain.from_iterable(overlaps)))
+peaks_with_tss = peaks_chr22[all_indices]
+print(peaks_with_tss)
+```
 
 Alternatively, one can subset peaks that overlap with TSS using the `subset_by_overlaps` method:
 
-::: {.panel-tabset}
-
-## Python
-
 ```{python}
-peaks_with_tss2 = peaks_chr22.subset_by_overlaps(tss)
+peaks_with_tss2 = peaks_chr22.subset_by_overlaps(tss, ignore_strand=True)
 print(peaks_with_tss2)
 ```
 
-## R
+### 3.3 Finding Overlaps with Promoters
 
-```r
-# R script to perform the same operation
+This operation finds ChIP-seq peaks that overlap with our defined promoter regions. If a significant number of peaks fall within promoters, it might suggest that the protein plays a role in gene regulation through promoter binding. This kind of analysis is often used to characterize the binding patterns of transcription factors or other regulatory proteins.
+
+```{python}
+peaks_with_promoters = peaks_chr22.subset_by_overlaps(promoters, ignore_strand=True)
+
+print("Peaks Overlapping with Promoters:")
+print(peaks_with_promoters)
 ```
 
-:::
+### 3.4 Finding Overlaps with Exons
 
-## Overlap with promoter regions
+An advanced and more broadly applicable analysis is to look at overlaps with all exons. This can help identify potential roles of the ChIP-seq peaks in gene regulation, or splicing. Let's modify our analysis to look at all exons:
 
-To identify peaks that overlap with promoter regions, lets first compute promoter regions.
+```{python}
+# Combine all exons into a single GenomicRanges object
+all_exons = hg38_grl.as_granges()
 
-The first step in this process is to extract the first exon from the genomic ranges list.
+# Find peaks overlapping with any exon
+peaks_with_exons = peaks_chr22.subset_by_overlaps(all_exons, ignore_strand=True)
 
-::: {.panel-tabset}
+print("Peaks overlapping with exons:")
+print(peaks_with_exons)
 
-## Python (shell)
+# Calculate the percentage of peaks that overlap with exons
+percent_overlapping = (len(peaks_with_exons) / len(peaks_chr22)) * 100
+
+print(f"Percentage of peaks overlapping with exons: {percent_overlapping:.2f}%")
+```
+
+This analysis can provide insights into whether the protein of interest (captured by the ChIP-seq) tends to bind within gene bodies, potentially influencing gene expression, splicing, or other co-transcriptional processes.
+
+## 4. Advanced Operations
+
+Let's explore some more complex operations that are often used in genomic analyses.
+
+### 4.1 Comparing Exonic vs. Intronic Binding
+
+To gain further insight, we can compare the proportion of peaks overlapping with exons to those overlapping with introns:
+
+```{python}
+# Create intronic regions (regions within genes but not in exons)
+gene_regions = all_exons.range()  # Get the full extent of genes
+introns = gene_regions.subtract(all_exons).as_granges()
+
+# Find peaks overlapping with introns
+peaks_with_introns = peaks_chr22.subset_by_overlaps(introns, ignore_strand=True)
+
+print("Peaks overlapping with introns:")
+print(peaks_with_introns)
+
+# Calculate percentages
+percent_exonic = (len(peaks_with_exons) / len(peaks_chr22)) * 100
+percent_intronic = (len(peaks_with_introns) / len(peaks_chr22)) * 100
+
+print(f"Percentage of peaks overlapping with exons: {percent_exonic:.2f}%")
+print(f"Percentage of peaks overlapping with introns: {percent_intronic:.2f}%")
+```
+
+This comparison can help determine if the protein of interest shows a preference for binding in exonic or intronic regions, which could suggest different functional roles (e.g., splicing regulation for exonic binding vs. potential enhancer activity for intronic binding).
+
+### 4.2 Finding Overlaps with the first exon
+
+Lets first put together a genomicranges that contains the first exon for each transcript.
 
 ```{python}
 all_first = []
@@ -202,86 +249,46 @@ for txid, grl in hg38_grl:
         all_first.append(grl.sort()[0])
 ```
 
-Then we combine all the individual genomic elements. The `biocutils` package provides various generics that provide bioconductor-like functionality. 
+Then we combine all the individual genomic elements. The [biocutils](https://github.com/BiocPy/BiocUtils) package provides utilities mostly convenient aspects of R that aren't provided by base Python and generics. One of these generics is the `'combine'` operation that to merge or concatenate various Bioconductor classes.
 
 ```{python}
 from biocutils import combine_sequences
-grs = combine_sequences(*all_first)
+first_exons = combine_sequences(*all_first)
 ```
 
-Now we can use the `promoters()` method to compute the promoter regions for each transcript
+We can now subset peaks that overlap with the first exon
 
 ```{python}
-promoters = grs.promoters()
-print(promoters)
+peaks_with_first_exons = peaks_chr22.subset_by_overlaps(first_exons, ignore_strand=True)
+print(peaks_with_first_exons)
 ```
 
-We can then finally subset peaks that overlap with promoter regions
+### 4.3 Resizing and Shifting Peaks
 
 ```{python}
-peaks_with_promoters = peaks_chr22.subset_by_overlaps(promoters)
-print(peaks_with_promoters)
+narrow_peaks = peaks_chr22.narrow(start=10, width=100)
+shifted_peaks = narrow_peaks.shift(10)
+
+print("Narrowed and Shifted Peaks:")
+print(shifted_peaks)
 ```
 
-## R
+Resizing and shifting genomic ranges can be useful in various contexts. For example:
+- Narrowing peaks might help focus on the center of ChIP-seq binding sites.
+- Shifting ranges can be used to look at regions adjacent to your features of interest.
 
-```r
-# R script to perform the same operation
-```
+These operations demonstrate the flexibility of genomic range manipulations, which can be useful for fine-tuning analyses or testing hypotheses about the spatial relationships between genomic features.
 
-:::
+## 5. Exercises
 
-### non-gene/transcipt regions 
+1. Calculate the average width of the ChIP-seq peaks on chromosome 22.
+2. Determine how many peaks overlap with CpG islands.
+3. Compute the percentage of promoter regions that have at least one overlapping ChIP-seq peak.
 
-In this example, lets compute non-gene regions and find peaks that overlap outside of genes
+## Conclusion
 
-::: {.panel-tabset}
-
-## Python (shell)
-
-```{python}
-all_gr = hg38_grl.as_granges()
-non_gene_gr = all_gr.reduce().gaps()
-print(non_gene_gr)
-```
-
-We can then identify peaks that overlap with these regions
-
-```{python}
-peaks_with_promoters = peaks_chr22.subset_by_overlaps(non_gene_gr)
-print(peaks_with_promoters)
-```
-
-## R
-
-```r
-# R script to perform the same operation
-```
-
-:::
+In this tutorial, we've explored how to use BiocPy's genomic ranges functionality to perform various genomic analyses. These tools and techniques provide a powerful way to work with genomic interval data in Python, mirroring the capabilities from Bioconductor. They form the foundation for many more complex genomic analyses and can be applied to a wide range of biological questions.
 
 :::{.callout-note}
-
-I wanted to show an example with finding overlaps with integenic regions, but the original object I used did not contain gene information. But this demonstrates some of the complex range based operations.
+Refer to the [BiocPy documentation](https://biocpy.github.io/) for more detailed information on these packages and their functionalities.
 :::
-
-### Peaks contained within regions
-
-```{python}
-peaks_with_promoters = peaks_chr22.subset_by_overlaps(non_gene_gr, query_type="within")
-print(peaks_with_promoters)
-```
-
-### are you peaks too wide?
-
-```{python}
-narrow_peaks = peaks_chr22.narrow(start=10, width = 100)
-print(narrow_peaks)
-```
-
-#### resize and shift
-
-```{python}
-resized = peaks_chr22.resize(100).shift(10)
-print(resized)
-```
