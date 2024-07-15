@@ -55,13 +55,12 @@ jobs:
       - name: Test python version
         run: |
           python3 --version
-          python --version
 
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: pip3 install -r requirements.txt
 
       - name: install geniml
-        run: pip install geniml
+        run: pip3 install geniml
       
       # - name: Setup R
       #   uses: r-lib/actions/setup-r@v2
