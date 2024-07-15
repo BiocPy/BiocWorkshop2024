@@ -24,9 +24,9 @@ jobs:
           sudo apt-get -y update
           sudo apt-get install -y rsync
 
-      - name: Install alternatives for Python
-        run: |
-          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 100
+      # - name: Install alternatives for Python
+      #   run: |
+      #     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 100
 
       # - name: Install curl
       #   run: |
@@ -52,13 +52,16 @@ jobs:
       #     python-version: '3.10'
       #     cache: 'pip'
 
-      - name: Test python
+      - name: Test python version
         run: |
           python3 --version
           python --version
 
       - name: Install Python dependencies
-        run: pip3 install -r requirements.txt
+        run: pip install -r requirements.txt
+
+      - name: install geniml
+        run: pip install geniml
       
       # - name: Setup R
       #   uses: r-lib/actions/setup-r@v2

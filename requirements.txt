@@ -1,11 +1,10 @@
-geniml
 biocframe>=0.5.0
 summarizedexperiment>=0.4.3
 singlecellexperiment>=0.4.2
 multiassayexperiment>=0.4.2
 genomicranges
 biocutils>=0.1.5
-rds2py==0.4.3
+rds2py>=0.4.3
 scranpy
 singler>=0.2.0
 numpy
@@ -22,3 +21,4 @@ scrnaseq
 anndata
 matplotlib
 scanpy
+# geniml
