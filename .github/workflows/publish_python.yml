@@ -1,0 +1,45 @@
+on:
+    push:
+      branches:
+        - master
+      tags:
+        - "*"
+    pull_request:
+  
+  name: Quarto Publish
+  
+  jobs:
+    build-deploy:
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+      steps:
+        - name: Check out repository
+          uses: actions/checkout@v4
+  
+        - name: Set up Quarto
+          uses: quarto-dev/quarto-actions/setup@v2
+          with:
+            tinytex: true
+  
+        - name: Install Python and Dependencies
+          uses: actions/setup-python@v4
+          with:
+            python-version: '3.9'
+            cache: 'pip'
+        # - run: pip install uv
+        # - run: uv venv
+        # - run: source .venv/bin/activate
+        - run: pip install -r requirements.txt
+  
+        - name: Render
+          uses: quarto-dev/quarto-actions/render@v2
+          with:
+            to: html
+  
+        - name: Publish to GH Pages
+          if: github.ref == 'refs/heads/master'
+          uses: quarto-dev/quarto-actions/publish@v2
+          with:
+            target: gh-pages # The branch the action should deploy to.
+            render: false

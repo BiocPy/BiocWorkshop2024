@@ -10,7 +10,6 @@ In this tutorial, you will learn how to:
 - Explore the `scrnaseq` package and access public single-cell RNA-seq datasets.
 - Perform basic operations on `SingleCellExperiment` objects, the core data structure for single-cell data.
 - Annotate cell types using reference datasets from the `celldex` package.
-- Understand the design principles behind BiocPy.
 
 Let's dive into the process!
 
@@ -27,6 +26,14 @@ Let's start by installing the required packages.
 
 ::: {.panel-tabset}
 
+## Python (shell)
+
+```sh
+pip install scrnaseq celldex singler
+```
+
+This will install the `scrnaseq`, `celldex`, `singler` packages from PyPI.
+
 ## R
 ```r
 BiocManager::install(c("scRNAseq", "celldex", "SingleR"), 
@@ -35,14 +42,6 @@ BiocManager::install(c("scRNAseq", "celldex", "SingleR"),
 
 This will install the `scRNAseq`, `celldex`, `SingleR`, packages from Bioconductor.
 
-
-## Python (shell)
-
-```sh
-pip install scrnaseq celldex singler
-```
-
-This will install the `scrnaseq`, `celldex`, `singler` packages from PyPI.
 
 :::
 
@@ -56,18 +55,18 @@ The `list_datasets()` function in Python or `surveyDatasets()` in R will display
 
 ::: {.panel-tabset}
 
-## R
-```{r}
-suppressMessages(library(scRNAseq))
-all_ds <- surveyDatasets()
-head(all_ds[, c("name", "title", "version")], 3)
-```
-
 ## Python
 ```{python}
 import scrnaseq
 datasets = scrnaseq.list_datasets()
 datasets[["name", "title", "version"]].head(3)
+```
+
+## R
+```r
+suppressMessages(library(scRNAseq))
+all_ds <- surveyDatasets()
+head(all_ds[, c("name", "title", "version")], 3)
 ```
 
 :::
@@ -80,18 +79,18 @@ You can also search for datasets based on metadata using `search_datasets()` in 
 
 ::: {.panel-tabset}
 
-## R
-```{r}
-pancreas_ds <- searchDatasets("pancreas")
-head(pancreas_ds[, c("name", "title", "version")], 3)
-```
-
 ## Python
 ```{python}
 import scrnaseq
 
 pancreas_datasets = scrnaseq.search_datasets("pancreas")
 pancreas_datasets[["name", "title", "version"]].head(3)
+```
+
+## R
+```r
+pancreas_ds <- searchDatasets("pancreas")
+head(pancreas_ds[, c("name", "title", "version")], 3)
 ```
 
 :::
@@ -108,17 +107,6 @@ Check out the reference manual for more details and usage of these functions.
 
 ::: {.panel-tabset}
 
-## R
-```{r}
-suppressWarnings(library(gypsum))
-res <- searchDatasets(
-    defineTextQuery("GRCm38", field="genome") &
-    (defineTextQuery("neuro%", partial=TRUE) | 
-     defineTextQuery("pancrea%", partial=TRUE))
-)
-head(res[,c("name", "title", "version")], 3)
-```
-
 ## Python
 ```{python}
 from gypsum_client import define_text_query
@@ -134,6 +122,16 @@ res = scrnaseq.search_datasets(
 res[["name", "title", "version"]].head(3)
 ```
 
+## R
+```r
+suppressWarnings(library(gypsum))
+res <- searchDatasets(
+    defineTextQuery("GRCm38", field="genome") &
+    (defineTextQuery("neuro%", partial=TRUE) | 
+     defineTextQuery("pancrea%", partial=TRUE))
+)
+head(res[,c("name", "title", "version")], 3)
+```
 :::
 
 This R|Python code performs a complex search to find datasets tagged as "mouse" in the reference genome field and containing the keywords "neuro" or "pancrea".
@@ -154,17 +152,18 @@ For this tutorial, let's download the `zeisel-brain` dataset:
 
 ::: {.panel-tabset}
 
-## R
-```{r}
-sce <- fetchDataset("zeisel-brain-2015", "2023-12-14", realize.assays=TRUE)
-sce
-```
-
 ## Python
 ```{python}
 import scrnaseq
 sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14", realize_assays=True)
 print(sce)
+```
+
+
+## R
+```r
+sce <- fetchDataset("zeisel-brain-2015", "2023-12-14", realize.assays=TRUE)
+sce
 ```
 
 :::
@@ -195,6 +194,8 @@ print("access counts ", sce.assays["counts"]) # or # sce.assay("counts")
 print("coerce to AnnData", sce.to_anndata())
 ```
 
+TODO: convert matrix to scipy sparse
+
 ## Annotate Cell Types
 
 We can now annotate cell types by using reference datasets and matching cells based on their expression profiles. In this tutorial, we will use [singleR](https://github.com/SingleR-inc/SingleR) in R or its Python equivalent [singler](https://github.com/BiocPy/singler).
@@ -213,13 +214,6 @@ For this tutorial, let's download the [Immunological Genome Project (immgen)](ht
 
 ::: {.panel-tabset}
 
-## R
-```{r}
-suppressWarnings(library(celldex))
-immgen_ref <- fetchReference("immgen", "2024-02-26", realize.assays=TRUE)
-immgen_ref
-```
-
 ## Python
 ```{python}
 import celldex
@@ -228,19 +222,17 @@ immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True
 print(immgen_ref)
 ```
 
+## R
+```r
+suppressWarnings(library(celldex))
+immgen_ref <- fetchReference("immgen", "2024-02-26", realize.assays=TRUE)
+immgen_ref
+```
 :::
 
 Now, let's identify cells from the `zeisel-brain` dataset using the `immgen` reference dataset.
 
 ::: {.panel-tabset}
-
-## R
-```{r}
-suppressWarnings(library(SingleR))
-cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
-
-table(cell_labels$labels)
-```
 
 ## Python
 ```{python}
@@ -264,6 +256,15 @@ pd.Series(matches["best"]).value_counts()
 ```
 
 Note: Since the python snippets use reticulate when built through Quarto, it does not keep the objects from prior code-blocks. Hence the code chunk is longer.
+
+## R
+```r
+suppressWarnings(library(SingleR))
+cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
+
+table(cell_labels$labels)
+```
+
 :::
 
 ## Visualizing Single-Cell Data
@@ -275,23 +276,6 @@ TODO: generate embeddings and then visualize clusters
 
 ::: {.panel-tabset}
 
-## R
-
-We will use the ggplot2 package in R to create visualizations. First, let's visualize the cell type annotations.
-
-```{r}
-suppressWarnings(library(SingleR))
-suppressWarnings(library(ggplot2))
-cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
-sce$labels <- cell_labels$labels
-
-ggplot(as.data.frame(colData(sce)), aes(x = labels)) +
-    geom_bar() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-    labs(title = "Cell Type Annotations", x = "Cell Type", y = "Count")
-```
-
-
 ## Python
 
 We will use the seaborn and matplotlib packages in Python to create visualizations. First, let's visualize the cell type annotations.
@@ -300,19 +284,6 @@ We will use the seaborn and matplotlib packages in Python to create visualizatio
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-import singler
-
-import scrnaseq
-sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14", realize_assays=True)
-
-import celldex
-immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True)
-
-matches = singler.annotate_single(
-    test_data=sce, 
-    ref_data=immgen_ref,
-    ref_labels="label.main"
-)
 
 cell_labels = pd.Series(matches["best"]).value_counts()
 
@@ -322,6 +293,22 @@ plt.title("Cell Type Annotations")
 plt.xlabel("Cell Type")
 plt.ylabel("Count")
 plt.show()
+```
+
+## R
+
+We will use the ggplot2 package in R to create visualizations. First, let's visualize the cell type annotations.
+
+```r
+suppressWarnings(library(SingleR))
+suppressWarnings(library(ggplot2))
+cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
+sce$labels <- cell_labels$labels
+
+ggplot(as.data.frame(colData(sce)), aes(x = labels)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(title = "Cell Type Annotations", x = "Cell Type", y = "Count")
 ```
 
 :::
