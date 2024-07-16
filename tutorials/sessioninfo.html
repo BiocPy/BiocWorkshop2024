@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.43">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bioc2024: Interoperability between R and Python using BiocPy – sessioninfo</title>
+<title>sessioninfo – Bioc2024: Interoperability between R and Python using BiocPy</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,9 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      Bioc2024: Interoperability between R and Python using BiocPy
-      </li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tutorials/sessioninfo.html">Session Info!</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -160,15 +158,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../tutorials/genomic_ranges.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 1: <code>GenomicRanges</code> and range-based analyses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../tutorials/annotate_cell_types.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
- <span class="menu-text">tutorials/sessioninfo</span>
-  </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/sessioninfo.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Session Info!</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -190,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Reproduce me!</h1>
+<h1 class="title">Session Info!</h1>
 </div>
 
 
@@ -211,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This book is automatically built to identify issues caused by changes in the dependencies. We use <a href="https://quarto.org/docs/books">quarto</a> for reproducing the scripts provided in this book.</p>
 <section id="pre-requisites" class="level2">
 <h2 class="anchored" data-anchor-id="pre-requisites">Pre-requisites</h2>
-<div id="49c14b9c" class="cell" data-execution_count="1">
+<div id="a627bb1d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -220,97 +227,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="python" class="level2">
 <h2 class="anchored" data-anchor-id="python">Python</h2>
-<p>Lets make sure we have all packages we need for this section</p>
-<div id="2d32a90f" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sys.version_info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>sys.version_info(major=3, minor=10, micro=12, releaselevel='final', serial=0)</code></pre>
+<p>The Python version on the GitHub runner</p>
+<div id="b362c1ec" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.version_info)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #800080; text-decoration-color: #800080; font-weight: bold">sys.version_info</span><span style="font-weight: bold">(</span><span style="color: #808000; text-decoration-color: #808000">major</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>, <span style="color: #808000; text-decoration-color: #808000">minor</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">11</span>, <span style="color: #808000; text-decoration-color: #808000">micro</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">9</span>, <span style="color: #808000; text-decoration-color: #808000">releaselevel</span>=<span style="color: #008000; text-decoration-color: #008000">'final'</span>, <span style="color: #808000; text-decoration-color: #808000">serial</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>
+</pre>
 </div>
 </div>
 </section>
 <section id="packages" class="level2">
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
-<div id="9384520f" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocframe</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocutils</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> genomicranges</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> summarizedexperiment</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> singlecellexperiment</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> multiassayexperiment</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rds2py</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> session_info</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>session_info.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Versions of packages installed for generating this build</p>
+<div id="def0e9bd" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> genomicranges</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> summarizedexperiment</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> singlecellexperiment</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> multiassayexperiment</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rds2py</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> celldex</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> session_info</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>session_info.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <details>
 <summary>Click to view session information</summary>
 <pre>-----
-biocframe                   0.5.10
-biocutils                   0.1.5
-genomicranges               0.4.15
+celldex                     0.1.1
+genomicranges               0.4.28
 multiassayexperiment        0.4.2
-rds2py                      0.4.2
+rds2py                      0.4.4
 rich                        NA
+scrnaseq                    0.2.0
 session_info                1.0.0
 singlecellexperiment        0.4.6
-summarizedexperiment        0.4.4
+summarizedexperiment        0.4.5
 -----
 </pre>
 <details>
 <summary>Click to view modules imported as dependencies</summary>
-<pre>PIL                         10.3.0
+<pre>PIL                         10.4.0
+anndata                     0.10.8
 anyio                       NA
 arrow                       1.3.0
+asciitree                   NA
 asttokens                   NA
 attr                        23.2.0
 attrs                       23.2.0
 babel                       2.15.0
-certifi                     2024.06.02
+biocframe                   0.5.11
+biocutils                   0.1.5
+certifi                     2024.07.04
 cffi                        1.16.0
 charset_normalizer          3.3.2
 comm                        0.2.2
 cycler                      0.12.1
 cython_runtime              NA
 dateutil                    2.9.0.post0
-debugpy                     1.8.1
+debugpy                     1.8.2
 decorator                   5.1.1
 defusedxml                  0.7.1
-exceptiongroup              1.2.1
+delayedarray                0.5.1
+dolomite_base               0.2.4
 executing                   2.0.1
 fastjsonschema              NA
+filelock                    3.15.4
 fqdn                        NA
+gypsum_client               0.1.3
+h5py                        3.11.0
 idna                        3.7
-ipykernel                   6.29.4
-iranges                     0.2.3
+ipykernel                   6.29.5
+iranges                     0.2.11
 isoduration                 NA
 jedi                        0.19.1
 jinja2                      3.1.4
 json5                       0.9.25
-jsonpointer                 2.4
-jsonschema                  4.22.0
+jsonpointer                 3.0.0
+jsonschema                  4.23.0
 jsonschema_specifications   NA
 jupyter_events              0.10.0
-jupyter_server              2.14.1
-jupyterlab_server           2.27.2
+jupyter_server              2.14.2
+jupyterlab_server           2.27.3
 kiwisolver                  1.4.5
 markupsafe                  2.1.5
-matplotlib                  3.9.0
+matplotlib                  3.9.1
 matplotlib_inline           0.1.7
 mpl_toolkits                NA
+natsort                     8.4.0
 nbformat                    5.10.4
+numcodecs                   0.13.0
 numpy                       1.26.4
 overrides                   NA
-packaging                   24.0
+packaging                   24.1
 pandas                      2.2.2
 parso                       0.8.4
 platformdirs                4.2.2
 prometheus_client           NA
-prompt_toolkit              3.0.46
-psutil                      5.9.8
+prompt_toolkit              3.0.47
+psutil                      6.0.0
 pure_eval                   0.2.2
+pyarrow                     17.0.0
 pydev_ipython               NA
 pydevconsole                NA
 pydevd                      2.9.5
@@ -326,36 +346,38 @@ requests                    2.32.3
 rfc3339_validator           0.1.4
 rfc3986_validator           0.1.1
 rpds                        NA
-scipy                       1.13.1
+scipy                       1.12.0
 send2trash                  NA
-sitecustomize               NA
 six                         1.16.0
 sniffio                     1.3.1
 stack_data                  0.6.3
+torch                       2.3.1+cu121
+torchgen                    NA
 tornado                     6.4.1
+tqdm                        4.66.4
 traitlets                   5.14.3
 typing_extensions           NA
 uri_template                NA
-urllib3                     2.2.1
+urllib3                     2.2.2
 wcwidth                     0.2.13
 webcolors                   24.6.0
 websocket                   1.8.0
 yaml                        6.0.1
+zarr                        2.18.2
 zmq                         26.0.3
-zoneinfo                    NA
 </pre>
 </details> <!-- seems like this ends pre, so might as well be explicit -->
 <pre>-----
-IPython             8.25.0
+IPython             8.26.0
 jupyter_client      8.6.2
 jupyter_core        5.7.2
-jupyterlab          4.2.1
+jupyterlab          4.2.3
 notebook            7.2.1
 -----
-Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]
-Linux-6.5.0-1021-azure-x86_64-with-glibc2.35
+Python 3.11.9 (main, Jun 25 2024, 18:25:01) [GCC 11.4.0]
+Linux-6.5.0-1023-azure-x86_64-with-glibc2.35
 -----
-Session information updated at 2024-06-07 23:38
+Session information updated at 2024-07-16 23:32
 </pre>
 </details>
 </div>
