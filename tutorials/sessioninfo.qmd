@@ -1,4 +1,4 @@
-# Reproduce me! {.unnumbered}
+# Session Info! {.unnumbered}
 
 The code base for this repository is available at [https://github.com/BiocPy/tutorial](https://github.com/BiocPy/tutorial).
 
@@ -16,25 +16,26 @@ from rich import print
 
 ## Python
 
-Lets make sure we have all packages we need for this section
+The Python version on the GitHub runner
 
 ```{python}
-sys.version_info
+print(sys.version_info)
 ```
 
 ## Packages 
 
+Versions of packages installed for generating this build
 
 ```{python}
 import math
 
-import biocframe
-import biocutils
 import genomicranges
 import summarizedexperiment
 import singlecellexperiment
 import multiassayexperiment
 import rds2py
+import celldex
+import scrnaseq
 import session_info
 
 

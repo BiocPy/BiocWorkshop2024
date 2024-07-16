@@ -1,13 +1,13 @@
 # Welcome
 
 Welcome to our workshop on exploring the data structures and packages 
-available in [BiocPy](https://github.com/biocpy), a project that brings 
-the power of Bioconductor to Python. 
+available in [BiocPy](https://github.com/biocpy), a project that aims 
+to facilitate Bioconductor workflows in Python. 
 
 In this workshop, we will focus on interoperability between R and Python, covering two main topics:
 
 - Reading an RDS file containing `GenomicRanges` and performing downstream range-based analyses.
-- Annotating single-cell RNA-seq data analysis using the [scrnaseq](https://github.com/biocpy/scrnaseq) package.
+- Annotating single-cell RNA-seq data using the [scrnaseq](https://github.com/biocpy/scrnaseq) package.
 
 Attendees will learn how to represent and manipulate their datasets in Python 
 in the same manner as in R/Bioconductor. 
@@ -20,6 +20,8 @@ on [GitHub](https://github.com/BiocPy).
 - [Jayaram Kancherla](https://github.com/jkanche)
 - [Aaron Lun](https://github.com/LTLA)
 
+Always looking for more contributions from the community to improve our packages! Checkout the issues or discussion in our GitHub organization.
+
 ----
 
 ## Other resources
@@ -29,4 +31,4 @@ on [GitHub](https://github.com/BiocPy).
 
 ## Developer notes
 
-This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [Reproduce me](./chapters/sessioninfo.qmd) for more information.
+This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [Session Info](./chapters/sessioninfo.qmd) for more information.
