@@ -1,20 +1,19 @@
 # Tutorial 1: `GenomicRanges` and range-based analyses
 
-Genomic range operations are fundamental to many bioinformatics analyses. They allow us to work with intervals of genomic coordinates, which is crucial for understanding the relationships between different genomic features such as genes, regulatory elements, and experimental data like ChIP-seq peaks. In this session, we'll explore how to work with genomic interval data using BiocPy's [GenomicRanges](https://github.com/BiocPy/GenomicRanges/) packages, which provide Python implementations to the R/Bioconductor [GenomicRanges package](https://github.com/Bioconductor/GenomicRanges).
+Genomic range operations are fundamental to many bioinformatics analyses. They allow us to work with intervals of genomic coordinates, which is crucial for understanding the relationships between different genomic features such as genes, regulatory elements, and experimental data like ChIP-seq peaks. In this tutorial, we'll explore how to work with genomic interval data using BiocPy's [GenomicRanges](https://github.com/BiocPy/GenomicRanges/) package, which provides Python implementations similar to the R/Bioconductor [GenomicRanges package](https://github.com/Bioconductor/GenomicRanges).
 
 ## Outline
 
 In this workshop, we'll walk through several key aspects of working with genomic ranges in Python:
 
-1. Reading Genomic Data: We'll start by reading in genomic data from RDS files, including CpG islands and gene annotations.
+1. Reading Genomic Data: We'll start by reading in genomic data from RDS files, including exon positions grouped by transcripts.
 2. Basic Genomic Operations: We'll cover fundamental operations like finding transcription start sites (TSS) and promoter regions.
 3. Overlap Analysis: We'll learn how to find overlaps between different genomic features, a common task in many analyses.
 4. Advanced Operations: We'll explore more complex operations like finding peaks within specific regions and resizing genomic intervals.
 
 ## Prerequisites
 
-Before we begin, please ensure that you have the following installed:
-
+Before we begin, please ensure that you have the following packages installed:
 
 ### Installation
 
@@ -27,7 +26,7 @@ Let's start by installing the required packages for R and Python.
 You can install the Python packages using pip:
 
 ```bash
-pip install -U biocutils genomicranges rds2py numpy pandas
+pip install -U biocutils genomicranges rds2py numpy pandas geniml
 ```
 
 ## R
@@ -41,8 +40,8 @@ BiocManager::install(c("AnnotationHub"),
 
 ## 1. Save Annotations as RDS
 
-Let's download the human reference genome and save the exon positions group by transcripts.
-We need do a bit of pre-processing to get this information.
+Let's download the human reference genome and save the exon positions grouped by transcripts.
+We need to do a bit of pre-processing to get this information.
 
 For the purpose of the tutorial, we'll limit the exons to chromosome 22.
 
@@ -72,8 +71,8 @@ The [rds2py](https://github.com/biocpy/rds2py) Python package allows us to read 
 
 Reading an RDS file with rds2py involves two steps:
 
-- Parse the RDS file into a Python dictionary containing data, its attributes and associated metadata.
-- Convert this dictionary into a suitable Python object using specific parser functions.
+1. Parse the RDS file into a Python dictionary containing data, its attributes, and associated metadata.
+2. Convert this dictionary into a suitable Python object using specific parser functions.
 
 This process allows a seamless transition between R and Python for bioinformatics analyses.
 
@@ -99,7 +98,7 @@ Now, let's perform some basic operations like finding Transcription Start Sites 
 
 ### 2.1 Create a `GenomicRangesList` by gene
 
-To identify TSS or define promoter regions, Let's first reprocess the input to create a `GenomicRangesList` by gene symbols.
+To identify TSS or define promoter regions, let's first reprocess the input to create a `GenomicRangesList` by gene symbols.
 
 ::: {.panel-tabset}
 
@@ -114,13 +113,13 @@ all_ranges = by_tx.as_genomic_ranges()
 Then we split the object using the `gene_name` metadata column in `mcols()`. 
 
 :::{.callout-important}
-We provide accessors to get or set attributes of the class. Most folks in Python may be familar with direct access to class members (via properties or @property) should generally be avoided, as it is too easy to perform modifications via one liners with the class.property on the left-hand-side of an assignment.
+We provide accessors to get or set attributes of the class. Most folks in Python may be familiar with direct access to class members (via properties or @property), but this should generally be avoided, as it is too easy to perform modifications via one-liners with the class.property on the left-hand side of an assignment.
 
 For more information, please refer to our [developer guide](https://github.com/BiocPy/developer_guide).
 :::
 
 :::{.callout-note}
-While gene id's are unique, gene symbols are not. In addition, this list has genes with no symbols.
+While gene IDs are unique, gene symbols are not. In addition, this list has genes with no symbols.
 :::
 
 ```{python}
@@ -139,7 +138,7 @@ Transcription Start Sites (TSS) are the locations where transcription of a gene 
 
 ::: {.panel-tabset}
 
-Let's use the `range()` method to the get the full extent of each gene.
+Let's use the `range()` method to get the full extent of each gene.
 
 ## Python
 
@@ -159,7 +158,7 @@ print("as GenomicRanges:")
 print(gr_by_gene)
 ```
 
-Then resizing to a width of 1 base pair at the start of each range to pinpoint the TSS.
+Then we resize to a width of 1 base pair at the start of each range to pinpoint the TSS.
 
 ```{python}
 tss = gr_by_gene.resize(width=1, fix="start")
@@ -184,7 +183,7 @@ print(promoters)
 ```
 
 :::{.callout-note}
-Please be aware that because gene symbols may not be unique, this GenomicRanges object might contain duplicates. One might want to resolve duplicate symbols by making the symbols unique. We will leave this as an exercise to the reader.
+Please be aware that because gene symbols may not be unique, this GenomicRanges object might contain duplicates. You might want to resolve duplicate symbols by making the symbols unique. We will leave this as an exercise for the reader.
 :::
 
 :::
@@ -197,7 +196,7 @@ A common task in genomic analysis is finding overlaps between different genomic 
 
 ChIP-seq (Chromatin Immunoprecipitation followed by sequencing) is a method used to identify binding sites of DNA-associated proteins. The peaks represent regions where a protein of interest is likely bound to the DNA. We're focusing on chromosome 22 for this example to keep the dataset manageable.
 
-For the purpose of this tutorial, lets download a bed file containing peaks from a ChIP-seq experiments on "Human B cells" to identify "EZH2" binding sites (from ENCODE) and cataloged in [bedbase.org](https://bedbase.org/bed/be4054acf6e3feeb4dc490e6430e358e).
+For the purpose of this tutorial, let's download a bed file containing peaks from a ChIP-seq experiment on "Human B cells" to identify "EZH2" binding sites (from ENCODE) and cataloged in [bedbase.org](https://bedbase.org/bed/be4054acf6e3feeb4dc490e6430e358e).
 
 ::: {.panel-tabset}
 
@@ -234,7 +233,7 @@ print(overlaps[:10])
 ```
 
 :::{.callout-note}
-Find overlaps returns a `list` with the same length as TSS, indicating which indices from peaks overlap with each of the TSS. Ideally, we would want to return a `Hits` object similar to Bioconductor implementation.
+`find_overlaps` returns a `list` with the same length as TSS, indicating which indices from peaks overlap with each of the TSS. Ideally, we would want to return a `Hits` object similar to the Bioconductor implementation.
 
 **TODO: Future plans to convert this into a `Hits` object.**
 :::
@@ -264,7 +263,7 @@ print(peaks_by_tss_ignoring_strand)
 ```
 
 :::{.callout-note}
-This yields same results for this particular scenario, but may not if the 'peaks' contain stand information.
+This yields the same results for this particular scenario, but may not if the 'peaks' contain strand information.
 :::
 
 :::
@@ -320,7 +319,7 @@ Let's explore some more complex operations that are often used in genomic analys
 
 ### 4.1 Comparing Exonic vs. Intronic Binding
 
-Let's first identify intro regions. We will use the `by_gene` object we created that contains a `GenomicRangesList` split by gene.
+Let's first identify intron regions. We will use the `by_gene` object we created that contains a `GenomicRangesList` split by gene.
 
 ::: {.panel-tabset}
 
@@ -355,7 +354,7 @@ print(f"Percentage of peaks overlapping with introns: {percent_intronic:.2f}%")
 :::
 
 :::{.callout-note}
-These add up to over 100%, because some peaks overlap both introns and exons depending on how wide the peaks are. Ideally you may want to filter the peaks based on preference as you annotate them with TSS, promoters etc.
+These percentages add up to over 100% because some peaks overlap both introns and exons, depending on how wide the peaks are. Ideally, you may want to filter the peaks based on preference as you annotate them with TSS, promoters, etc.
 :::
 
 This comparison can help determine if the protein of interest shows a preference for binding in exonic or intronic regions, which could suggest different functional roles (e.g., splicing regulation for exonic binding vs. potential enhancer activity for intronic binding).
@@ -363,8 +362,8 @@ This comparison can help determine if the protein of interest shows a preference
 ### 4.2 Finding Overlaps with the first exon
 
 :::{.callout-note}
-- This is by transcript.
-- Not really sure what the rationale would be, but we are mostly showcasing complex genomic operations that are possible with the package.
+- This analysis is performed by transcript.
+- The rationale for this analysis may vary, but we are mostly showcasing complex genomic operations that are possible with the package.
 :::
 
 Let's first put together a `GenomicRanges` object containing the first exon for each transcript.
@@ -379,7 +378,7 @@ for txid, grl in by_tx:
         all_first.append(grl.sort()[0])
 ```
 
-Then we combine all the individual genomic elements. The [biocutils](https://github.com/BiocPy/BiocUtils) package provides utilities mostly convenient aspects of R that aren't provided by base Python and generics. One of these generics is the `'combine'` operation that to merge or concatenate various Bioconductor classes.
+Then we combine all the individual genomic elements. The [biocutils](https://github.com/BiocPy/BiocUtils) package provides utilities for convenient aspects of R that aren't provided by base Python and generics. One of these generics is the `'combine'` operation that merges or concatenates various Bioconductor classes.
 
 ```{python}
 from biocutils import combine_sequences
@@ -406,7 +405,7 @@ print(shifted_peaks)
 Resizing and shifting genomic ranges can be useful in various contexts. For example:
 
 - Narrowing peaks might help focus on the center of ChIP-seq binding sites.
-- Shifting ranges can be used to look at regions adjacent to your features of interest. e.g. defining a crips cleavage site from the guide binding site.
+- Shifting ranges can be used to look at regions adjacent to your features of interest. e.g. defining the predicted CRISPR cleavage site based on the position of the CRISPR gRNA sequence.
 
 These operations demonstrate the flexibility of genomic range manipulations, which can be useful for fine-tuning analyses or testing hypotheses about the spatial relationships between genomic features.
 

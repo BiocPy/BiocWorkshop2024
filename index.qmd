@@ -20,6 +20,8 @@ on [GitHub](https://github.com/BiocPy).
 - [Jayaram Kancherla](https://github.com/jkanche)
 - [Aaron Lun](https://github.com/LTLA)
 
+Always looking for more contributions from the community to improve our packages! Checkout the issues or discussion in our GitHub organization.
+
 ----
 
 ## Other resources
@@ -29,4 +31,4 @@ on [GitHub](https://github.com/BiocPy).
 
 ## Developer notes
 
-This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [Reproduce me](./chapters/sessioninfo.qmd) for more information.
+This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [Session Info](./chapters/sessioninfo.qmd) for more information.

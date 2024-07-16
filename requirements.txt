@@ -20,5 +20,4 @@ celldex
 scrnaseq
 anndata
 matplotlib
-scanpy
 geniml

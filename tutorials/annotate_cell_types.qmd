@@ -1,24 +1,22 @@
 # Tutorial 2: Access single-cell datasets from `scRNAseq` collection and annotate cell types
 
-Welcome to this tutorial on annotating single-cell datasets with reference collections. The **scRNAseq** ([R/Bioc](https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html), [Python](https://github.com/BiocPy/scrnaseq)) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor/BiocPy packages and workflows. These datasets are stored in language-agnostic representations described in [ArtifactDB](https://github.com/artifactdb), enabling easy access to datasets and analysis results across multiple programming languages such as R and Python. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets. 
+Welcome to this tutorial on annotating single-cell datasets with reference collections. The **scRNAseq** ([R/Bioc](https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html), [Python](https://github.com/BiocPy/scrnaseq)) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor/BiocPy packages and workflows. These datasets are stored in language-agnostic representations described in [ArtifactDB](https://github.com/artifactdb), enabling easy access to datasets and analysis results across multiple programming languages such as R and Python. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets.
 
 ## Outline
 
 In this tutorial, you will learn how to:
 
-- Install and set up BiocPy packages in your Python environment.
-- Explore the `scrnaseq` package and access public single-cell RNA-seq datasets.
-- Perform basic operations on `SingleCellExperiment` objects, the core data structure for single-cell data.
-- Annotate cell types using reference datasets from the `celldex` package.
-
-Let's dive into the process!
+1. Install and set up BiocPy packages in your Python environment.
+2. Explore the `scrnaseq` package and access public single-cell RNA-seq datasets.
+3. Perform basic operations on `SingleCellExperiment` objects, the core data structure for single-cell data.
+4. Annotate cell types using reference datasets from the `celldex` package.
 
 ## Prerequisites
 
 Before we begin, please ensure that you have the following prerequisites installed:
 
-- Python 3.8 or later with dependencies listed [here]([../requirements.txt](https://github.com/BiocPy/BiocWorkshop2024/blob/master/requirements.txt)).
-- R 4.4.0 and Bioconductor packages listed [here]([../rpackages.R](https://github.com/BiocPy/BiocWorkshop2024/blob/master/rpackages.R)).
+- Python 3.8 or later with dependencies listed [here](https://github.com/BiocPy/BiocWorkshop2024/blob/master/requirements.txt).
+- R 4.4.0 and Bioconductor packages listed [here](https://github.com/BiocPy/BiocWorkshop2024/blob/master/rpackages.R).
 
 ## Installation
 
@@ -41,7 +39,6 @@ BiocManager::install(c("scRNAseq", "celldex", "SingleR"),
 ```
 
 This will install the `scRNAseq`, `celldex`, `SingleR`, packages from Bioconductor.
-
 
 :::
 
@@ -99,7 +96,7 @@ This R|Python code searches for datasets containing the term "pancreas" and disp
 
 #### Advanced Searches
 
-For more complex searches involving boolean operations, use `define_text_query()` in Python or `defineTextQuery()` in R. Here’s an example to find datasets using the mouse reference genome (`GRCm38`) and containing the words `neuro` or `pancrea`.
+For more complex searches involving boolean operations, use `define_text_query()` in Python or `defineTextQuery()` in R. Here's an example to find datasets using the mouse reference genome (`GRCm38`) and containing the words `neuro` or `pancrea`.
 
 ::: {.callout-tip}
 Check out the reference manual for more details and usage of these functions.
@@ -155,14 +152,14 @@ For this tutorial, let's download the `zeisel-brain` dataset:
 ## Python
 ```{python}
 import scrnaseq
-sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14", realize_assays=True)
+sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14")
 print(sce)
 ```
 
 
 ## R
 ```r
-sce <- fetchDataset("zeisel-brain-2015", "2023-12-14", realize.assays=TRUE)
+sce <- fetchDataset("zeisel-brain-2015", "2023-12-14")
 sce
 ```
 
@@ -178,23 +175,46 @@ For more details on the design, refer to the [BiocPy developer guide](https://gi
 
 This Python code demonstrates basic operations on a `SingleCellExperiment` object, including retrieving assay names, column names, column metadata, accessing counts, and coercing to an `AnnData` object for interoperability with existing analysis ready eco-systems in Python.
 
-```{python}
-## repeated because quarto's build does not keep state of python snippets across the notebook.
-import scrnaseq
-sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14")
+::: {.panel-tabset}
 
+## Python
+
+```{python}
 print("assays: ", sce.get_assay_names()) # or sce.assay_names
 
 print("column names: ", sce.get_column_names()) # or sce.column_names
 
-print("column metadata:", sce.get_column_data()) # or sce.column_data
+print("column metadata: ", sce.get_column_data()) # or sce.column_data
 
-print("access counts ", sce.assays["counts"]) # or # sce.assay("counts")
-
-print("coerce to AnnData", sce.to_anndata())
+print("access counts: ", sce.assays["counts"]) # or # sce.assay("counts")
 ```
 
-TODO: convert matrix to scipy sparse
+:::{.callout-note}
+The package uses [delayed arrays](https://github.com/biocpy/delayedarray), to load file-backed arrays and matrices. This reduces memory usage when loading large datasets. This package provides similar functionality to the R/Bioconductor's [DelayedArray](https://www.bioconductor.org/packages/release/bioc/html/DelayedArray.html) eco-system. 
+:::
+
+```{python}
+from delayedarray import to_scipy_sparse_matrix
+print("counts as csr: ")
+print(repr(to_scipy_sparse_matrix(sce.assays["counts"], "csc")))
+```
+
+or realize the entire matrix when loaded from disk,
+
+```{python}
+sce = scrnaseq.fetch_dataset(
+    "zeisel-brain-2015", "2023-12-14", 
+    realize_assays=True)
+print(sce)
+```
+
+We also provide coercions to various package to take advantage of methods in the Python ecosystem, e.g. scverse and AnnData
+
+```{python}
+print("coerce to AnnData: ", sce.to_anndata())
+```
+
+:::
 
 ## Annotate Cell Types
 
@@ -210,7 +230,7 @@ Similar to the `scRNAseq` package, the `celldex` package provides access to the 
 The `celldex` package is available on [R/Bioconductor](https://bioconductor.org/packages/devel/data/experiment/html/celldex.html) and [PyPI](https://github.com/BiocPy/celldex).
 :::
 
-For this tutorial, let's download the [Immunological Genome Project (immgen)](https://www.immgen.org/) reference from `celldex` using `fetch_reference()` in Python or `fetchReference()` in R.
+For this tutorial, let's download the [Mouse RNA-seq](https://www.immgen.org/) reference from `celldex` using `fetch_reference()` in Python or `fetchReference()` in R. This reference consists of a collection of mouse bulk RNA-seq data sets downloaded from the gene expression omnibus ([Benayoun et al. 2019](https://doi.org/10.1101/gr.240093.118)). A variety of cell types are available, again mostly from blood but also covering several other tissues.
 
 ::: {.panel-tabset}
 
@@ -218,19 +238,21 @@ For this tutorial, let's download the [Immunological Genome Project (immgen)](ht
 ```{python}
 import celldex
 
-immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True)
-print(immgen_ref)
+mouse_rnaseq_ref = celldex.fetch_reference(
+    "mouse_rnaseq", "2024-02-26", 
+    realize_assays=True)
+print(mouse_rnaseq_ref)
 ```
 
 ## R
 ```r
 suppressWarnings(library(celldex))
-immgen_ref <- fetchReference("immgen", "2024-02-26", realize.assays=TRUE)
-immgen_ref
+mouse_rnaseq_ref <- fetchReference("mouse_rnaseq", "2024-02-26", realize.assays=TRUE)
+mouse_rnaseq_ref
 ```
 :::
 
-Now, let's identify cells from the `zeisel-brain` dataset using the `immgen` reference dataset.
+Now, let's identify cells from the `zeisel-brain` dataset using the `mouse_rnaseq` reference dataset.
 
 ::: {.panel-tabset}
 
@@ -238,15 +260,9 @@ Now, let's identify cells from the `zeisel-brain` dataset using the `immgen` ref
 ```{python}
 import singler
 
-import scrnaseq
-sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14", realize_assays=True)
-
-import celldex
-immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True)
-
 matches = singler.annotate_single(
     test_data=sce, 
-    ref_data = immgen_ref,
+    ref_data = mouse_rnaseq_ref,
     ref_labels = "label.main"
 )
 
@@ -255,97 +271,80 @@ import pandas as pd
 pd.Series(matches["best"]).value_counts()
 ```
 
-Note: Since the python snippets use reticulate when built through Quarto, it does not keep the objects from prior code-blocks. Hence the code chunk is longer.
-
 ## R
 ```r
 suppressWarnings(library(SingleR))
-cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
+cell_labels <- SingleR(test = assay(sce, "counts"), ref = mouse_rnaseq_ref, labels = mouse_rnaseq_ref$label.main)
 
 table(cell_labels$labels)
 ```
 
 :::
 
-## Visualizing Single-Cell Data
+## Analyze Single-cell RNA-seq datasets
+
+![single-cell-methods](../assets/single-cell-space.jpg)
+
+Aaron has implemented the single-cell methods from scran in C++. This allows us to reuse the same implementation in JS and develop applications for analyzing single-cell data ([Kana](https://github.com/kanaverse/kana)), or in Python through the [scranpy](https://github.com/BiocPy/scranpy) package. This avoids different interpretations of the analysis results by switching programming languages (Pachter et al, [The impact of package selection and versioning on single-cell RNA-seq analysis | bioRxiv](https://www.biorxiv.org/content/10.1101/2024.04.04.588111v1) )
+
+
+To analyze the dataset,
+
+```{python}
+import scranpy
+
+results = scranpy.analyze_sce(sce)
+
+# results is a complex object, lets explore the umap and tsne dimensions
+print(results.tsne)
+```
+
+### Seems like magic?
+
+Running the `analyze_sce()` function uses the default parameters to run the single-cell workflow. If you want to customize or want to have fine-grained control on the analysis steps, set the parameter `dry_run=True`.
+
+:::{.callout-note}
+This prints out the exact series of steps the function does under the hood to perform the analysis. You can then use this to customize the analysis to your specific dataset or use case.
+:::
+
+```{python}
+print(scranpy.analyze_sce(sce, dry_run=True))
+```
+
+:::{.callout-tip}
+Users can also run individual steps from the analysis without having to perform the full analysis, e.g. compute log normalized counts or find markers, etc.
+:::
+
+## Visualize Results
 
 I can't have a tutorial without a section on visualization or figures.
 
-TODO: generate embeddings and then visualize clusters
-
-
-::: {.panel-tabset}
-
-## Python
-
-We will use the seaborn and matplotlib packages in Python to create visualizations. First, let's visualize the cell type annotations.
+We will use the seaborn and matplotlib packages in Python to create visualizations. We'll plot the t-SNE embedding and color the cells by their cluster assignments.
 
 ```{python}
 import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
-
-cell_labels = pd.Series(matches["best"]).value_counts()
-
-sns.barplot(x=cell_labels.index, y=cell_labels.values)
-plt.xticks(rotation=45, ha='right')
-plt.title("Cell Type Annotations")
-plt.xlabel("Cell Type")
-plt.ylabel("Count")
-plt.show()
-```
-
-## R
-
-We will use the ggplot2 package in R to create visualizations. First, let's visualize the cell type annotations.
-
-```r
-suppressWarnings(library(SingleR))
-suppressWarnings(library(ggplot2))
-cell_labels <- SingleR(test = assay(sce, "counts"), ref = immgen_ref, labels = immgen_ref$label.main)
-sce$labels <- cell_labels$labels
-
-ggplot(as.data.frame(colData(sce)), aes(x = labels)) +
-    geom_bar() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-    labs(title = "Cell Type Annotations", x = "Cell Type", y = "Count")
-```
-
-:::
-
-## Homework: Performing Differential Expression Analysis
-
-Differential expression analysis helps identify genes that are differentially expressed between different cell types or conditions. Let's explore how to identify markers for various cell types.
-
-### Differential Expression Analysis in Python
-
-We will use the scanpy package in Python to perform differential expression analysis.
-
-```python
-import scanpy as sc
-
-import scrnaseq
-sce = scrnaseq.fetch_dataset("zeisel-brain-2015", "2023-12-14", realize_assays=True)
-
-import celldex
-immgen_ref = celldex.fetch_reference("immgen", "2024-02-26", realize_assays=True)
-
-import singler
-matches = singler.annotate_single(
-    test_data=sce, 
-    ref_data=immgen_ref,
-    ref_labels="label.main"
+sns.scatterplot(
+    x=results.tsne.x, y=results.tsne.y, 
+    hue=results.clusters, palette="deep"
 )
-
-# Prepare the data
-adata, _ = sce.to_anndata()
-adata.obs['labels'] = matches["best"]
-adata.X = sc.pp.normalize_total(adata, target_sum=1e4, inplace=False)['X']
-
-# Perform differential expression analysis
-sc.tl.rank_genes_groups(adata, groupby='labels')
-sc.pl.rank_genes_groups(adata, n_genes=20, sharey=False)
 ```
+
+or the UMAP embedding with the cell types we identified from `celldex`
+
+
+```{python}
+import seaborn as sns
+sns.scatterplot(
+    x=results.umap.x, y=results.umap.y, 
+    hue=matches["best"][:3002], palette="deep"
+)
+```
+
+:::{.callout-caution}
+During the QC step, some cells were filtered, hence we filter the matches and this is incorrect (since we don't know which cells were filtered). 
+
+We'll leave this as an exercise for the reader to change the order of steps: 1) run the dataset through the QC step 2) filter cells, and then 3) annotate using singleR.
+:::
 
 Congratulations! You have now completed the tutorial on accessing single-cell datasets using `scRNAseq` and `ArtifactDB`, and annotating cell types using reference datasets from `celldex`. For more detailed usage and advanced analyses, refer to the respective documentation of these packages.
 
