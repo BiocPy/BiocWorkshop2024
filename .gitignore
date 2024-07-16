@@ -9,5 +9,4 @@ chapters/zilinois_lung_with_celltypist/
 *.tiledb
 *_cache
 *_files
-*.rds
 tutorials/cache/*
