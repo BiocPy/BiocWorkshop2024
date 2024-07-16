@@ -46,6 +46,8 @@ jobs:
         uses: quarto-dev/quarto-actions/render@v2
         with:
           to: html
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib
 
       - name: Publish to GH Pages
         if: github.ref == 'refs/heads/master'
