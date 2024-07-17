@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Tutorial 2: Access single-cell datasets from scRNAseq collection and annotate cell types – Bioc2024: Interoperability between R and Python using BiocPy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href=".././assets/short.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src=".././assets/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main">
+    <a href="https://github.com/BiocPy/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interoperability between R and Python using BiocPy</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/genomic_ranges.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 1: <code>GenomicRanges</code> and range-based analyses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/annotate_cell_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/sessioninfo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session Info</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#accessing-and-exploring-single-cell-datasets" id="toc-accessing-and-exploring-single-cell-datasets" class="nav-link" data-scroll-target="#accessing-and-exploring-single-cell-datasets">1. Accessing and Exploring Single-Cell Datasets</a>
+  <ul class="collapse">
+  <li><a href="#list-all-datasets" id="toc-list-all-datasets" class="nav-link" data-scroll-target="#list-all-datasets">1.1 List All Datasets</a></li>
+  <li><a href="#search-for-datasets" id="toc-search-for-datasets" class="nav-link" data-scroll-target="#search-for-datasets">1.2 Search for Datasets</a></li>
+  </ul></li>
+  <li><a href="#download-dataset" id="toc-download-dataset" class="nav-link" data-scroll-target="#download-dataset">2. Download dataset</a>
+  <ul class="collapse">
+  <li><a href="#side-quest-on-singlecellexperiment-in-python" id="toc-side-quest-on-singlecellexperiment-in-python" class="nav-link" data-scroll-target="#side-quest-on-singlecellexperiment-in-python">2.1 Side-quest on <code>SingleCellExperiment</code> in Python</a></li>
+  </ul></li>
+  <li><a href="#annotate-cell-types" id="toc-annotate-cell-types" class="nav-link" data-scroll-target="#annotate-cell-types">3. Annotate Cell Types</a>
+  <ul class="collapse">
+  <li><a href="#access-reference-datasets-from-celldex" id="toc-access-reference-datasets-from-celldex" class="nav-link" data-scroll-target="#access-reference-datasets-from-celldex">3.1 Access Reference Datasets from <code>celldex</code></a></li>
+  </ul></li>
+  <li><a href="#analyze-single-cell-rna-seq-datasets" id="toc-analyze-single-cell-rna-seq-datasets" class="nav-link" data-scroll-target="#analyze-single-cell-rna-seq-datasets">4. Analyze Single-cell RNA-seq datasets</a>
+  <ul class="collapse">
+  <li><a href="#seems-like-magic" id="toc-seems-like-magic" class="nav-link" data-scroll-target="#seems-like-magic">4.1 Seems like magic?</a></li>
+  </ul></li>
+  <li><a href="#visualize-results" id="toc-visualize-results" class="nav-link" data-scroll-target="#visualize-results">5. Visualize Results</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">6. Exercises</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BiocPy/BiocWorkshop2024/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Welcome to this tutorial on annotating single-cell datasets with reference collections. The <strong>scRNAseq</strong> (<a href="https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html">R/Bioc</a>, <a href="https://github.com/BiocPy/scrnaseq">Python</a>) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor/BiocPy packages and workflows. These datasets are stored in language-agnostic representations described in <a href="https://github.com/artifactdb">ArtifactDB</a>, enabling easy access to datasets and analysis results across multiple programming languages such as R and Python. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets.</p>
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<p>In this tutorial, you will learn how to:</p>
+<ol type="1">
+<li>Install and set up BiocPy packages in your Python environment.</li>
+<li>Explore the <code>scrnaseq</code> package and access public single-cell RNA-seq datasets.</li>
+<li>Perform basic operations on <code>SingleCellExperiment</code> objects, the core data structure for single-cell data.</li>
+<li>Annotate cell types using reference datasets from the <code>celldex</code> package.</li>
+</ol>
+</section>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>Before we begin, please ensure that you have the following prerequisites installed:</p>
+<ul>
+<li>Python 3.8 or later with dependencies listed <a href="https://github.com/BiocPy/BiocWorkshop2024/blob/master/requirements.txt">here</a>.</li>
+<li>R 4.4.0 and Bioconductor packages listed <a href="https://github.com/BiocPy/BiocWorkshop2024/blob/master/rpackages.R">here</a>.</li>
+</ul>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p>Let’s start by installing the required packages.</p>
+<p>!pip install scrnaseq celldex singler</p>
+<p>This will install the <code>scrnaseq</code>, <code>celldex</code>, <code>singler</code> packages from PyPI.</p>
+<section id="r" class="level4">
+<h4 class="anchored" data-anchor-id="r">R</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">"scRNAseq"</span>, <span class="st">"celldex"</span>, <span class="st">"SingleR"</span>), </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">repos=</span><span class="st">'http://cran.us.r-project.org'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will install the <code>scRNAseq</code>, <code>celldex</code>, <code>SingleR</code>, packages from Bioconductor.</p>
+</section>
+</section>
+<section id="accessing-and-exploring-single-cell-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="accessing-and-exploring-single-cell-datasets">1. Accessing and Exploring Single-Cell Datasets</h2>
+<p>Now that we have the necessary packages installed, let’s explore the <code>scrnaseq</code> package and learn how to access public single-cell RNA-seq datasets. Datasets published to the <code>scrnaseq</code> package are decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let’s see how we can list and search for datasets.</p>
+<section id="list-all-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="list-all-datasets">1.1 List All Datasets</h3>
+<p>The <code>list_datasets()</code> function in Python or <code>surveyDatasets()</code> in R will display all available datasets published to the <code>scRNAseq</code> collection along with their metadata.</p>
+<div id="cell-6" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> scrnaseq.list_datasets()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>datasets[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>aztekin-tail-2019</td>
+<td>Identification of a regeneration-organizing ce...</td>
+<td>2023-12-14</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>splicing-demonstration-2020</td>
+<td>[reprocessed, subset] The Mammalian Spermatoge...</td>
+<td>2023-12-20</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>marques-brain-2016</td>
+<td>Oligodendrocyte heterogeneity in the mouse juv...</td>
+<td>2023-12-19</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="r-1" class="level4">
+<h4 class="anchored" data-anchor-id="r-1">R</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(scRNAseq))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>all_ds <span class="ot">&lt;-</span> <span class="fu">surveyDatasets</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_ds[, <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This lists all available datasets in the <code>scrnaseq</code> package and displays their names, titles, and versions.</p>
+</section>
+</section>
+<section id="search-for-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="search-for-datasets">1.2 Search for Datasets</h3>
+<p>You can also search for datasets based on metadata using <code>search_datasets()</code> in Python or <code>searchDatasets()</code> in R. This supports both simple text queries and complex boolean expressions.</p>
+<div id="cell-9" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pancreas_datasets <span class="op">=</span> scrnaseq.search_datasets(<span class="st">"pancreas"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>pancreas_datasets[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>grun-bone_marrow-2016</td>
+<td>De Novo Prediction of Stem Cell Identity using...</td>
+<td>2023-12-14</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>muraro-pancreas-2016</td>
+<td>A Single-Cell Transcriptome Atlas of the Human...</td>
+<td>2023-12-19</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>baron-pancreas-2016</td>
+<td>A Single-Cell Transcriptomic Map of the Human ...</td>
+<td>2023-12-14</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="r-2" class="level4">
+<h4 class="anchored" data-anchor-id="r-2">R</h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pancreas_ds <span class="ot">&lt;-</span> <span class="fu">searchDatasets</span>(<span class="st">"pancreas"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pancreas_ds[, <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This R|Python code searches for datasets containing the term “pancreas” and displays their names, titles, and versions.</p>
+</section>
+<section id="advanced-searches" class="level4">
+<h4 class="anchored" data-anchor-id="advanced-searches">1.2.1 Advanced Searches</h4>
+<p>For more complex searches involving boolean operations, use <code>define_text_query()</code> in Python or <code>defineTextQuery()</code> in R. Here’s an example to find datasets using the mouse reference genome (<code>GRCm38</code>) and containing the words <code>neuro</code> or <code>pancrea</code>.</p>
+<pre class="{tip}"><code>Check out the reference manual for more details and usage of these functions.</code></pre>
+<div id="cell-11" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gypsum_client <span class="im">import</span> define_text_query</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> scrnaseq.search_datasets(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     define_text_query(<span class="st">"GRCm38"</span>, field<span class="op">=</span><span class="st">"genome"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="op">&amp;</span> (</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>          define_text_query(<span class="st">"neuro%"</span>, partial<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>          <span class="op">|</span> define_text_query(<span class="st">"pancrea%"</span>, partial<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>res[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>grun-bone_marrow-2016</td>
+<td>De Novo Prediction of Stem Cell Identity using...</td>
+<td>2023-12-14</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>campbell-brain-2017</td>
+<td>A molecular census of arcuate hypothalamus and...</td>
+<td>2023-12-14</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>hu-cortex-2017</td>
+<td>Dissecting cell-type composition and activity-...</td>
+<td>2023-12-20</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="r-3" class="level4">
+<h4 class="anchored" data-anchor-id="r-3">R</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(gypsum))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">searchDatasets</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">defineTextQuery</span>(<span class="st">"GRCm38"</span>, <span class="at">field=</span><span class="st">"genome"</span>) <span class="sc">&amp;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">defineTextQuery</span>(<span class="st">"neuro%"</span>, <span class="at">partial=</span><span class="cn">TRUE</span>) <span class="sc">|</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">defineTextQuery</span>(<span class="st">"pancrea%"</span>, <span class="at">partial=</span><span class="cn">TRUE</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res[,<span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This performs a complex search to find datasets tagged as “mouse” in the reference genome field and containing the keywords “neuro” or “pancrea”.</p>
+<pre class="{important}"><code>Once a dataset is identified, always list the name and version of the dataset in your scripts for reproducibility.</code></pre>
+</section>
+</section>
+</section>
+<section id="download-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="download-dataset">2. Download dataset</h2>
+<p>After identifying a dataset of interest, use <code>fetch_dataset()</code> in Python or <code>fetchDataset()</code> in R to download the dataset. This will load the dataset as a <code>SingleCellExperiment</code> object.</p>
+<pre class="{note}"><code>R/Bioconductor users might already be familiar with the [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class. BiocPy also provides the same implementation in the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) package.</code></pre>
+<p>For this tutorial, let’s download the <code>zeisel-brain</code> dataset:</p>
+<div id="cell-13" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sce <span class="op">=</span> scrnaseq.fetch_dataset(<span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: SingleCellExperiment
+dimensions: (20006, 3005)
+assays(1): ['counts']
+row_data columns(1): ['featureType']
+row_names(20006): ['Tspan12', 'Tshz1', 'Fnbp1l', ..., 'mt-Rnr2', 'mt-Rnr1', 'mt-Nd4l']
+column_data columns(9): ['tissue', 'group #', 'total mRNA mol', 'well', 'sex', 'age', 'diameter', 'level1class', 'level2class']
+column_names(3005): ['1772071015_C02', '1772071017_G12', '1772071017_A05', ..., '1772063068_D01', '1772066098_A12', '1772058148_F03']
+main_experiment_name: gene
+reduced_dims(0): []
+alternative_experiments(2): ['repeat', 'ERCC']
+row_pairs(0): []
+column_pairs(0): []
+metadata(0): 
+</code></pre>
+</div>
+</div>
+<section id="r-4" class="level4">
+<h4 class="anchored" data-anchor-id="r-4">R</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">fetchDataset</span>(<span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sce</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="side-quest-on-singlecellexperiment-in-python" class="level3">
+<h3 class="anchored" data-anchor-id="side-quest-on-singlecellexperiment-in-python">2.1 Side-quest on <code>SingleCellExperiment</code> in Python</h3>
+<p>The Python implementation of the <code>SingleCellExperiment</code> class adheres to Bioconductor’s specification and offers similar interface and methods. Our goal is to make it simple for analysts to switch between R and Python. A key difference is the shift from functional to an object-oriented paradigm.</p>
+<pre class="{note}"><code>For more details on the design, refer to the [BiocPy developer guide](https://github.com/BiocPy/developer_guide) or the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) documentation.</code></pre>
+<p>This Python code demonstrates basic operations on a <code>SingleCellExperiment</code> object, including retrieving assay names, column names, column metadata, accessing counts, and coercing to an <code>AnnData</code> object for interoperability with existing analysis ready eco-systems in Python.</p>
+<div id="cell-15" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"assays: "</span>, sce.get_assay_names()) <span class="co"># or sce.assay_names</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"column names: "</span>, sce.get_column_names()[:<span class="dv">10</span>]) <span class="co"># or sce.column_names</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"column metadata: "</span>, sce.get_column_data()) <span class="co"># or sce.column_data</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"access counts: "</span>, sce.assays[<span class="st">"counts"</span>]) <span class="co"># or # sce.assay("counts")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>assays:  ['counts']
+column names:  ['1772071015_C02', '1772071017_G12', '1772071017_A05', '1772071014_B06', '1772067065_H06', '1772071017_E02', '1772067065_B07', '1772067060_B09', '1772071014_E04', '1772071015_D04']
+column metadata:  BiocFrame with 3005 rows and 9 columns
+                       tissue            group #     total mRNA mol               well                sex                age           diameter
+                 &lt;StringList&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt;
+1772071015_C02       sscortex                1.0            21580.0               11.0                1.0               21.0                0.0
+1772071017_G12       sscortex                1.0            21748.0               95.0               -1.0               20.0               9.56
+1772071017_A05       sscortex                1.0            31642.0               33.0               -1.0               20.0               11.1
+                          ...                ...                ...                ...                ...                ...                ...
+1772063068_D01       sscortex                9.0             4015.0                4.0                1.0               26.0               8.63
+1772066098_A12 ca1hippocampus                9.0             2896.0               89.0               -1.0               26.0               9.23
+1772058148_F03       sscortex                9.0             4460.0               22.0                1.0               26.0               10.4
+                     level1class  level2class
+                    &lt;StringList&gt; &lt;StringList&gt;
+1772071015_C02      interneurons        Int10
+1772071017_G12      interneurons        Int10
+1772071017_A05      interneurons         Int6
+                             ...          ...
+1772063068_D01 endothelial-mural         Vsmc
+1772066098_A12 endothelial-mural         Vsmc
+1772058148_F03 endothelial-mural         Vsmc
+access counts:  &lt;20006 x 3005&gt; sparse ReloadedArray object of type 'uint16'
+[[  0,   0,   0, ...,   0,   0,   1],
+ [  3,   1,   0, ...,   0,   0,   1],
+ [  3,   1,   6, ...,   0,   0,   0],
+ ...,
+ [158, 326, 209, ..., 193,  36, 359],
+ [ 31,  88,  97, ...,  50,  12,  52],
+ [ 13,  14,   9, ...,  18,   3,  13]]</code></pre>
+</div>
+</div>
+<pre class="{note}"><code>The package uses [delayed arrays](https://github.com/biocpy/delayedarray), to load file-backed arrays and matrices. This reduces memory usage when loading large datasets. This package provides similar functionality to the R/Bioconductor's [DelayedArray](https://www.bioconductor.org/packages/release/bioc/html/DelayedArray.html) eco-system. </code></pre>
+<div id="cell-17" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> delayedarray <span class="im">import</span> to_scipy_sparse_matrix</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"counts as csr: "</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">repr</span>(to_scipy_sparse_matrix(sce.assays[<span class="st">"counts"</span>], <span class="st">"csc"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>counts as csr: 
+&lt;20006x3005 sparse matrix of type '&lt;class 'numpy.uint16'&gt;'
+    with 11349080 stored elements in Compressed Sparse Column format&gt;</code></pre>
+</div>
+</div>
+<p>or realize the entire matrix when loaded from disk,</p>
+<div id="cell-19" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sce <span class="op">=</span> scrnaseq.fetch_dataset(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>, </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    realize_assays<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: SingleCellExperiment
+dimensions: (20006, 3005)
+assays(1): ['counts']
+row_data columns(1): ['featureType']
+row_names(20006): ['Tspan12', 'Tshz1', 'Fnbp1l', ..., 'mt-Rnr2', 'mt-Rnr1', 'mt-Nd4l']
+column_data columns(9): ['tissue', 'group #', 'total mRNA mol', 'well', 'sex', 'age', 'diameter', 'level1class', 'level2class']
+column_names(3005): ['1772071015_C02', '1772071017_G12', '1772071017_A05', ..., '1772063068_D01', '1772066098_A12', '1772058148_F03']
+main_experiment_name: gene
+reduced_dims(0): []
+alternative_experiments(2): ['repeat', 'ERCC']
+row_pairs(0): []
+column_pairs(0): []
+metadata(0): 
+</code></pre>
+</div>
+</div>
+<p>We also provide coercions to various package to take advantage of methods in the Python ecosystem, e.g.&nbsp;scverse and AnnData</p>
+<div id="cell-21" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coerce to AnnData: "</span>, sce.to_anndata())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>coerce to AnnData:  (AnnData object with n_obs × n_vars = 3005 × 20006
+    obs: 'tissue', 'group #', 'total mRNA mol', 'well', 'sex', 'age', 'diameter', 'level1class', 'level2class', 'rownames'
+    var: 'featureType', 'rownames'
+    layers: 'counts', None)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="annotate-cell-types" class="level2">
+<h2 class="anchored" data-anchor-id="annotate-cell-types">3. Annotate Cell Types</h2>
+<p>We can now annotate cell types by using reference datasets and matching cells based on their expression profiles. In this tutorial, we will use <a href="https://github.com/SingleR-inc/SingleR">singleR</a> in R or its Python equivalent <a href="https://github.com/BiocPy/singler">singler</a>.</p>
+<p>Before running the <code>singler</code> algorithm, we need to download an appropriate reference dataset from the <code>celldex</code> package.</p>
+<section id="access-reference-datasets-from-celldex" class="level3">
+<h3 class="anchored" data-anchor-id="access-reference-datasets-from-celldex">3.1 Access Reference Datasets from <code>celldex</code></h3>
+<p>Similar to the <code>scRNAseq</code> package, the <code>celldex</code> package provides access to the collection of reference expression datasets with curated cell type labels, for use in procedures like automated annotation of single-cell data or deconvolution of bulk RNA-seq to reference datasets. These datasets are also stored in language-agnostic representations for use in downstream analyses.</p>
+<pre class="{note}"><code>The `celldex` package is available on [R/Bioconductor](https://bioconductor.org/packages/devel/data/experiment/html/celldex.html) and [PyPI](https://github.com/BiocPy/celldex).</code></pre>
+<p>For this tutorial, let’s download the <a href="https://www.immgen.org/">Mouse RNA-seq</a> reference from <code>celldex</code> using <code>fetch_reference()</code> in Python or <code>fetchReference()</code> in R. This reference consists of a collection of mouse bulk RNA-seq data sets downloaded from the gene expression omnibus (<a href="https://doi.org/10.1101/gr.240093.118">Benayoun et al.&nbsp;2019</a>). A variety of cell types are available, again mostly from blood but also covering several other tissues.</p>
+<div id="cell-23" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> celldex</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref <span class="op">=</span> celldex.fetch_reference(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mouse_rnaseq"</span>, <span class="st">"2024-02-26"</span>, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    realize_assays<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mouse_rnaseq_ref)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: SummarizedExperiment
+dimensions: (21214, 358)
+assays(1): ['logcounts']
+row_data columns(0): []
+row_names(21214): ['Xkr4', 'Rp1', 'Sox17', ..., 'MGC107098', 'LOC100039574', 'LOC100039753']
+column_data columns(3): ['label.main', 'label.fine', 'label.ont']
+column_names(358): ['ERR525589Aligned', 'ERR525592Aligned', 'SRR275532Aligned', ..., 'SRR1044042Aligned', 'SRR1044043Aligned', 'SRR1044044Aligned']
+metadata(0): 
+</code></pre>
+</div>
+</div>
+<section id="r-5" class="level4">
+<h4 class="anchored" data-anchor-id="r-5">R</h4>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(celldex))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref <span class="ot">&lt;-</span> <span class="fu">fetchReference</span>(<span class="st">"mouse_rnaseq"</span>, <span class="st">"2024-02-26"</span>, <span class="at">realize.assays=</span><span class="cn">TRUE</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, let’s identify cells from the <code>zeisel-brain</code> dataset using the <code>mouse_rnaseq</code> reference dataset.</p>
+<div id="cell-25" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> singler</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> singler.annotate_single(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    test_data<span class="op">=</span>sce, </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    ref_data <span class="op">=</span> mouse_rnaseq_ref,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    ref_labels <span class="op">=</span> <span class="st">"label.main"</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>pd.Series(matches[<span class="st">"best"</span>]).value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/kancherj/miniforge3/envs/bioc2024/lib/python3.10/site-packages/biocframe/BiocFrame.py:591: UserWarning: Setting property 'metadata' is an in-place operation, use 'set_metadata' instead
+  warn(</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>Neurons              1704
+Oligodendrocytes      844
+Astrocytes            180
+Endothelial cells     177
+Macrophages            45
+Epithelial cells       20
+Microglia              18
+Fibroblasts            17
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="r-6" class="level4">
+<h4 class="anchored" data-anchor-id="r-6">R</h4>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(SingleR))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cell_labels <span class="ot">&lt;-</span> <span class="fu">SingleR</span>(<span class="at">test =</span> <span class="fu">assay</span>(sce, <span class="st">"counts"</span>), <span class="at">ref =</span> mouse_rnaseq_ref, <span class="at">labels =</span> mouse_rnaseq_ref<span class="sc">$</span>label.main)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cell_labels<span class="sc">$</span>labels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="analyze-single-cell-rna-seq-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="analyze-single-cell-rna-seq-datasets">4. Analyze Single-cell RNA-seq datasets</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/single-cell-space.jpg" class="img-fluid figure-img"></p>
+<figcaption>single-cell-methods</figcaption>
+</figure>
+</div>
+<p>Aaron has implemented the single-cell methods from scran in C++. This allows us to reuse the same implementation in JS and develop applications for analyzing single-cell data (<a href="https://github.com/kanaverse/kana">Kana</a>), or in Python through the <a href="https://github.com/BiocPy/scranpy">scranpy</a> package. This avoids different interpretations of the analysis results by switching programming languages (Pachter et al, <a href="https://www.biorxiv.org/content/10.1101/2024.04.04.588111v1">The impact of package selection and versioning on single-cell RNA-seq analysis | bioRxiv</a> )</p>
+<p>To analyze the dataset,</p>
+<div id="cell-27" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scranpy</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> scranpy.analyze_sce(sce)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># results is a complex object, lets explore the umap and tsne dimensions</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.tsne)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>TsneEmbedding(x=array([23.78283174, 23.20692407, 23.99748307, ..., 16.43261279,
+       12.91835402, 20.38262289]), y=array([-15.02586205, -15.00463774, -14.18924958, ...,  -1.56177656,
+         1.55240304,   3.51312435]))</code></pre>
+</div>
+</div>
+<section id="seems-like-magic" class="level3">
+<h3 class="anchored" data-anchor-id="seems-like-magic">4.1 Seems like magic?</h3>
+<p>Running the <code>analyze_sce()</code> function uses the default parameters to run the single-cell workflow. If you want to customize or want to have fine-grained control on the analysis steps, set the parameter <code>dry_run=True</code>.</p>
+<pre class="{note}"><code>This prints out the exact series of steps the function does under the hood to perform the analysis. You can then use this to customize the analysis to your specific dataset or use case.</code></pre>
+<div id="cell-29" class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(scranpy.analyze_sce(sce, dry_run<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre class="{tip}"><code>Users can also run individual steps from the analysis without having to perform the full analysis, e.g. compute log normalized counts or find markers, etc.</code></pre>
+</section>
+</section>
+<section id="visualize-results" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-results">5. Visualize Results</h2>
+<p>I can’t have a tutorial without a section on visualization or figures.</p>
+<p>We will use the seaborn and matplotlib packages in Python to create visualizations. We’ll plot the t-SNE embedding and color the cells by their cluster assignments.</p>
+<div id="cell-31" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>results.tsne.x, y<span class="op">=</span>results.tsne.y, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>results.clusters, palette<span class="op">=</span><span class="st">"deep"</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="annotate_cell_types_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>or the UMAP embedding with the cell types we identified from <code>celldex</code></p>
+<div id="cell-33" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>results.umap.x, y<span class="op">=</span>results.umap.y, </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>matches[<span class="st">"best"</span>][:<span class="dv">3002</span>], palette<span class="op">=</span><span class="st">"deep"</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="annotate_cell_types_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<pre class="{caution}"><code>During the QC step, some cells were filtered, hence we filter the matches and this is incorrect (since we don't know which cells were filtered). 
+
+We'll leave this as an exercise for the reader to change the order of steps: 1) run the dataset through the QC step 2) filter cells, and then 3) annotate using singleR.</code></pre>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">6. Exercises</h2>
+<ol type="1">
+<li>Share or Upload your datasets to scrna-seq, Instructions to upload are available in their respective <a href="https://bioconductor.org/packages/release/data/experiment/html/scRNAseq.html">R/Bioc</a> and <a href="https://github.com/BiocPy/scrnaseq">Python</a> packages.</li>
+<li>Explore top markers for each cluster identified by scranpy.</li>
+<li>Perform multi-modal analysis (scranpy supports RNA, ADT, CRISPR).</li>
+<li>save your results and explore in <a href="https://github.com/kanaverse/kana">Kana</a>.</li>
+</ol>
+<p>Congratulations! You have now completed the tutorial on accessing single-cell datasets using <code>scRNAseq</code> and <code>ArtifactDB</code>, and annotating cell types using reference datasets from <code>celldex</code>. For more detailed usage and advanced analyses, refer to the respective documentation of these packages.</p>
+<p>By integrating R and Python workflows, you can leverage the strengths of both languages and perform comprehensive single-cell analysis. Keep exploring and happy analyzing!</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ (c) Jayaram Kancherla &amp; Aaron Lun.
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BiocPy/BiocWorkshop2024/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
