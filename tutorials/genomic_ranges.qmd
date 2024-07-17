@@ -40,10 +40,7 @@ BiocManager::install(c("AnnotationHub"),
 
 ## 1. Save Annotations as RDS
 
-Let's download the human reference genome and save the exon positions grouped by transcripts.
-We need to do a bit of pre-processing to get this information.
-
-For the purpose of the tutorial, we'll limit the exons to chromosome 22.
+Let's download the human reference genome and save the exon positions grouped by transcripts. For the purpose of the tutorial, we'll limit the exons to chromosome 22.
 
 ::: {.panel-tabset}
 
@@ -183,7 +180,7 @@ print(promoters)
 ```
 
 :::{.callout-note}
-Please be aware that because gene symbols may not be unique, this GenomicRanges object might contain duplicates. You might want to resolve duplicate symbols by making the symbols unique. We will leave this as an exercise for the reader.
+Please be aware that because gene symbols may not be unique, this `GenomicRanges` object might contain duplicates. You might want to resolve duplicate symbols by making the symbols unique. We will leave this as an exercise for the reader.
 :::
 
 :::
@@ -311,7 +308,7 @@ print(f"Percentage of peaks overlapping with exons: {percent_overlapping:.2f}%")
 
 :::
 
-This analysis can provide insights into whether the protein of interest (captured by the ChIP-seq) tends to bind within gene bodies, potentially influencing gene expression, splicing, or other co-transcriptional processes.
+This analysis can provide insights into whether the protein of interest (captured by the ChIP-seq: "EZH2") tends to bind within gene bodies, potentially influencing gene expression, splicing, or other co-transcriptional processes.
 
 ## 4. Advanced Operations
 

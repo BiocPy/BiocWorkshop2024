@@ -20,7 +20,7 @@ on [GitHub](https://github.com/BiocPy).
 - [Jayaram Kancherla](https://github.com/jkanche)
 - [Aaron Lun](https://github.com/LTLA)
 
-Always looking for more contributions from the community to improve our packages! Checkout the issues or discussion in our GitHub organization.
+We are always looking for more contributions from the community to improve our packages! Please check out the issues or discussion in our GitHub organization if you are interested.
 
 ----
 
