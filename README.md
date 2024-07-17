@@ -9,14 +9,14 @@ To get started locally, follow these steps:
 - Install [quarto-cli](https://quarto.org/docs/get-started/).
 - Install the necessary packages listed in [requirements.txt](./requirements.txt) and [rpackages.R](rpackages.R).
 
-```shell
+```sh
 pip install -r requirements.txt
 Rscript rpackages.R
 ```
 
 - Run quarto preview to view the HTML version of the site.
 
-```shell
+```sh
 qurto preview
 ```
 

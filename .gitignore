@@ -10,3 +10,5 @@ chapters/zilinois_lung_with_celltypist/
 *_cache
 *_files
 tutorials/cache/*``
+cache/
+.ipynb_checkpoints

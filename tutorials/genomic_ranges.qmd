@@ -25,7 +25,7 @@ Let's start by installing the required packages for R and Python.
 
 You can install the Python packages using pip:
 
-```bash
+```sh
 pip install -U biocutils genomicranges rds2py numpy pandas geniml
 ```
 

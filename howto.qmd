@@ -1,0 +1,39 @@
+# How to run the notebooks
+
+## Option 1: Run notebooks locally
+
+If you want to run locally, please clone the repository and install the python packages used for the workshop.
+
+```sh
+git clone https://github.com/BiocPy/BiocWorkshop2024
+cd BiocWorkshop2024
+
+# Assuming python is available
+# You are free to use mamba, conda or virtualenv's
+pip install -r requirements.txt
+
+# Start the jupyter server
+jupyter lab
+```
+
+Then checkout the [notebook](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) directory that contain Jupyter notebooks.
+
+## Option 2: Using Google colab
+
+To open the session in Google colab
+
+1. Open [Google colab](https://colab.research.google.com/) in a new tab.
+2. On the page, It should open up a dialog to "Open notebook" as shown in the screenshot below. If not, go to file -> Open Notebook from the menu in the top left.
+3. Choose Github and enter the repository url for the workshop: `https://github.com/BiocPy/BiocWorkshop2024`. This will automatically find the python notebooks available in the repository.
+
+![](./assets/colab_session.png)
+
+4. Choose the open icon to explore this notebook
+
+![](./assets/colab_open_notebook.png)
+
+:::{.callout-important}
+This process does not download the [RDS file](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) available in the repository. Folks might have to manually download this to their colab sessions.
+:::
+
+and thats it!

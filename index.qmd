@@ -18,7 +18,6 @@ on [GitHub](https://github.com/BiocPy).
 
 ![](./assets/workshop.png)
 
-
 ### Core contributors
 
 - [Jayaram Kancherla](https://github.com/jkanche)
@@ -33,4 +32,4 @@ We are looking for more contributions from the community to improve our packages
 
 ## Developer notes
 
-This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [sessioninfo](./tutorials/sessioninfo.qmd) for more information.
+This is a reproducible Quarto book with reusable snippets. Check out [sessioninfo](./tutorials/sessioninfo.qmd) for packages installed during the build.
