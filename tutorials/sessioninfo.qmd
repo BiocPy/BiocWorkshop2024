@@ -1,4 +1,4 @@
-# Session Info! {.unnumbered}
+# Session Info {.unnumbered}
 
 The code base for this repository is available at [https://github.com/BiocPy/tutorial](https://github.com/BiocPy/tutorial).
 

@@ -1,4 +1,6 @@
-# Welcome
+# Interoperability between R and Python using BiocPy
+
+## Welcome
 
 Welcome to our workshop on exploring the data structures and packages 
 available in [BiocPy](https://github.com/biocpy), a project that aims 
@@ -14,15 +16,15 @@ in the same manner as in R/Bioconductor.
 All packages in BiocPy are published to PyPI, and the code is open-source 
 on [GitHub](https://github.com/BiocPy).
 
+![](./assets/workshop.png)
+
 
 ### Core contributors
 
 - [Jayaram Kancherla](https://github.com/jkanche)
 - [Aaron Lun](https://github.com/LTLA)
 
-We are always looking for more contributions from the community to improve our packages! Please check out the issues or discussion in our GitHub organization if you are interested.
-
-----
+We are looking for more contributions from the community to improve our packages! If you are interested, please check out the issues or discussion in our GitHub organization.
 
 ## Other resources
 
@@ -31,4 +33,4 @@ We are always looking for more contributions from the community to improve our p
 
 ## Developer notes
 
-This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [Session Info](./chapters/sessioninfo.qmd) for more information.
+This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [sessioninfo](./tutorials/sessioninfo.qmd) for more information.
