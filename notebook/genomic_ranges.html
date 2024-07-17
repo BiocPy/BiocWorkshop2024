@@ -148,6 +148,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Interoperability between R and Python using BiocPy</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../howto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How to run the notebooks</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -260,163 +266,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="python-shell" class="level4">
 <h4 class="anchored" data-anchor-id="python-shell">Python (shell)</h4>
 <p>You can install the Python packages using pip:</p>
-<div id="cell-4" class="cell" data-scrolled="true" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>U biocutils genomicranges rds2py numpy pandas geniml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Requirement already satisfied: biocutils in /Users/kancherj/miniforge3/lib/python3.10/site-packages (0.1.5)
-Requirement already satisfied: genomicranges in /Users/kancherj/miniforge3/lib/python3.10/site-packages (0.4.28)
-Requirement already satisfied: rds2py in /Users/kancherj/miniforge3/lib/python3.10/site-packages (0.4.4)
-Requirement already satisfied: numpy in /Users/kancherj/miniforge3/lib/python3.10/site-packages (1.26.4)
-Collecting numpy
-  Using cached numpy-2.0.0-cp310-cp310-macosx_14_0_arm64.whl.metadata (60 kB)
-Requirement already satisfied: pandas in /Users/kancherj/miniforge3/lib/python3.10/site-packages (2.2.2)
-Requirement already satisfied: geniml in /Users/kancherj/miniforge3/lib/python3.10/site-packages (0.4.0)
-Requirement already satisfied: biocframe&gt;=0.5.11 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from genomicranges) (0.5.11)
-Requirement already satisfied: iranges&gt;=0.2.11 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from iranges[optional]&gt;=0.2.11-&gt;genomicranges) (0.2.11)
-Requirement already satisfied: Cython in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from rds2py) (3.0.10)
-Requirement already satisfied: scipy in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from rds2py) (1.12.0)
-Requirement already satisfied: singlecellexperiment&gt;=0.4.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from rds2py) (0.4.6)
-Requirement already satisfied: summarizedexperiment&gt;=0.4.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from rds2py) (0.4.5)
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from pandas) (2.9.0.post0)
-Requirement already satisfied: pytz&gt;=2020.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from pandas) (2024.1)
-Requirement already satisfied: tzdata&gt;=2022.7 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from pandas) (2024.1)
-Requirement already satisfied: anndata&gt;0.9.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.10.8)
-Requirement already satisfied: genimtools&gt;=0.0.12 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.0.13)
-Requirement already satisfied: fastembed&gt;=0.2.5 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.3.4)
-Requirement already satisfied: gensim in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (4.3.2)
-Requirement already satisfied: huggingface-hub in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.23.5)
-Requirement already satisfied: logmuse in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.2.8)
-Requirement already satisfied: matplotlib in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (3.8.3)
-Requirement already satisfied: hnswlib in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.8.0)
-Requirement already satisfied: paramiko&gt;=3.0.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (3.4.0)
-Requirement already satisfied: peppy&gt;=0.40.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.40.3)
-Requirement already satisfied: pyBigWig in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.3.23)
-Requirement already satisfied: qdrant-client in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (1.10.1)
-Requirement already satisfied: requests&gt;=2.31.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (2.31.0)
-Requirement already satisfied: scanpy in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (1.10.2)
-Requirement already satisfied: seaborn in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.13.2)
-Requirement already satisfied: torch in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (2.3.1)
-Requirement already satisfied: ubiquerg&gt;=0.6.3 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.8.0)
-Requirement already satisfied: pyarrow in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (15.0.2)
-Requirement already satisfied: lightning in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (2.3.3)
-Requirement already satisfied: langchain-huggingface==0.0.2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.0.2)
-Requirement already satisfied: botocore&gt;=1.34.54 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (1.34.131)
-Requirement already satisfied: boto3&gt;=1.34.54 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (1.34.131)
-Requirement already satisfied: pybiocfilecache&gt;=0.4.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (0.4.0)
-Requirement already satisfied: zarr&gt;=2.17.2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (2.18.2)
-Requirement already satisfied: pyyaml&gt;=6.0.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (6.0.1)
-Requirement already satisfied: s3fs&gt;=2024.3.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from geniml) (2024.6.1)
-Requirement already satisfied: langchain-core&lt;0.3,&gt;=0.1.52 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-huggingface==0.0.2-&gt;geniml) (0.2.20)
-Requirement already satisfied: sentence-transformers&gt;=2.6.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-huggingface==0.0.2-&gt;geniml) (3.0.1)
-Requirement already satisfied: text-generation&lt;0.8.0,&gt;=0.7.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-huggingface==0.0.2-&gt;geniml) (0.7.0)
-Requirement already satisfied: tokenizers&gt;=0.19.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-huggingface==0.0.2-&gt;geniml) (0.19.1)
-Requirement already satisfied: transformers&gt;=4.39.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-huggingface==0.0.2-&gt;geniml) (4.42.4)
-Requirement already satisfied: array-api-compat!=1.5,&gt;1.4 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from anndata&gt;0.9.0-&gt;geniml) (1.7.1)
-Requirement already satisfied: exceptiongroup in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from anndata&gt;0.9.0-&gt;geniml) (1.2.1)
-Requirement already satisfied: h5py&gt;=3.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from anndata&gt;0.9.0-&gt;geniml) (3.11.0)
-Requirement already satisfied: natsort in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from anndata&gt;0.9.0-&gt;geniml) (8.4.0)
-Requirement already satisfied: packaging&gt;=20.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from anndata&gt;0.9.0-&gt;geniml) (23.2)
-Requirement already satisfied: jmespath&lt;2.0.0,&gt;=0.7.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from boto3&gt;=1.34.54-&gt;geniml) (1.0.1)
-Requirement already satisfied: s3transfer&lt;0.11.0,&gt;=0.10.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from boto3&gt;=1.34.54-&gt;geniml) (0.10.2)
-Requirement already satisfied: urllib3!=2.2.0,&lt;3,&gt;=1.25.4 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from botocore&gt;=1.34.54-&gt;geniml) (2.2.1)
-Requirement already satisfied: PyStemmer&lt;3.0.0,&gt;=2.2.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (2.2.0.1)
-Requirement already satisfied: loguru&lt;0.8.0,&gt;=0.7.2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (0.7.2)
-Requirement already satisfied: mmh3&lt;5.0,&gt;=4.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (4.1.0)
-Requirement already satisfied: onnx&lt;2.0.0,&gt;=1.15.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (1.16.1)
-Requirement already satisfied: onnxruntime&lt;2.0.0,&gt;=1.17.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (1.18.1)
-Requirement already satisfied: pillow&lt;11.0.0,&gt;=10.3.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (10.4.0)
-Requirement already satisfied: snowballstemmer&lt;3.0.0,&gt;=2.2.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (2.2.0)
-Requirement already satisfied: tqdm&lt;5.0,&gt;=4.66 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from fastembed&gt;=0.2.5-&gt;geniml) (4.66.2)
-Requirement already satisfied: filelock in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from huggingface-hub-&gt;geniml) (3.15.4)
-Requirement already satisfied: fsspec&gt;=2023.5.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from huggingface-hub-&gt;geniml) (2024.6.1)
-Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from huggingface-hub-&gt;geniml) (4.10.0)
-Requirement already satisfied: ncls==0.0.68 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from iranges&gt;=0.2.11-&gt;iranges[optional]&gt;=0.2.11-&gt;genomicranges) (0.0.68)
-Requirement already satisfied: polars in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from iranges[optional]&gt;=0.2.11-&gt;genomicranges) (1.1.0)
-Requirement already satisfied: bcrypt&gt;=3.2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from paramiko&gt;=3.0.0-&gt;geniml) (4.1.3)
-Requirement already satisfied: cryptography&gt;=3.3 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from paramiko&gt;=3.0.0-&gt;geniml) (42.0.8)
-Requirement already satisfied: pynacl&gt;=1.5 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from paramiko&gt;=3.0.0-&gt;geniml) (1.5.0)
-Requirement already satisfied: rich&gt;=10.3.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from peppy&gt;=0.40.1-&gt;geniml) (13.7.1)
-Requirement already satisfied: pephubclient&gt;=0.4.2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from peppy&gt;=0.40.1-&gt;geniml) (0.4.2)
-Requirement already satisfied: sqlalchemy&lt;2.1,&gt;=2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from pybiocfilecache&gt;=0.4.0-&gt;geniml) (2.0.31)
-Requirement already satisfied: six&gt;=1.5 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.16.0)
-Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from requests&gt;=2.31.0-&gt;geniml) (3.3.2)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from requests&gt;=2.31.0-&gt;geniml) (3.6)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from requests&gt;=2.31.0-&gt;geniml) (2024.2.2)
-Requirement already satisfied: aiobotocore&lt;3.0.0,&gt;=2.5.4 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from s3fs&gt;=2024.3.1-&gt;geniml) (2.13.1)
-Requirement already satisfied: aiohttp!=4.0.0a0,!=4.0.0a1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from s3fs&gt;=2024.3.1-&gt;geniml) (3.9.5)
-Requirement already satisfied: asciitree in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from zarr&gt;=2.17.2-&gt;geniml) (0.3.3)
-Requirement already satisfied: numcodecs&gt;=0.10.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from zarr&gt;=2.17.2-&gt;geniml) (0.13.0)
-Requirement already satisfied: fasteners in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from zarr&gt;=2.17.2-&gt;geniml) (0.19)
-Requirement already satisfied: smart-open&gt;=1.8.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from gensim-&gt;geniml) (7.0.4)
-Requirement already satisfied: lightning-utilities&lt;2.0,&gt;=0.10.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from lightning-&gt;geniml) (0.11.5)
-Requirement already satisfied: torchmetrics&lt;3.0,&gt;=0.7.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from lightning-&gt;geniml) (1.4.0.post0)
-Requirement already satisfied: pytorch-lightning in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from lightning-&gt;geniml) (2.3.3)
-Requirement already satisfied: sympy in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from torch-&gt;geniml) (1.13.0)
-Requirement already satisfied: networkx in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from torch-&gt;geniml) (3.3)
-Requirement already satisfied: jinja2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from torch-&gt;geniml) (3.1.3)
-Requirement already satisfied: setuptools in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from logmuse-&gt;geniml) (69.2.0)
-Requirement already satisfied: contourpy&gt;=1.0.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from matplotlib-&gt;geniml) (1.2.0)
-Requirement already satisfied: cycler&gt;=0.10 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from matplotlib-&gt;geniml) (0.12.1)
-Requirement already satisfied: fonttools&gt;=4.22.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from matplotlib-&gt;geniml) (4.50.0)
-Requirement already satisfied: kiwisolver&gt;=1.3.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from matplotlib-&gt;geniml) (1.4.5)
-Requirement already satisfied: pyparsing&gt;=2.3.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from matplotlib-&gt;geniml) (3.1.2)
-Requirement already satisfied: grpcio&gt;=1.41.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from qdrant-client-&gt;geniml) (1.64.1)
-Requirement already satisfied: grpcio-tools&gt;=1.41.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from qdrant-client-&gt;geniml) (1.64.1)
-Requirement already satisfied: httpx&gt;=0.20.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (0.27.0)
-Requirement already satisfied: portalocker&lt;3.0.0,&gt;=2.7.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from qdrant-client-&gt;geniml) (2.10.1)
-Requirement already satisfied: pydantic&gt;=1.10.8 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from qdrant-client-&gt;geniml) (2.8.2)
-Requirement already satisfied: joblib in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (1.4.2)
-Requirement already satisfied: legacy-api-wrap&gt;=1.4 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (1.4)
-Requirement already satisfied: numba&gt;=0.56 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (0.60.0)
-Requirement already satisfied: patsy in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (0.5.6)
-Requirement already satisfied: pynndescent&gt;=0.5 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (0.5.13)
-Requirement already satisfied: scikit-learn&gt;=0.24 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (1.5.1)
-Requirement already satisfied: session-info in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (1.0.0)
-Requirement already satisfied: statsmodels&gt;=0.13 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (0.14.2)
-Requirement already satisfied: umap-learn!=0.5.0,&gt;=0.5 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scanpy-&gt;geniml) (0.5.6)
-Requirement already satisfied: wrapt&lt;2.0.0,&gt;=1.10.10 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiobotocore&lt;3.0.0,&gt;=2.5.4-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (1.16.0)
-Requirement already satisfied: aioitertools&lt;1.0.0,&gt;=0.5.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiobotocore&lt;3.0.0,&gt;=2.5.4-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (0.11.0)
-Requirement already satisfied: aiosignal&gt;=1.1.2 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (1.3.1)
-Requirement already satisfied: attrs&gt;=17.3.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (23.2.0)
-Requirement already satisfied: frozenlist&gt;=1.1.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (1.4.1)
-Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (6.0.5)
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (1.9.4)
-Requirement already satisfied: async-timeout&lt;5.0,&gt;=4.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;s3fs&gt;=2024.3.1-&gt;geniml) (4.0.3)
-Requirement already satisfied: cffi&gt;=1.12 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from cryptography&gt;=3.3-&gt;paramiko&gt;=3.0.0-&gt;geniml) (1.16.0)
-Requirement already satisfied: protobuf&lt;6.0dev,&gt;=5.26.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from grpcio-tools&gt;=1.41.0-&gt;qdrant-client-&gt;geniml) (5.27.2)
-Requirement already satisfied: anyio in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from httpx&gt;=0.20.0-&gt;httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (4.4.0)
-Requirement already satisfied: httpcore==1.* in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from httpx&gt;=0.20.0-&gt;httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (1.0.5)
-Requirement already satisfied: sniffio in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from httpx&gt;=0.20.0-&gt;httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (1.3.1)
-Requirement already satisfied: h11&lt;0.15,&gt;=0.13 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from httpcore==1.*-&gt;httpx&gt;=0.20.0-&gt;httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (0.14.0)
-Requirement already satisfied: h2&lt;5,&gt;=3 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (4.1.0)
-Requirement already satisfied: jsonpatch&lt;2.0,&gt;=1.33 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-core&lt;0.3,&gt;=0.1.52-&gt;langchain-huggingface==0.0.2-&gt;geniml) (1.33)
-Requirement already satisfied: langsmith&lt;0.2.0,&gt;=0.1.75 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-core&lt;0.3,&gt;=0.1.52-&gt;langchain-huggingface==0.0.2-&gt;geniml) (0.1.88)
-Requirement already satisfied: tenacity!=8.4.0,&lt;9.0.0,&gt;=8.1.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langchain-core&lt;0.3,&gt;=0.1.52-&gt;langchain-huggingface==0.0.2-&gt;geniml) (8.2.3)
-Requirement already satisfied: llvmlite&lt;0.44,&gt;=0.43.0dev0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from numba&gt;=0.56-&gt;scanpy-&gt;geniml) (0.43.0)
-Requirement already satisfied: coloredlogs in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from onnxruntime&lt;2.0.0,&gt;=1.17.0-&gt;fastembed&gt;=0.2.5-&gt;geniml) (15.0.1)
-Requirement already satisfied: flatbuffers in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from onnxruntime&lt;2.0.0,&gt;=1.17.0-&gt;fastembed&gt;=0.2.5-&gt;geniml) (24.3.25)
-Requirement already satisfied: typer&gt;=0.7.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from pephubclient&gt;=0.4.2-&gt;peppy&gt;=0.40.1-&gt;geniml) (0.12.3)
-Requirement already satisfied: annotated-types&gt;=0.4.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from pydantic&gt;=1.10.8-&gt;qdrant-client-&gt;geniml) (0.7.0)
-Requirement already satisfied: pydantic-core==2.20.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from pydantic&gt;=1.10.8-&gt;qdrant-client-&gt;geniml) (2.20.1)
-Requirement already satisfied: markdown-it-py&gt;=2.2.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from rich&gt;=10.3.0-&gt;peppy&gt;=0.40.1-&gt;geniml) (3.0.0)
-Requirement already satisfied: pygments&lt;3.0.0,&gt;=2.13.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from rich&gt;=10.3.0-&gt;peppy&gt;=0.40.1-&gt;geniml) (2.17.2)
-Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from scikit-learn&gt;=0.24-&gt;scanpy-&gt;geniml) (3.5.0)
-Requirement already satisfied: regex!=2019.12.17 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from transformers&gt;=4.39.0-&gt;langchain-huggingface==0.0.2-&gt;geniml) (2024.5.15)
-Requirement already satisfied: safetensors&gt;=0.4.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from transformers&gt;=4.39.0-&gt;langchain-huggingface==0.0.2-&gt;geniml) (0.4.3)
-Requirement already satisfied: MarkupSafe&gt;=2.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from jinja2-&gt;torch-&gt;geniml) (2.1.5)
-Requirement already satisfied: stdlib-list in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from session-info-&gt;scanpy-&gt;geniml) (0.10.0)
-Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from sympy-&gt;torch-&gt;geniml) (1.3.0)
-Requirement already satisfied: pycparser in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from cffi&gt;=1.12-&gt;cryptography&gt;=3.3-&gt;paramiko&gt;=3.0.0-&gt;geniml) (2.21)
-Requirement already satisfied: humanfriendly&gt;=9.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from coloredlogs-&gt;onnxruntime&lt;2.0.0,&gt;=1.17.0-&gt;fastembed&gt;=0.2.5-&gt;geniml) (10.0)
-Requirement already satisfied: hyperframe&lt;7,&gt;=6.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from h2&lt;5,&gt;=3-&gt;httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (6.0.1)
-Requirement already satisfied: hpack&lt;5,&gt;=4.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from h2&lt;5,&gt;=3-&gt;httpx[http2]&gt;=0.20.0-&gt;qdrant-client-&gt;geniml) (4.0.0)
-Requirement already satisfied: jsonpointer&gt;=1.9 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from jsonpatch&lt;2.0,&gt;=1.33-&gt;langchain-core&lt;0.3,&gt;=0.1.52-&gt;langchain-huggingface==0.0.2-&gt;geniml) (2.4)
-Requirement already satisfied: orjson&lt;4.0.0,&gt;=3.9.14 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from langsmith&lt;0.2.0,&gt;=0.1.75-&gt;langchain-core&lt;0.3,&gt;=0.1.52-&gt;langchain-huggingface==0.0.2-&gt;geniml) (3.10.6)
-Requirement already satisfied: mdurl~=0.1 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from markdown-it-py&gt;=2.2.0-&gt;rich&gt;=10.3.0-&gt;peppy&gt;=0.40.1-&gt;geniml) (0.1.2)
-Requirement already satisfied: click&gt;=8.0.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from typer&gt;=0.7.0-&gt;pephubclient&gt;=0.4.2-&gt;peppy&gt;=0.40.1-&gt;geniml) (8.1.7)
-Requirement already satisfied: shellingham&gt;=1.3.0 in /Users/kancherj/miniforge3/lib/python3.10/site-packages (from typer&gt;=0.7.0-&gt;pephubclient&gt;=0.4.2-&gt;peppy&gt;=0.40.1-&gt;geniml) (1.5.4)</code></pre>
-</div>
-</div>
+<p>!pip install -U biocutils genomicranges rds2py numpy pandas geniml</p>
+<p>If you are using Google colab, you may not have access to the RDS file used, in this tutorial. Change the block below from markdown to code and run the chunk.</p>
+<p>!wget https://raw.githubusercontent.com/BiocPy/BiocWorkshop2024/master/notebook/hg38_exons_by_tx.rds</p>
 </section>
 <section id="r" class="level4">
 <h4 class="anchored" data-anchor-id="r">R</h4>
@@ -457,15 +309,15 @@ saveRDS(exons_by_tx, "hg38_exons_by_tx.rds")
 <li>Convert this dictionary into a suitable Python object using specific parser functions.</li>
 </ol>
 <p>This process allows a seamless transition between R and Python for bioinformatics analyses.</p>
-<div id="cell-8" class="cell" data-scrolled="true" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rds2py <span class="im">import</span> read_rds</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hg38_robject <span class="op">=</span> read_rds(<span class="st">"./hg38_exons_by_tx.rds"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rds2py.granges <span class="im">import</span> as_granges_list</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>by_tx <span class="op">=</span> as_granges_list(hg38_robject)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Exons by transcript:"</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(by_tx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-10" class="cell" data-scrolled="true" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rds2py <span class="im">import</span> read_rds</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>hg38_robject <span class="op">=</span> read_rds(<span class="st">"./hg38_exons_by_tx.rds"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rds2py.granges <span class="im">import</span> as_granges_list</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>by_tx <span class="op">=</span> as_granges_list(hg38_robject)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Exons by transcript:"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(by_tx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Exons by transcript:
 GenomicRangesList with 5387 ranges and 0 metadata columns
@@ -565,21 +417,21 @@ seqinfo(1 sequences): chr22
 <h3 class="anchored" data-anchor-id="create-a-genomicrangeslist-by-gene">2.1 Create a <code>GenomicRangesList</code> by gene</h3>
 <p>To identify TSS or define promoter regions, let’s first reprocess the input to create a <code>GenomicRangesList</code> by gene symbols.</p>
 <p>To achieve this, we unlist the <code>GenomicRangesList</code> object. This is accomplished in Python using the <code>as_genomic_ranges()</code> method.</p>
-<div id="cell-10" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>all_ranges <span class="op">=</span> by_tx.as_genomic_ranges()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-12" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>all_ranges <span class="op">=</span> by_tx.as_genomic_ranges()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then we split the object using the <code>gene_name</code> metadata column in <code>mcols()</code>.</p>
 <pre class="{important}"><code>We provide accessors to get or set attributes of the class. Most folks in Python may be familiar with direct access to class members (via properties or @property), but this should generally be avoided, as it is too easy to perform modifications via one-liners with the class.property on the left-hand side of an assignment.
 
 For more information, please refer to our [developer guide](https://github.com/BiocPy/developer_guide).</code></pre>
 <pre class="{note}"><code>While gene IDs are unique, gene symbols are not. In addition, this list has genes with no symbols.</code></pre>
-<div id="cell-12" class="cell" data-scrolled="true" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>by_gene <span class="op">=</span> all_ranges.split(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>all_ranges.get_mcols().get_column(<span class="st">"gene_name"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Exons by gene:"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-14" class="cell" data-scrolled="true" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>by_gene <span class="op">=</span> all_ranges.split(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>all_ranges.get_mcols().get_column(<span class="st">"gene_name"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Exons by gene:"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Exons by gene:
 GenomicRangesList with 932 ranges and 0 metadata columns
@@ -661,11 +513,11 @@ seqinfo(1 sequences): chr22
 <h3 class="anchored" data-anchor-id="finding-transcription-start-sites-tss">2.2 Finding Transcription Start Sites (TSS)</h3>
 <p>Transcription Start Sites (TSS) are the locations where transcription of a gene begins. Identifying TSS is crucial for understanding gene regulation, as many regulatory elements are located near the TSS.</p>
 <p>Let’s use the <code>range()</code> method to get the full extent of each gene.</p>
-<div id="cell-14" class="cell" data-scrolled="true" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ranges_by_gene <span class="op">=</span> by_gene.<span class="bu">range</span>()</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Gene ranges:"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ranges_by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-16" class="cell" data-scrolled="true" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ranges_by_gene <span class="op">=</span> by_gene.<span class="bu">range</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Gene ranges:"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ranges_by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Gene ranges:
 GenomicRangesList with 932 ranges and 0 metadata columns
@@ -723,11 +575,11 @@ seqinfo(1 sequences): chr22
 </div>
 </div>
 <p>We convert the list to a <code>GenomicRanges</code> object.</p>
-<div id="cell-16" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>gr_by_gene <span class="op">=</span> ranges_by_gene.as_genomic_ranges()</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"as GenomicRanges:"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gr_by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-18" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gr_by_gene <span class="op">=</span> ranges_by_gene.as_genomic_ranges()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"as GenomicRanges:"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gr_by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>as GenomicRanges:
 GenomicRanges with 936 ranges and 0 metadata columns
@@ -745,11 +597,11 @@ seqinfo(1 sequences): chr22</code></pre>
 </div>
 </div>
 <p>Then we resize to a width of 1 base pair at the start of each range to pinpoint the TSS.</p>
-<div id="cell-18" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tss <span class="op">=</span> gr_by_gene.resize(width<span class="op">=</span><span class="dv">1</span>, fix<span class="op">=</span><span class="st">"start"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Transcript Start Sites:"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gr_by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-20" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tss <span class="op">=</span> gr_by_gene.resize(width<span class="op">=</span><span class="dv">1</span>, fix<span class="op">=</span><span class="st">"start"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Transcript Start Sites:"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gr_by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Transcript Start Sites:
 GenomicRanges with 936 ranges and 0 metadata columns
@@ -770,11 +622,11 @@ seqinfo(1 sequences): chr22</code></pre>
 <section id="defining-promoter-regions" class="level3">
 <h3 class="anchored" data-anchor-id="defining-promoter-regions">2.3 Defining Promoter Regions</h3>
 <p>Here, we’re defining promoters as the region 2000 base pairs upstream to 200 base pairs downstream of each TSS. This definition can vary depending on the specific analysis, but this range often captures important regulatory elements.</p>
-<div id="cell-20" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>promoters <span class="op">=</span> tss.promoters(upstream<span class="op">=</span><span class="dv">2000</span>, downstream<span class="op">=</span><span class="dv">200</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Promoter Regions:"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(promoters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-22" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>promoters <span class="op">=</span> tss.promoters(upstream<span class="op">=</span><span class="dv">2000</span>, downstream<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Promoter Regions:"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(promoters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Promoter Regions:
 GenomicRanges with 936 ranges and 0 metadata columns
@@ -801,18 +653,18 @@ seqinfo(1 sequences): chr22</code></pre>
 <h3 class="anchored" data-anchor-id="reading-chip-seq-peaks">3.1 Reading ChIP-seq Peaks</h3>
 <p>ChIP-seq (Chromatin Immunoprecipitation followed by sequencing) is a method used to identify binding sites of DNA-associated proteins. The peaks represent regions where a protein of interest is likely bound to the DNA. We’re focusing on chromosome 22 for this example to keep the dataset manageable.</p>
 <p>For the purpose of this tutorial, let’s download a bed file containing peaks from a ChIP-seq experiment on “Human B cells” to identify “EZH2” binding sites (from ENCODE) and cataloged in <a href="https://bedbase.org/bed/be4054acf6e3feeb4dc490e6430e358e">bedbase.org</a>.</p>
-<div id="cell-22" class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geniml.bbclient <span class="im">import</span> BBClient</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>bbclient <span class="op">=</span> BBClient(cache_folder<span class="op">=</span><span class="st">"cache"</span>, bedbase_api<span class="op">=</span><span class="st">"https://api.bedbase.org"</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>bedfile_id <span class="op">=</span> <span class="st">"be4054acf6e3feeb4dc490e6430e358e"</span> </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>bedfile <span class="op">=</span> bbclient.load_bed(bedfile_id)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>peaks <span class="op">=</span> bedfile.to_granges()</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>filter_chr22 <span class="op">=</span> [x <span class="op">==</span> <span class="st">"chr22"</span> <span class="cf">for</span> x <span class="kw">in</span> peaks.get_seqnames()]</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>peaks_chr22 <span class="op">=</span> peaks[filter_chr22]</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_chr22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-24" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geniml.bbclient <span class="im">import</span> BBClient</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>bbclient <span class="op">=</span> BBClient(cache_folder<span class="op">=</span><span class="st">"cache"</span>, bedbase_api<span class="op">=</span><span class="st">"https://api.bedbase.org"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>bedfile_id <span class="op">=</span> <span class="st">"be4054acf6e3feeb4dc490e6430e358e"</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>bedfile <span class="op">=</span> bbclient.load_bed(bedfile_id)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>peaks <span class="op">=</span> bedfile.to_granges()</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>filter_chr22 <span class="op">=</span> [x <span class="op">==</span> <span class="st">"chr22"</span> <span class="cf">for</span> x <span class="kw">in</span> peaks.get_seqnames()]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>peaks_chr22 <span class="op">=</span> peaks[filter_chr22]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_chr22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GenomicRanges with 1441 ranges and 0 metadata columns
        seqnames              ranges          strand
@@ -832,11 +684,11 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 <section id="finding-overlaps-with-tss" class="level3">
 <h3 class="anchored" data-anchor-id="finding-overlaps-with-tss">3.2 Finding Overlaps with TSS</h3>
 <p>Here, we’re identifying ChIP-seq peaks that overlap with TSS. This analysis can help us understand if the protein of interest tends to bind near the start of genes, which could suggest a role in transcription initiation.</p>
-<div id="cell-24" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>overlaps <span class="op">=</span> peaks_chr22.find_overlaps(tss)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peak indices that overlap with first 10 TSS:"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(overlaps[:<span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-26" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>overlaps <span class="op">=</span> peaks_chr22.find_overlaps(tss)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peak indices that overlap with first 10 TSS:"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(overlaps[:<span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Peak indices that overlap with first 10 TSS:
 [[], [], [], [55], [217], [], [], [], [], []]</code></pre>
@@ -846,12 +698,12 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 
 **TODO: Future plans to convert this into a `Hits` object.**</code></pre>
 <p>Let’s identify the peaks that overlap with TSS.</p>
-<div id="cell-26" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>all_indices <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(itertools.chain.from_iterable(overlaps)))</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>peaks_by_tss <span class="op">=</span> peaks_chr22[all_indices]</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-28" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>all_indices <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(itertools.chain.from_iterable(overlaps)))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>peaks_by_tss <span class="op">=</span> peaks_chr22[all_indices]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GenomicRanges with 35 ranges and 0 metadata columns
      seqnames              ranges          strand
@@ -868,9 +720,9 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 </div>
 </div>
 <p>Instead, one can subset peaks that overlap with TSS using the <code>subset_by_overlaps</code> method:</p>
-<div id="cell-28" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>peaks_by_tss2 <span class="op">=</span> peaks_chr22.subset_by_overlaps(tss)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-30" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>peaks_by_tss2 <span class="op">=</span> peaks_chr22.subset_by_overlaps(tss)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GenomicRanges with 35 ranges and 0 metadata columns
      seqnames              ranges          strand
@@ -887,9 +739,9 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 </div>
 </div>
 <p>Additionally, in some cases, we may want to ignore strand information (<code>ignore_strand=True</code>) when finding overlaps.</p>
-<div id="cell-30" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>peaks_by_tss_ignoring_strand <span class="op">=</span> peaks_chr22.subset_by_overlaps(tss, ignore_strand<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss_ignoring_strand)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-32" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>peaks_by_tss_ignoring_strand <span class="op">=</span> peaks_chr22.subset_by_overlaps(tss, ignore_strand<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss_ignoring_strand)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GenomicRanges with 35 ranges and 0 metadata columns
      seqnames              ranges          strand
@@ -910,11 +762,11 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 <section id="finding-overlaps-with-promoters" class="level3">
 <h3 class="anchored" data-anchor-id="finding-overlaps-with-promoters">3.3 Finding Overlaps with Promoters</h3>
 <p>This operation finds ChIP-seq peaks that overlap with our defined promoter regions. If a significant number of peaks fall within promoters, it might suggest that the protein plays a role in gene regulation through promoter binding. This kind of analysis is often used to characterize the binding patterns of transcription factors or other regulatory proteins.</p>
-<div id="cell-32" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>peaks_by_promoters <span class="op">=</span> peaks_chr22.subset_by_overlaps(promoters)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peaks Overlapping with Promoters:"</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_promoters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-34" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>peaks_by_promoters <span class="op">=</span> peaks_chr22.subset_by_overlaps(promoters)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peaks Overlapping with Promoters:"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_promoters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Peaks Overlapping with Promoters:
 GenomicRanges with 190 ranges and 0 metadata columns
@@ -935,20 +787,20 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 <section id="finding-overlaps-with-exons" class="level3">
 <h3 class="anchored" data-anchor-id="finding-overlaps-with-exons">3.4 Finding Overlaps with Exons</h3>
 <p>Another analysis is to look at overlaps with all exons. This can help identify potential roles of the ChIP-seq peaks in splicing. Let’s modify our analysis to look at all exons:</p>
-<div id="cell-34" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all exons into a single GenomicRanges object</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>all_exons <span class="op">=</span> by_gene.as_granges()</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Find peaks overlapping with any exon</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>peaks_by_exons <span class="op">=</span> peaks_chr22.subset_by_overlaps(all_exons)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peaks overlapping with exons:"</span>)</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_exons)</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentage of peaks that overlap with exons</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>percent_overlapping <span class="op">=</span> (<span class="bu">len</span>(peaks_by_exons) <span class="op">/</span> <span class="bu">len</span>(peaks_chr22)) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of peaks overlapping with exons: </span><span class="sc">{</span>percent_overlapping<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-36" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all exons into a single GenomicRanges object</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>all_exons <span class="op">=</span> by_gene.as_granges()</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Find peaks overlapping with any exon</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>peaks_by_exons <span class="op">=</span> peaks_chr22.subset_by_overlaps(all_exons)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peaks overlapping with exons:"</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_exons)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentage of peaks that overlap with exons</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>percent_overlapping <span class="op">=</span> (<span class="bu">len</span>(peaks_by_exons) <span class="op">/</span> <span class="bu">len</span>(peaks_chr22)) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of peaks overlapping with exons: </span><span class="sc">{</span>percent_overlapping<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Peaks overlapping with exons:
 GenomicRanges with 279 ranges and 0 metadata columns
@@ -975,13 +827,13 @@ Percentage of peaks overlapping with exons: 19.36%</code></pre>
 <section id="comparing-exonic-vs.-intronic-binding" class="level3">
 <h3 class="anchored" data-anchor-id="comparing-exonic-vs.-intronic-binding">4.1 Comparing Exonic vs.&nbsp;Intronic Binding</h3>
 <p>Let’s first identify intron regions. We will use the <code>by_gene</code> object we created that contains a <code>GenomicRangesList</code> split by gene.</p>
-<div id="cell-36" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create intronic regions (regions within genes but not in exons)</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>gene_ranges <span class="op">=</span> by_gene.<span class="bu">range</span>().as_genomic_ranges()  <span class="co"># Get the full extent of each gene</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>introns <span class="op">=</span> gene_ranges.subtract(all_exons).as_granges()</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Intron regions:"</span>)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(introns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-38" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create intronic regions (regions within genes but not in exons)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>gene_ranges <span class="op">=</span> by_gene.<span class="bu">range</span>().as_genomic_ranges()  <span class="co"># Get the full extent of each gene</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>introns <span class="op">=</span> gene_ranges.subtract(all_exons).as_granges()</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Intron regions:"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(introns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Intron regions:
 GenomicRanges with 1572 ranges and 0 metadata columns
@@ -999,19 +851,19 @@ seqinfo(1 sequences): chr22</code></pre>
 </div>
 </div>
 <p>To gain further insight, we can compare the proportion of peaks overlapping with exons to those overlapping with introns:</p>
-<div id="cell-38" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find peaks overlapping with introns</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>peaks_by_introns <span class="op">=</span> peaks_chr22.subset_by_overlaps(introns)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peaks overlapping with introns:"</span>)</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_introns)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate percentages</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>percent_exonic <span class="op">=</span> (<span class="bu">len</span>(peaks_by_exons) <span class="op">/</span> <span class="bu">len</span>(peaks_chr22)) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>percent_intronic <span class="op">=</span> (<span class="bu">len</span>(peaks_by_introns) <span class="op">/</span> <span class="bu">len</span>(peaks_chr22)) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of peaks overlapping with exons: </span><span class="sc">{</span>percent_exonic<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of peaks overlapping with introns: </span><span class="sc">{</span>percent_intronic<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-40" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find peaks overlapping with introns</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>peaks_by_introns <span class="op">=</span> peaks_chr22.subset_by_overlaps(introns)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peaks overlapping with introns:"</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_introns)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate percentages</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>percent_exonic <span class="op">=</span> (<span class="bu">len</span>(peaks_by_exons) <span class="op">/</span> <span class="bu">len</span>(peaks_chr22)) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>percent_intronic <span class="op">=</span> (<span class="bu">len</span>(peaks_by_introns) <span class="op">/</span> <span class="bu">len</span>(peaks_chr22)) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of peaks overlapping with exons: </span><span class="sc">{</span>percent_exonic<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of peaks overlapping with introns: </span><span class="sc">{</span>percent_intronic<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Peaks overlapping with introns:
 GenomicRanges with 1438 ranges and 0 metadata columns
@@ -1038,24 +890,24 @@ Percentage of peaks overlapping with introns: 99.79%</code></pre>
 <pre class="{note}"><code>- This analysis is performed by transcript.
 - The rationale for this analysis may vary, but we are mostly showcasing complex genomic operations that are possible with the package.</code></pre>
 <p>Let’s first put together a <code>GenomicRanges</code> object containing the first exon for each transcript.</p>
-<div id="cell-40" class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>all_first <span class="op">=</span> []</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txid, grl <span class="kw">in</span> by_tx:</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    strand <span class="op">=</span> grl.get_strand(as_type <span class="op">=</span> <span class="st">"list"</span>)[<span class="dv">0</span>]</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> strand <span class="op">==</span> <span class="st">"-"</span>:</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>        all_first.append(grl.sort()[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>        all_first.append(grl.sort()[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-42" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>all_first <span class="op">=</span> []</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txid, grl <span class="kw">in</span> by_tx:</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    strand <span class="op">=</span> grl.get_strand(as_type <span class="op">=</span> <span class="st">"list"</span>)[<span class="dv">0</span>]</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> strand <span class="op">==</span> <span class="st">"-"</span>:</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>        all_first.append(grl.sort()[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>        all_first.append(grl.sort()[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then we combine all the individual genomic elements. The <a href="https://github.com/BiocPy/BiocUtils">biocutils</a> package provides utilities for convenient aspects of R that aren’t provided by base Python and generics. One of these generics is the <code>'combine'</code> operation that merges or concatenates various Bioconductor classes.</p>
-<div id="cell-42" class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> biocutils <span class="im">import</span> combine_sequences</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>first_exons <span class="op">=</span> combine_sequences(<span class="op">*</span>all_first)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-44" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> biocutils <span class="im">import</span> combine_sequences</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>first_exons <span class="op">=</span> combine_sequences(<span class="op">*</span>all_first)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now subset peaks that overlap with the first exon</p>
-<div id="cell-44" class="cell" data-execution_count="41">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>peaks_with_first_exons <span class="op">=</span> peaks_chr22.subset_by_overlaps(first_exons)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_with_first_exons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-46" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>peaks_with_first_exons <span class="op">=</span> peaks_chr22.subset_by_overlaps(first_exons)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_with_first_exons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GenomicRanges with 153 ranges and 0 metadata columns
       seqnames              ranges          strand
@@ -1074,12 +926,12 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 </section>
 <section id="resizing-and-shifting-peaks" class="level3">
 <h3 class="anchored" data-anchor-id="resizing-and-shifting-peaks">4.3 Resizing and Shifting Peaks</h3>
-<div id="cell-46" class="cell" data-execution_count="42">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>narrow_peaks <span class="op">=</span> peaks_chr22.narrow(start<span class="op">=</span><span class="dv">10</span>, width<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>shifted_peaks <span class="op">=</span> narrow_peaks.shift(<span class="dv">10</span>)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Narrowed and Shifted Peaks:"</span>)</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shifted_peaks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-48" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>narrow_peaks <span class="op">=</span> peaks_chr22.narrow(start<span class="op">=</span><span class="dv">10</span>, width<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>shifted_peaks <span class="op">=</span> narrow_peaks.shift(<span class="dv">10</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Narrowed and Shifted Peaks:"</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shifted_peaks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Narrowed and Shifted Peaks:
 GenomicRanges with 1441 ranges and 0 metadata columns

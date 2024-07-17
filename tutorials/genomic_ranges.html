@@ -148,6 +148,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Interoperability between R and Python using BiocPy</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../howto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How to run the notebooks</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -262,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>You can install the Python packages using pip:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-U</span> biocutils genomicranges rds2py numpy pandas geniml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-U</span> biocutils genomicranges rds2py numpy pandas geniml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">"AnnotationHub"</span>), </span>
@@ -308,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div id="99832b65" class="cell" data-execution_count="1">
+<div id="edc1ba6e" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rds2py <span class="im">import</span> read_rds</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hg38_robject <span class="op">=</span> read_rds(<span class="st">"./hg38_exons_by_tx.rds"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -423,7 +429,7 @@ seqinfo(1 sequences): chr22
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>To achieve this, we unlist the <code>GenomicRangesList</code> object. This is accomplished in Python using the <code>as_genomic_ranges()</code> method.</p>
-<div id="917a7ba8" class="cell" data-execution_count="2">
+<div id="ba0b6ec3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>all_ranges <span class="op">=</span> by_tx.as_genomic_ranges()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then we split the object using the <code>gene_name</code> metadata column in <code>mcols()</code>.</p>
@@ -454,7 +460,7 @@ Note
 <p>While gene IDs are unique, gene symbols are not. In addition, this list has genes with no symbols.</p>
 </div>
 </div>
-<div id="5d492a56" class="cell" data-execution_count="3">
+<div id="c722d54f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>by_gene <span class="op">=</span> all_ranges.split(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>all_ranges.get_mcols().get_column(<span class="st">"gene_name"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -548,7 +554,7 @@ seqinfo(1 sequences): chr22
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div id="49ad420d" class="cell" data-execution_count="4">
+<div id="b3f0de8c" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ranges_by_gene <span class="op">=</span> by_gene.<span class="bu">range</span>()</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Gene ranges:"</span>)</span>
@@ -610,7 +616,7 @@ seqinfo(1 sequences): chr22
 </div>
 </div>
 <p>We convert the list to a <code>GenomicRanges</code> object.</p>
-<div id="40fa0f1a" class="cell" data-execution_count="5">
+<div id="a40986cc" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gr_by_gene <span class="op">=</span> ranges_by_gene.as_genomic_ranges()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"as GenomicRanges:"</span>)</span>
@@ -632,7 +638,7 @@ seqinfo(1 sequences): chr22</code></pre>
 </div>
 </div>
 <p>Then we resize to a width of 1 base pair at the start of each range to pinpoint the TSS.</p>
-<div id="d6c2257f" class="cell" data-execution_count="6">
+<div id="aef84774" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tss <span class="op">=</span> gr_by_gene.resize(width<span class="op">=</span><span class="dv">1</span>, fix<span class="op">=</span><span class="st">"start"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Transcript Start Sites:"</span>)</span>
@@ -664,7 +670,7 @@ seqinfo(1 sequences): chr22</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<div id="f8cf46c0" class="cell" data-execution_count="7">
+<div id="167fc4a1" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>promoters <span class="op">=</span> tss.promoters(upstream<span class="op">=</span><span class="dv">2000</span>, downstream<span class="op">=</span><span class="dv">200</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Promoter Regions:"</span>)</span>
@@ -714,7 +720,7 @@ Note
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
-<div id="9fdb92e2" class="cell" data-execution_count="8">
+<div id="535000af" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geniml.bbclient <span class="im">import</span> BBClient</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>bbclient <span class="op">=</span> BBClient(cache_folder<span class="op">=</span><span class="st">"cache"</span>, bedbase_api<span class="op">=</span><span class="st">"https://api.bedbase.org"</span>)</span>
@@ -752,7 +758,7 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
-<div id="e37c783f" class="cell" data-execution_count="9">
+<div id="3d40022d" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>overlaps <span class="op">=</span> peaks_chr22.find_overlaps(tss)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peak indices that overlap with first 10 TSS:"</span>)</span>
@@ -777,7 +783,7 @@ Note
 </div>
 </div>
 <p>Let’s identify the peaks that overlap with TSS.</p>
-<div id="2b13d8a5" class="cell" data-execution_count="10">
+<div id="1fb81b66" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>all_indices <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(itertools.chain.from_iterable(overlaps)))</span>
@@ -799,7 +805,7 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 </div>
 </div>
 <p>Instead, one can subset peaks that overlap with TSS using the <code>subset_by_overlaps</code> method:</p>
-<div id="433ab2ba" class="cell" data-execution_count="11">
+<div id="e68ea131" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>peaks_by_tss2 <span class="op">=</span> peaks_chr22.subset_by_overlaps(tss)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -818,7 +824,7 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 </div>
 </div>
 <p>Additionally, in some cases, we may want to ignore strand information (<code>ignore_strand=True</code>) when finding overlaps.</p>
-<div id="51c08505" class="cell" data-execution_count="12">
+<div id="b8ddc048" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>peaks_by_tss_ignoring_strand <span class="op">=</span> peaks_chr22.subset_by_overlaps(tss, ignore_strand<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_by_tss_ignoring_strand)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -860,7 +866,7 @@ Note
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
-<div id="066d3e35" class="cell" data-execution_count="13">
+<div id="d552b114" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>peaks_by_promoters <span class="op">=</span> peaks_chr22.subset_by_overlaps(promoters)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Peaks Overlapping with Promoters:"</span>)</span>
@@ -892,7 +898,7 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
-<div id="0a023c31" class="cell" data-execution_count="14">
+<div id="1c9299d1" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all exons into a single GenomicRanges object</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>all_exons <span class="op">=</span> by_gene.as_granges()</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -939,7 +945,7 @@ Percentage of peaks overlapping with exons: 19.36%</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
-<div id="9d55f5a0" class="cell" data-execution_count="15">
+<div id="c843f9d0" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create intronic regions (regions within genes but not in exons)</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>gene_ranges <span class="op">=</span> by_gene.<span class="bu">range</span>().as_genomic_ranges()  <span class="co"># Get the full extent of each gene</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>introns <span class="op">=</span> gene_ranges.subtract(all_exons).as_granges()</span>
@@ -963,7 +969,7 @@ seqinfo(1 sequences): chr22</code></pre>
 </div>
 </div>
 <p>To gain further insight, we can compare the proportion of peaks overlapping with exons to those overlapping with introns:</p>
-<div id="1335d9d7" class="cell" data-execution_count="16">
+<div id="c188fd88" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find peaks overlapping with introns</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>peaks_by_introns <span class="op">=</span> peaks_chr22.subset_by_overlaps(introns)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1031,7 +1037,7 @@ Note
 </div>
 </div>
 <p>Let’s first put together a <code>GenomicRanges</code> object containing the first exon for each transcript.</p>
-<div id="b9629de8" class="cell" data-execution_count="17">
+<div id="5c7978f8" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>all_first <span class="op">=</span> []</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txid, grl <span class="kw">in</span> by_tx:</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    strand <span class="op">=</span> grl.get_strand(as_type <span class="op">=</span> <span class="st">"list"</span>)[<span class="dv">0</span>]</span>
@@ -1041,12 +1047,12 @@ Note
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        all_first.append(grl.sort()[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then we combine all the individual genomic elements. The <a href="https://github.com/BiocPy/BiocUtils">biocutils</a> package provides utilities for convenient aspects of R that aren’t provided by base Python and generics. One of these generics is the <code>'combine'</code> operation that merges or concatenates various Bioconductor classes.</p>
-<div id="6b6912bd" class="cell" data-execution_count="18">
+<div id="fb7d4ce8" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> biocutils <span class="im">import</span> combine_sequences</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>first_exons <span class="op">=</span> combine_sequences(<span class="op">*</span>all_first)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now subset peaks that overlap with the first exon</p>
-<div id="813d13f6" class="cell" data-execution_count="19">
+<div id="3e2fb36f" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>peaks_with_first_exons <span class="op">=</span> peaks_chr22.subset_by_overlaps(first_exons)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peaks_with_first_exons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1067,7 +1073,7 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 </section>
 <section id="resizing-and-shifting-peaks" class="level3">
 <h3 class="anchored" data-anchor-id="resizing-and-shifting-peaks">4.3 Resizing and Shifting Peaks</h3>
-<div id="8684f2f3" class="cell" data-execution_count="20">
+<div id="b50280e8" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>narrow_peaks <span class="op">=</span> peaks_chr22.narrow(start<span class="op">=</span><span class="dv">10</span>, width<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>shifted_peaks <span class="op">=</span> narrow_peaks.shift(<span class="dv">10</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
