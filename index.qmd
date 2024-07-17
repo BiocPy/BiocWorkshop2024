@@ -1,26 +1,29 @@
-# Welcome
+# Interoperability between R and Python using BiocPy
 
-The BiocPy project aims to facilitate development of Bioconductor workflows in Python. 
+## Welcome
 
-This tutorial for the workshop will provide an overview of the core data structures implemented in BiocPy 
-(e.g., `GenomicRanges`, `SummarizedExperiment`) that were ported from R. 
-Participants will be guided through two Bioconductor-derived workflows in Python. 
-The first will involve reading an RDS file containing genomic ranges and performing 
-downstream range-based analyses. 
-The second will use the `scRNAseq` package to access public single-cell RNA-seq datasets, 
-followed by cell type annotation using the `SinglePy` package. 
-Attendees will learn how to represent and manipulate their datasets in Python in the 
-same manner as in R/Bioconductor. 
+Welcome to our workshop on exploring the data structures and packages 
+available in [BiocPy](https://github.com/biocpy), a project that aims 
+to facilitate Bioconductor workflows in Python. 
 
-All packages in BiocPy are published to PyPI, and code is open-source on [GitHub](https://github.com/BiocPy).
+In this workshop, we will focus on interoperability between R and Python, covering two main topics:
 
+- Reading an RDS file containing `GenomicRanges` and performing downstream range-based analyses.
+- Annotating single-cell RNA-seq data using the [scrnaseq](https://github.com/biocpy/scrnaseq) package.
+
+Attendees will learn how to represent and manipulate their datasets in Python 
+in the same manner as in R/Bioconductor. 
+All packages in BiocPy are published to PyPI, and the code is open-source 
+on [GitHub](https://github.com/BiocPy).
+
+![](./assets/workshop.png)
 
 ### Core contributors
 
 - [Jayaram Kancherla](https://github.com/jkanche)
 - [Aaron Lun](https://github.com/LTLA)
 
-----
+We are looking for more contributions from the community to improve our packages! If you are interested, please check out the issues or discussion in our GitHub organization.
 
 ## Other resources
 
@@ -29,4 +32,4 @@ All packages in BiocPy are published to PyPI, and code is open-source on [GitHub
 
 ## Developer notes
 
-This is a reproducible Quarto book with reusable snippets. To learn more about Quarto books visit <https://quarto.org/docs/books>. Check out [Reproduce me](./chapters/sessioninfo.qmd) for more information.
+This is a reproducible Quarto book with reusable snippets. Check out [sessioninfo](./tutorials/sessioninfo.qmd) for packages installed during the build.

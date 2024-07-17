@@ -8,3 +8,7 @@ chapters/zilinois_lung_with_celltypist/
 *whee.h5
 *.tiledb
 *_cache
+*_files
+tutorials/cache/*``
+cache/
+.ipynb_checkpoints

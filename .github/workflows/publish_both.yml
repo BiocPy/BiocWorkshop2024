@@ -1,10 +1,7 @@
 name: Quarto Publish
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build-deploy:
@@ -19,10 +16,14 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install rsync
+      - name: Install rsync and upgrade
         run: |
-          sudo apt-get update
+          sudo apt-get -y update
           sudo apt-get install -y rsync
+
+      # - name: Install alternatives for Python
+      #   run: |
+      #     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 100
 
       # - name: Install curl
       #   run: |
@@ -43,13 +44,20 @@ jobs:
         run: quarto install tinytex
 
       # - name: Setup Python
-      #   uses: actions/setup-python@v4
+      #   uses: actions/setup-python@v5
       #   with:
-      #     python-version: '3.9'
+      #     python-version: '3.10'
       #     cache: 'pip'
 
+      - name: Test python version
+        run: |
+          python3 --version
+
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: pip3 install -r requirements.txt
+
+      - name: install geniml
+        run: pip3 install geniml
       
       # - name: Setup R
       #   uses: r-lib/actions/setup-r@v2
