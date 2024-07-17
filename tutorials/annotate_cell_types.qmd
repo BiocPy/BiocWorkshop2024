@@ -42,11 +42,11 @@ This will install the `scRNAseq`, `celldex`, `SingleR`, packages from Bioconduct
 
 :::
 
-## Accessing and Exploring Single-Cell Datasets
+## 1. Accessing and Exploring Single-Cell Datasets
 
 Now that we have the necessary packages installed, let's explore the `scrnaseq` package and learn how to access public single-cell RNA-seq datasets. Datasets published to the `scrnaseq` package are decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let's see how we can list and search for datasets.
 
-### List All Datasets
+### 1.1 List All Datasets
 
 The `list_datasets()` function in Python or `surveyDatasets()` in R will display all available datasets published to the `scRNAseq` collection along with their metadata.
 
@@ -68,9 +68,9 @@ head(all_ds[, c("name", "title", "version")], 3)
 
 :::
 
-This R|Python code lists all available datasets in the `scrnaseq` package and displays their names, titles, and versions.
+This lists all available datasets in the `scrnaseq` package and displays their names, titles, and versions.
 
-### Search for Datasets
+### 1.2 Search for Datasets
 
 You can also search for datasets based on metadata using `search_datasets()` in Python or `searchDatasets()` in R. This supports both simple text queries and complex boolean expressions.
 
@@ -94,7 +94,7 @@ head(pancreas_ds[, c("name", "title", "version")], 3)
 
 This R|Python code searches for datasets containing the term "pancreas" and displays their names, titles, and versions.
 
-#### Advanced Searches
+#### 1.2.1 Advanced Searches
 
 For more complex searches involving boolean operations, use `define_text_query()` in Python or `defineTextQuery()` in R. Here's an example to find datasets using the mouse reference genome (`GRCm38`) and containing the words `neuro` or `pancrea`.
 
@@ -131,13 +131,13 @@ head(res[,c("name", "title", "version")], 3)
 ```
 :::
 
-This R|Python code performs a complex search to find datasets tagged as "mouse" in the reference genome field and containing the keywords "neuro" or "pancrea".
+This performs a complex search to find datasets tagged as "mouse" in the reference genome field and containing the keywords "neuro" or "pancrea".
 
 ::: {.callout-important}
 Once a dataset is identified, always list the name and version of the dataset in your scripts for reproducibility.
 :::
 
-## Download dataset
+## 2. Download dataset
 
 After identifying a dataset of interest, use `fetch_dataset()` in Python or `fetchDataset()` in R to download the dataset. This will load the dataset as a `SingleCellExperiment` object.
 
@@ -165,7 +165,7 @@ sce
 
 :::
 
-### Side-quest on `SingleCellExperiment` in Python
+### 2.1 Side-quest on `SingleCellExperiment` in Python
 
 The Python implementation of the `SingleCellExperiment` class adheres to Bioconductor's specification and offers similar interface and methods. Our goal is to make it simple for analysts to switch between R and Python. A key difference is the shift from functional to an object-oriented paradigm.
 
@@ -216,13 +216,13 @@ print("coerce to AnnData: ", sce.to_anndata())
 
 :::
 
-## Annotate Cell Types
+## 3. Annotate Cell Types
 
 We can now annotate cell types by using reference datasets and matching cells based on their expression profiles. In this tutorial, we will use [singleR](https://github.com/SingleR-inc/SingleR) in R or its Python equivalent [singler](https://github.com/BiocPy/singler).
 
 Before running the `singler` algorithm, we need to download an appropriate reference dataset from the `celldex` package.
 
-### Access Reference Datasets from `celldex`
+### 3.1 Access Reference Datasets from `celldex`
 
 Similar to the `scRNAseq` package, the `celldex` package provides access to the collection of reference expression datasets with curated cell type labels, for use in procedures like automated annotation of single-cell data or deconvolution of bulk RNA-seq to reference datasets. These datasets are also stored in language-agnostic representations for use in downstream analyses.
 
@@ -281,7 +281,7 @@ table(cell_labels$labels)
 
 :::
 
-## Analyze Single-cell RNA-seq datasets
+## 4. Analyze Single-cell RNA-seq datasets
 
 ![single-cell-methods](../assets/single-cell-space.jpg)
 
@@ -299,7 +299,7 @@ results = scranpy.analyze_sce(sce)
 print(results.tsne)
 ```
 
-### Seems like magic?
+### 4.1 Seems like magic?
 
 Running the `analyze_sce()` function uses the default parameters to run the single-cell workflow. If you want to customize or want to have fine-grained control on the analysis steps, set the parameter `dry_run=True`.
 
@@ -315,7 +315,7 @@ print(scranpy.analyze_sce(sce, dry_run=True))
 Users can also run individual steps from the analysis without having to perform the full analysis, e.g. compute log normalized counts or find markers, etc.
 :::
 
-## Visualize Results
+## 5. Visualize Results
 
 I can't have a tutorial without a section on visualization or figures.
 
@@ -345,6 +345,13 @@ During the QC step, some cells were filtered, hence we filter the matches and th
 
 We'll leave this as an exercise for the reader to change the order of steps: 1) run the dataset through the QC step 2) filter cells, and then 3) annotate using singleR.
 :::
+
+## 6. Exercises
+
+1. Share or Upload your datasets to scrna-seq, Instructions to upload are available in their respective [R/Bioc](https://bioconductor.org/packages/release/data/experiment/html/scRNAseq.html) and [Python](https://github.com/BiocPy/scrnaseq) packages.
+2. Explore top markers for each cluster identified by scranpy.
+3. Perform multi-modal analysis (scranpy supports RNA, ADT, CRISPR).
+4. save your results and explore in [Kana](https://github.com/kanaverse/kana).
 
 Congratulations! You have now completed the tutorial on accessing single-cell datasets using `scRNAseq` and `ArtifactDB`, and annotating cell types using reference datasets from `celldex`. For more detailed usage and advanced analyses, refer to the respective documentation of these packages.
 

@@ -8,8 +8,14 @@ execute:
 
 website:
   title: "Bioc2024: Interoperability between R and Python using BiocPy"
+  description: "Explore the data structures and packages available in [BiocPy](https://github.com/biocpy), a project that aims to facilitate Bioconductor workflows in Python"
+  repo-url: https://github.com/BiocPy/BiocWorkshop2024
+  repo-actions: [issue]
+  favicon: ./assets/short.png
+  image: ./assets/full.png
+  back-to-top-navigation: true
   sidebar:
-    # search: true
+    logo: ./assets/logo.png
     contents:
       - index.qmd
       - section: "Tutorials"
@@ -17,6 +23,12 @@ website:
           - tutorials/genomic_ranges.qmd
           - tutorials/annotate_cell_types.qmd
       - tutorials/sessioninfo.qmd
+    tools:
+      - icon: github
+        href: https://github.com/BiocPy/
+  page-footer: 
+    center: 
+      - text: "(c) Jayaram Kancherla & Aaron Lun."
 
   # navbar:
   #   left:
