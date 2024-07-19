@@ -10,10 +10,10 @@ singler>=0.2.0
 numpy
 scipy
 pandas
+jupyterlab
 jupyter
 jupyter-cache
 rich
-jupyterlab
 seaborn
 session-info
 celldex

@@ -1,5 +1,5 @@
 # Use the bioconductor base image as the starting point
-FROM --platform=linux/amd64 bioconductor/bioconductor_docker:devel
+FROM --platform=linux/amd64 python:3.11-slim
 
 # Install system dependencies
 RUN apt-get update && \
@@ -8,24 +8,9 @@ RUN apt-get update && \
     build-essential \
     rsync
 
-# Install Quarto CLI
-RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.43/quarto-1.5.43-linux-amd64.deb && \
-    dpkg -i quarto-1.5.43-linux-amd64.deb && \
-    rm quarto-1.5.43-linux-amd64.deb
-
-# Install TinyTeX
-RUN quarto install tinytex
-
 # Install Python dependencies
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
-
-# Set R environment variable
-ENV R_PKG_DIR=${R_HOME}/site-library
-
-# Copy and install R packages
-COPY rpackages.R /rpackages.R
-RUN Rscript /rpackages.R
 
 # Download and build SQLite3 from source
 RUN wget --no-check-certificate https://www.sqlite.org/2024/sqlite-autoconf-3450300.tar.gz && \
@@ -47,4 +32,5 @@ COPY . /project
 # Set the working directory
 WORKDIR /project
 
-RUN quarto render --execute --to html --output-dir build
+EXPOSE 8889
+CMD ["jupyter", "lab", "--allow-root", "--ip=0.0.0.0", "--port=8889", "--no-browser"]
