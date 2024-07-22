@@ -133,7 +133,7 @@ Now, let's perform some basic operations like finding transcription start sites 
 
 Transcription Start Sites (TSS) are the locations where transcription of a gene begins. Identifying TSS is crucial for understanding gene regulation, as many regulatory elements are located near the TSS. 
 
-First, we use the `range()` method to get the full extent of each transcript. This should give us exactly one range per transcript.
+First, we use the `range()` method to get the full extent of each transcript, i.e. from the start of the first exon to the end of the last exon. This should give us exactly one range per transcript.
 
 ::: {.panel-tabset}
 
@@ -294,7 +294,7 @@ print(peaks_by_promoters)
 
 ### 4.4 Find overlaps with exons
 
-Lets find overlaps with any exon. We `unlist` our `GenomicRangesList` object to get all exon positions.
+Let's find overlaps with any exon. We `unlist` our `GenomicRangesList` object to get all exon positions.
 
 ::: {.panel-tabset}
 
@@ -336,12 +336,12 @@ Let's explore some more complex operations that are often used in genomic analys
 
 ### 5.1 Compare exonic vs. intronic binding
 
-Let's first identify intron regions. There are two ways to find introns
+Let's first identify intronic regions. There are two ways to find introns:
 
-1. **Find introns for each gene**, regions within each gene body that do not overlap to that gene's exons (using `psetdiff` in R/Bioconductor).
-2. **Find introns globally**, regions that don't overlap with any exon (using `subtract`). To find these positions, we also ignore strand information.
+1. **Find introns for each gene**, i.e. regions within each gene's transcript body that do not overlap any of that gene's exons (using `psetdiff` in R/Bioconductor).
+2. **Find intronic regions globally**, i.e. regions that do not overlap with any exon (using `subtract`) for any gene. To find these positions, we ignore strand information, because there could be genes that overlap on different strands.
 
-We will find introns globally (2) for our tutorial today. If you are wondering why, we currently don't have `psetdiff` implemented in BiocPy/GenomicRanges. If you are interested in contributing, check out [this issue](https://github.com/BiocPy/GenomicRanges/issues/115).
+We will find intronic regions globally (2) for our tutorial today.
 
 Let's first get all transcript ranges, following the steps in [Section 3.1](#find-transcription-start-sites-tss):
 
@@ -350,12 +350,12 @@ Let's first get all transcript ranges, following the steps in [Section 3.1](#fin
 ## Python
 
 ```{python}
-# Get the full extent of each gene
+# Get the full extent of each transcript
 tx_ranges = by_tx.range().as_genomic_ranges()
 ```
 :::
 
-We now subtract any exons that overlaps within each transcript by ignoring the strand. The result is a `GenomicRangesList` containing intron regions for each transcript. We simplify this by coercing this into a `GenomicRanges` object.
+We now subtract any exons that overlaps within each transcript by ignoring the strand. The result is a `GenomicRangesList` containing intronic regions for each transcript. We simplify this by coercing this into a `GenomicRanges` object.
 
 ::: {.panel-tabset}
 
@@ -429,7 +429,7 @@ peaks_with_first_exons = peaks_chr22.subset_by_overlaps(first_exons)
 print(peaks_with_first_exons)
 ```
 
-### 4.3 Resizing and Shifting Peaks
+### 5.3 Resizing and Shifting Peaks
 
 Resizing and shifting genomic ranges can be useful in various contexts. For example:
 
