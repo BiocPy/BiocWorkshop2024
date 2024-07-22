@@ -18,12 +18,13 @@ jupyter lab
 
 Then checkout the [notebook](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) directory that contain Jupyter notebooks.
 
-## Option 2: Using Google colab
+## Option 2: Using Google Colab
 
-To open the session in Google colab
+To open the session in Google Colab:
 
 1. Open [Google colab](https://colab.research.google.com/) in a new tab.
-2. On the page, It should open up a dialog to "Open notebook" as shown in the screenshot below. If not, go to file -> Open Notebook from the menu in the top left.
+2. On the page, it should open up a dialog to "Open notebook" as shown in the screenshot below. 
+   * If no dialog appears, go to File -> Open Notebook from the menu (in the top left).
 3. Choose Github and enter the repository url for the workshop: `https://github.com/BiocPy/BiocWorkshop2024`. This will automatically find the python notebooks available in the repository.
 
 ![](./assets/colab_session.png)
@@ -33,7 +34,5 @@ To open the session in Google colab
 ![](./assets/colab_open_notebook.png)
 
 :::{.callout-important}
-This process does not download the [RDS file](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) available in the repository. Folks might have to manually download this to their colab sessions.
+This process does not download the [RDS file](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) available in the repository. Folks might have to manually download this to their Google Colab sessions.
 :::
-
-and thats it!
