@@ -198,26 +198,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#accessing-and-exploring-single-cell-datasets" id="toc-accessing-and-exploring-single-cell-datasets" class="nav-link" data-scroll-target="#accessing-and-exploring-single-cell-datasets">1. Accessing and Exploring Single-Cell Datasets</a>
+  <li><a href="#accessing-and-exploring-single-cell-datasets" id="toc-accessing-and-exploring-single-cell-datasets" class="nav-link" data-scroll-target="#accessing-and-exploring-single-cell-datasets">1. Accessing and exploring single-cell datasets</a>
   <ul class="collapse">
-  <li><a href="#list-all-datasets" id="toc-list-all-datasets" class="nav-link" data-scroll-target="#list-all-datasets">1.1 List All Datasets</a></li>
-  <li><a href="#search-for-datasets" id="toc-search-for-datasets" class="nav-link" data-scroll-target="#search-for-datasets">1.2 Search for Datasets</a></li>
+  <li><a href="#list-all-datasets" id="toc-list-all-datasets" class="nav-link" data-scroll-target="#list-all-datasets">1.1 List all datasets</a></li>
+  <li><a href="#search-for-datasets" id="toc-search-for-datasets" class="nav-link" data-scroll-target="#search-for-datasets">1.2 Search for datasets</a></li>
   </ul></li>
   <li><a href="#download-dataset" id="toc-download-dataset" class="nav-link" data-scroll-target="#download-dataset">2. Download dataset</a>
   <ul class="collapse">
   <li><a href="#side-quest-on-singlecellexperiment-in-python" id="toc-side-quest-on-singlecellexperiment-in-python" class="nav-link" data-scroll-target="#side-quest-on-singlecellexperiment-in-python">2.1 Side-quest on <code>SingleCellExperiment</code> in Python</a></li>
   </ul></li>
-  <li><a href="#annotate-cell-types" id="toc-annotate-cell-types" class="nav-link" data-scroll-target="#annotate-cell-types">3. Annotate Cell Types</a>
+  <li><a href="#annotate-cell-types" id="toc-annotate-cell-types" class="nav-link" data-scroll-target="#annotate-cell-types">3. Annotate cell types</a>
   <ul class="collapse">
-  <li><a href="#access-reference-datasets-from-celldex" id="toc-access-reference-datasets-from-celldex" class="nav-link" data-scroll-target="#access-reference-datasets-from-celldex">3.1 Access Reference Datasets from <code>celldex</code></a></li>
+  <li><a href="#access-reference-datasets-from-celldex" id="toc-access-reference-datasets-from-celldex" class="nav-link" data-scroll-target="#access-reference-datasets-from-celldex">3.1 Access reference datasets from <code>celldex</code></a></li>
   </ul></li>
-  <li><a href="#analyze-single-cell-rna-seq-datasets" id="toc-analyze-single-cell-rna-seq-datasets" class="nav-link" data-scroll-target="#analyze-single-cell-rna-seq-datasets">4. Analyze Single-cell RNA-seq datasets</a>
+  <li><a href="#analyze-single-cell-rna-seq-datasets" id="toc-analyze-single-cell-rna-seq-datasets" class="nav-link" data-scroll-target="#analyze-single-cell-rna-seq-datasets">4. Analyze single-cell RNA-seq datasets</a>
   <ul class="collapse">
-  <li><a href="#seems-like-magic" id="toc-seems-like-magic" class="nav-link" data-scroll-target="#seems-like-magic">4.1 Seems like magic?</a></li>
+  <li><a href="#want-to-know-whats-happening-in-the-entire-analysis" id="toc-want-to-know-whats-happening-in-the-entire-analysis" class="nav-link" data-scroll-target="#want-to-know-whats-happening-in-the-entire-analysis">4.1 Want to know whats happening in the entire analysis</a></li>
   </ul></li>
   <li><a href="#visualize-results" id="toc-visualize-results" class="nav-link" data-scroll-target="#visualize-results">5. Visualize Results</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">6. Exercises</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BiocPy/BiocWorkshop2024/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -246,9 +246,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Welcome to this tutorial on annotating single-cell datasets with reference collections. The <strong>scRNAseq</strong> (<a href="https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html">R/Bioc</a>, <a href="https://github.com/BiocPy/scrnaseq">Python</a>) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor/BiocPy packages and workflows. These datasets are stored in language-agnostic representations described in <a href="https://github.com/artifactdb">ArtifactDB</a>, enabling easy access to datasets and analysis results across multiple programming languages such as R and Python. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets.</p>
 <section id="outline" class="level2">
 <h2 class="anchored" data-anchor-id="outline">Outline</h2>
-<p>In this tutorial, you will learn how to:</p>
+<p>In this tutorial, we’ll walk through how to:</p>
 <ol type="1">
-<li>Install and set up BiocPy packages in your Python environment.</li>
 <li>Explore the <code>scrnaseq</code> package and access public single-cell RNA-seq datasets.</li>
 <li>Perform basic operations on <code>SingleCellExperiment</code> objects, the core data structure for single-cell data.</li>
 <li>Annotate cell types using reference datasets from the <code>celldex</code> package.</li>
@@ -261,29 +260,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Python 3.8 or later with dependencies listed <a href="https://github.com/BiocPy/BiocWorkshop2024/blob/master/requirements.txt">here</a>.</li>
 <li>R 4.4.0 and Bioconductor packages listed <a href="https://github.com/BiocPy/BiocWorkshop2024/blob/master/rpackages.R">here</a>.</li>
 </ul>
-</section>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>Let’s start by installing the required packages.</p>
-<p>!pip install scrnaseq celldex singler</p>
-<p>This will install the <code>scrnaseq</code>, <code>celldex</code>, <code>singler</code> packages from PyPI.</p>
-<section id="r" class="level4">
-<h4 class="anchored" data-anchor-id="r">R</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">"scRNAseq"</span>, <span class="st">"celldex"</span>, <span class="st">"SingleR"</span>), </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">repos=</span><span class="st">'http://cran.us.r-project.org'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This will install the <code>scRNAseq</code>, <code>celldex</code>, <code>SingleR</code>, packages from Bioconductor.</p>
-</section>
+<p>Install the Python packages using pip:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install scrnaseq celldex singler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Install the R packages using BiocManager:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">"scRNAseq"</span>, <span class="st">"celldex"</span>, <span class="st">"SingleR"</span>), </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">repos=</span><span class="st">'http://cran.us.r-project.org'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="accessing-and-exploring-single-cell-datasets" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-and-exploring-single-cell-datasets">1. Accessing and Exploring Single-Cell Datasets</h2>
-<p>Now that we have the necessary packages installed, let’s explore the <code>scrnaseq</code> package and learn how to access public single-cell RNA-seq datasets. Datasets published to the <code>scrnaseq</code> package are decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let’s see how we can list and search for datasets.</p>
+<h2 class="anchored" data-anchor-id="accessing-and-exploring-single-cell-datasets">1. Accessing and exploring single-cell datasets</h2>
+<p>Let’s explore the <code>scrnaseq</code> package and learn how to access public single-cell RNA-seq datasets. Datasets published to the <code>scrnaseq</code> package are decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let’s see how we can list and search for datasets.</p>
 <section id="list-all-datasets" class="level3">
-<h3 class="anchored" data-anchor-id="list-all-datasets">1.1 List All Datasets</h3>
-<p>The <code>list_datasets()</code> function in Python or <code>surveyDatasets()</code> in R will display all available datasets published to the <code>scRNAseq</code> collection along with their metadata.</p>
-<div id="cell-6" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> scrnaseq.list_datasets()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>datasets[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 class="anchored" data-anchor-id="list-all-datasets">1.1 List all datasets</h3>
+<p>The <code>list_datasets()</code> function in Python or <code>surveyDatasets()</code> in R will display all available datasets published to the <code>scRNAseq</code> collection along with their metadata. To list all available datasets in the <code>scrnaseq</code> package and displays their names, titles, and versions:</p>
+<div id="cell-2" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> scrnaseq.list_datasets()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>datasets[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
@@ -322,22 +314,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="r-1" class="level4">
-<h4 class="anchored" data-anchor-id="r-1">R</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(scRNAseq))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>all_ds <span class="ot">&lt;-</span> <span class="fu">surveyDatasets</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_ds[, <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This lists all available datasets in the <code>scrnaseq</code> package and displays their names, titles, and versions.</p>
+<section id="r" class="level4">
+<h4 class="anchored" data-anchor-id="r">R</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(scRNAseq))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>all_ds <span class="ot">&lt;-</span> <span class="fu">surveyDatasets</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_ds[, <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="search-for-datasets" class="level3">
-<h3 class="anchored" data-anchor-id="search-for-datasets">1.2 Search for Datasets</h3>
+<h3 class="anchored" data-anchor-id="search-for-datasets">1.2 Search for datasets</h3>
 <p>You can also search for datasets based on metadata using <code>search_datasets()</code> in Python or <code>searchDatasets()</code> in R. This supports both simple text queries and complex boolean expressions.</p>
-<div id="cell-9" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pancreas_datasets <span class="op">=</span> scrnaseq.search_datasets(<span class="st">"pancreas"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>pancreas_datasets[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s search for datasets containing the term “pancreas” and displays their names, titles, and versions.</p>
+<div id="cell-4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pancreas_datasets <span class="op">=</span> scrnaseq.search_datasets(<span class="st">"pancreas"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>pancreas_datasets[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -376,28 +368,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="r-2" class="level4">
-<h4 class="anchored" data-anchor-id="r-2">R</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pancreas_ds <span class="ot">&lt;-</span> <span class="fu">searchDatasets</span>(<span class="st">"pancreas"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pancreas_ds[, <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This R|Python code searches for datasets containing the term “pancreas” and displays their names, titles, and versions.</p>
+<section id="r-1" class="level4">
+<h4 class="anchored" data-anchor-id="r-1">R</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pancreas_ds <span class="ot">&lt;-</span> <span class="fu">searchDatasets</span>(<span class="st">"pancreas"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pancreas_ds[, <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="advanced-searches" class="level4">
-<h4 class="anchored" data-anchor-id="advanced-searches">1.2.1 Advanced Searches</h4>
+<h4 class="anchored" data-anchor-id="advanced-searches">1.2.1 Advanced searches</h4>
 <p>For more complex searches involving boolean operations, use <code>define_text_query()</code> in Python or <code>defineTextQuery()</code> in R. Here’s an example to find datasets using the mouse reference genome (<code>GRCm38</code>) and containing the words <code>neuro</code> or <code>pancrea</code>.</p>
 <pre class="{tip}"><code>Check out the reference manual for more details and usage of these functions.</code></pre>
-<div id="cell-11" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gypsum_client <span class="im">import</span> define_text_query</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> scrnaseq.search_datasets(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     define_text_query(<span class="st">"GRCm38"</span>, field<span class="op">=</span><span class="st">"genome"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="op">&amp;</span> (</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>          define_text_query(<span class="st">"neuro%"</span>, partial<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>          <span class="op">|</span> define_text_query(<span class="st">"pancrea%"</span>, partial<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>     )</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>res[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gypsum_client <span class="im">import</span> define_text_query</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> scrnaseq.search_datasets(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>     define_text_query(<span class="st">"GRCm38"</span>, field<span class="op">=</span><span class="st">"genome"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>     <span class="op">&amp;</span> (</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>          define_text_query(<span class="st">"neuro%"</span>, partial<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>          <span class="op">|</span> define_text_query(<span class="st">"pancrea%"</span>, partial<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>res[[<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
@@ -437,15 +428,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="r-3" class="level4">
-<h4 class="anchored" data-anchor-id="r-3">R</h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(gypsum))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">searchDatasets</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">defineTextQuery</span>(<span class="st">"GRCm38"</span>, <span class="at">field=</span><span class="st">"genome"</span>) <span class="sc">&amp;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">defineTextQuery</span>(<span class="st">"neuro%"</span>, <span class="at">partial=</span><span class="cn">TRUE</span>) <span class="sc">|</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">defineTextQuery</span>(<span class="st">"pancrea%"</span>, <span class="at">partial=</span><span class="cn">TRUE</span>))</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res[,<span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="r-2" class="level4">
+<h4 class="anchored" data-anchor-id="r-2">R</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(gypsum))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">searchDatasets</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">defineTextQuery</span>(<span class="st">"GRCm38"</span>, <span class="at">field=</span><span class="st">"genome"</span>) <span class="sc">&amp;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">defineTextQuery</span>(<span class="st">"neuro%"</span>, <span class="at">partial=</span><span class="cn">TRUE</span>) <span class="sc">|</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">defineTextQuery</span>(<span class="st">"pancrea%"</span>, <span class="at">partial=</span><span class="cn">TRUE</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res[,<span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"title"</span>, <span class="st">"version"</span>)], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This performs a complex search to find datasets tagged as “mouse” in the reference genome field and containing the keywords “neuro” or “pancrea”.</p>
 <pre class="{important}"><code>Once a dataset is identified, always list the name and version of the dataset in your scripts for reproducibility.</code></pre>
 </section>
@@ -454,12 +445,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="download-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="download-dataset">2. Download dataset</h2>
 <p>After identifying a dataset of interest, use <code>fetch_dataset()</code> in Python or <code>fetchDataset()</code> in R to download the dataset. This will load the dataset as a <code>SingleCellExperiment</code> object.</p>
-<pre class="{note}"><code>R/Bioconductor users might already be familiar with the [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class. BiocPy also provides the same implementation in the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) package.</code></pre>
+<pre class="{note}"><code>R/Bioconductor users might already be familiar with the [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class. BiocPy also provides similar implementation in the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) package.</code></pre>
 <p>For this tutorial, let’s download the <code>zeisel-brain</code> dataset:</p>
-<div id="cell-13" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sce <span class="op">=</span> scrnaseq.fetch_dataset(<span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-8" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrnaseq</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sce <span class="op">=</span> scrnaseq.fetch_dataset(<span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SingleCellExperiment
 dimensions: (20006, 3005)
@@ -477,28 +468,35 @@ metadata(0):
 </code></pre>
 </div>
 </div>
-<section id="r-4" class="level4">
-<h4 class="anchored" data-anchor-id="r-4">R</h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">fetchDataset</span>(<span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sce</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="r-3" class="level4">
+<h4 class="anchored" data-anchor-id="r-3">R</h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">fetchDataset</span>(<span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sce</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="side-quest-on-singlecellexperiment-in-python" class="level3">
 <h3 class="anchored" data-anchor-id="side-quest-on-singlecellexperiment-in-python">2.1 Side-quest on <code>SingleCellExperiment</code> in Python</h3>
-<p>The Python implementation of the <code>SingleCellExperiment</code> class adheres to Bioconductor’s specification and offers similar interface and methods. Our goal is to make it simple for analysts to switch between R and Python. A key difference is the shift from functional to an object-oriented paradigm.</p>
+<p>The Python implementation of the <code>SingleCellExperiment</code> class adheres to Bioconductor’s specification and offers similar interface and methods. Our goal is to make it simple for analysts to switch between R and Python.</p>
 <pre class="{note}"><code>For more details on the design, refer to the [BiocPy developer guide](https://github.com/BiocPy/developer_guide) or the [singlecellexperiment](https://github.com/BiocPy/SingleCellExperiment) documentation.</code></pre>
 <p>This Python code demonstrates basic operations on a <code>SingleCellExperiment</code> object, including retrieving assay names, column names, column metadata, accessing counts, and coercing to an <code>AnnData</code> object for interoperability with existing analysis ready eco-systems in Python.</p>
-<div id="cell-15" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"assays: "</span>, sce.get_assay_names()) <span class="co"># or sce.assay_names</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"column names: "</span>, sce.get_column_names()[:<span class="dv">10</span>]) <span class="co"># or sce.column_names</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"column metadata: "</span>, sce.get_column_data()) <span class="co"># or sce.column_data</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"access counts: "</span>, sce.assays[<span class="st">"counts"</span>]) <span class="co"># or # sce.assay("counts")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To display assays names from the object:</p>
+<div id="cell-10" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Assays names: "</span>, sce.get_assay_names()) <span class="co"># or sce.assay_names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>assays:  ['counts']
-column names:  ['1772071015_C02', '1772071017_G12', '1772071017_A05', '1772071014_B06', '1772067065_H06', '1772071017_E02', '1772067065_B07', '1772067060_B09', '1772071014_E04', '1772071015_D04']
-column metadata:  BiocFrame with 3005 rows and 9 columns
+<pre><code>Assays names:  ['counts']</code></pre>
+</div>
+</div>
+<p>To access cell barcodes or ids:</p>
+<div id="cell-12" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cell barcodes (first 10): "</span>, sce.get_column_names()[:<span class="dv">10</span>]) <span class="co"># or sce.column_names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cell barcodes (first 10):  ['1772071015_C02', '1772071017_G12', '1772071017_A05', '1772071014_B06', '1772067065_H06', '1772071017_E02', '1772067065_B07', '1772067060_B09', '1772071014_E04', '1772071015_D04']</code></pre>
+</div>
+</div>
+<p>To access all cell annotations:</p>
+<div id="cell-14" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Column metadata: "</span>, sce.get_column_data()) <span class="co"># or sce.column_data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Column metadata:  BiocFrame with 3005 rows and 9 columns
                        tissue            group #     total mRNA mol               well                sex                age           diameter
                  &lt;StringList&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt; &lt;ndarray[float64]&gt;
 1772071015_C02       sscortex                1.0            21580.0               11.0                1.0               21.0                0.0
@@ -516,8 +514,14 @@ column metadata:  BiocFrame with 3005 rows and 9 columns
                              ...          ...
 1772063068_D01 endothelial-mural         Vsmc
 1772066098_A12 endothelial-mural         Vsmc
-1772058148_F03 endothelial-mural         Vsmc
-access counts:  &lt;20006 x 3005&gt; sparse ReloadedArray object of type 'uint16'
+1772058148_F03 endothelial-mural         Vsmc</code></pre>
+</div>
+</div>
+<p>To access an assay matrix:</p>
+<div id="cell-16" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Counts matrix: "</span>, sce.assays[<span class="st">"counts"</span>]) <span class="co"># or # sce.assay("counts")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Counts matrix:  &lt;20006 x 3005&gt; sparse ReloadedArray object of type 'uint16'
 [[  0,   0,   0, ...,   0,   0,   1],
  [  3,   1,   0, ...,   0,   0,   1],
  [  3,   1,   6, ...,   0,   0,   0],
@@ -527,23 +531,23 @@ access counts:  &lt;20006 x 3005&gt; sparse ReloadedArray object of type 'uint16
  [ 13,  14,   9, ...,  18,   3,  13]]</code></pre>
 </div>
 </div>
-<pre class="{note}"><code>The package uses [delayed arrays](https://github.com/biocpy/delayedarray), to load file-backed arrays and matrices. This reduces memory usage when loading large datasets. This package provides similar functionality to the R/Bioconductor's [DelayedArray](https://www.bioconductor.org/packages/release/bioc/html/DelayedArray.html) eco-system. </code></pre>
-<div id="cell-17" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> delayedarray <span class="im">import</span> to_scipy_sparse_matrix</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"counts as csr: "</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">repr</span>(to_scipy_sparse_matrix(sce.assays[<span class="st">"counts"</span>], <span class="st">"csc"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The package uses <a href="https://github.com/biocpy/delayedarray">delayed arrays</a> (similar to the R/Bioconductor’s <a href="https://www.bioconductor.org/packages/release/bioc/html/DelayedArray.html">DelayedArray</a>), to load file-backed arrays and matrices. This reduces memory usage when loading large datasets. Methods are available to coerce delayed arrays to <a href="https://docs.scipy.org/doc/scipy/reference/sparse.html">sparse matrix representations</a> from the scipy package:</p>
+<div id="cell-18" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> delayedarray <span class="im">import</span> to_scipy_sparse_matrix</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"counts as csr: "</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">repr</span>(to_scipy_sparse_matrix(sce.assays[<span class="st">"counts"</span>], <span class="st">"csc"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>counts as csr: 
 &lt;20006x3005 sparse matrix of type '&lt;class 'numpy.uint16'&gt;'
     with 11349080 stored elements in Compressed Sparse Column format&gt;</code></pre>
 </div>
 </div>
-<p>or realize the entire matrix when loaded from disk,</p>
-<div id="cell-19" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sce <span class="op">=</span> scrnaseq.fetch_dataset(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>, </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    realize_assays<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To simplify this, we provide the <code>realize_assays</code> option to load matrices fully into memory when fetching the dataset.</p>
+<div id="cell-20" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sce <span class="op">=</span> scrnaseq.fetch_dataset(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"zeisel-brain-2015"</span>, <span class="st">"2023-12-14"</span>, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    realize_assays<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SingleCellExperiment
 dimensions: (20006, 3005)
@@ -561,9 +565,9 @@ metadata(0):
 </code></pre>
 </div>
 </div>
-<p>We also provide coercions to various package to take advantage of methods in the Python ecosystem, e.g.&nbsp;scverse and AnnData</p>
-<div id="cell-21" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coerce to AnnData: "</span>, sce.to_anndata())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In addition, we provide coercions from <code>SingleCellExperiment</code> class to take advantage of methods in the Python ecosystem, e.g.&nbsp;scverse and AnnData.</p>
+<div id="cell-22" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coerce to AnnData: "</span>, sce.to_anndata())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>coerce to AnnData:  (AnnData object with n_obs × n_vars = 3005 × 20006
     obs: 'tissue', 'group #', 'total mRNA mol', 'well', 'sex', 'age', 'diameter', 'level1class', 'level2class', 'rownames'
@@ -574,21 +578,20 @@ metadata(0):
 </section>
 </section>
 <section id="annotate-cell-types" class="level2">
-<h2 class="anchored" data-anchor-id="annotate-cell-types">3. Annotate Cell Types</h2>
-<p>We can now annotate cell types by using reference datasets and matching cells based on their expression profiles. In this tutorial, we will use <a href="https://github.com/SingleR-inc/SingleR">singleR</a> in R or its Python equivalent <a href="https://github.com/BiocPy/singler">singler</a>.</p>
+<h2 class="anchored" data-anchor-id="annotate-cell-types">3. Annotate cell types</h2>
+<p>We can now annotate cell types by using reference datasets and matching cells based on their expression profiles. In this tutorial, we will use <a href="https://github.com/SingleR-inc/SingleR">SingleR</a> in R or its Python equivalent <a href="https://github.com/BiocPy/singler">singler</a>.</p>
 <p>Before running the <code>singler</code> algorithm, we need to download an appropriate reference dataset from the <code>celldex</code> package.</p>
 <section id="access-reference-datasets-from-celldex" class="level3">
-<h3 class="anchored" data-anchor-id="access-reference-datasets-from-celldex">3.1 Access Reference Datasets from <code>celldex</code></h3>
+<h3 class="anchored" data-anchor-id="access-reference-datasets-from-celldex">3.1 Access reference datasets from <code>celldex</code></h3>
 <p>Similar to the <code>scRNAseq</code> package, the <code>celldex</code> package provides access to the collection of reference expression datasets with curated cell type labels, for use in procedures like automated annotation of single-cell data or deconvolution of bulk RNA-seq to reference datasets. These datasets are also stored in language-agnostic representations for use in downstream analyses.</p>
-<pre class="{note}"><code>The `celldex` package is available on [R/Bioconductor](https://bioconductor.org/packages/devel/data/experiment/html/celldex.html) and [PyPI](https://github.com/BiocPy/celldex).</code></pre>
 <p>For this tutorial, let’s download the <a href="https://www.immgen.org/">Mouse RNA-seq</a> reference from <code>celldex</code> using <code>fetch_reference()</code> in Python or <code>fetchReference()</code> in R. This reference consists of a collection of mouse bulk RNA-seq data sets downloaded from the gene expression omnibus (<a href="https://doi.org/10.1101/gr.240093.118">Benayoun et al.&nbsp;2019</a>). A variety of cell types are available, again mostly from blood but also covering several other tissues.</p>
-<div id="cell-23" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> celldex</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref <span class="op">=</span> celldex.fetch_reference(</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mouse_rnaseq"</span>, <span class="st">"2024-02-26"</span>, </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    realize_assays<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mouse_rnaseq_ref)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-24" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> celldex</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref <span class="op">=</span> celldex.fetch_reference(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mouse_rnaseq"</span>, <span class="st">"2024-02-26"</span>, </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    realize_assays<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mouse_rnaseq_ref)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SummarizedExperiment
 dimensions: (21214, 358)
@@ -601,24 +604,24 @@ metadata(0):
 </code></pre>
 </div>
 </div>
-<section id="r-5" class="level4">
-<h4 class="anchored" data-anchor-id="r-5">R</h4>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(celldex))</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref <span class="ot">&lt;-</span> <span class="fu">fetchReference</span>(<span class="st">"mouse_rnaseq"</span>, <span class="st">"2024-02-26"</span>, <span class="at">realize.assays=</span><span class="cn">TRUE</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now, let’s identify cells from the <code>zeisel-brain</code> dataset using the <code>mouse_rnaseq</code> reference dataset.</p>
-<div id="cell-25" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> singler</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> singler.annotate_single(</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    test_data<span class="op">=</span>sce, </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    ref_data <span class="op">=</span> mouse_rnaseq_ref,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    ref_labels <span class="op">=</span> <span class="st">"label.main"</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>pd.Series(matches[<span class="st">"best"</span>]).value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="r-4" class="level4">
+<h4 class="anchored" data-anchor-id="r-4">R</h4>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(celldex))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref <span class="ot">&lt;-</span> <span class="fu">fetchReference</span>(<span class="st">"mouse_rnaseq"</span>, <span class="st">"2024-02-26"</span>, <span class="at">realize.assays=</span><span class="cn">TRUE</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>mouse_rnaseq_ref</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, let’s annotate cells from the <code>zeisel-brain</code> dataset using the <code>mouse_rnaseq</code> reference dataset.</p>
+<div id="cell-26" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> singler</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> singler.annotate_single(</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    test_data<span class="op">=</span>sce, </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    ref_data <span class="op">=</span> mouse_rnaseq_ref,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    ref_labels <span class="op">=</span> <span class="st">"label.main"</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>pd.Series(matches[<span class="st">"best"</span>]).value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/Users/kancherj/miniforge3/envs/bioc2024/lib/python3.10/site-packages/biocframe/BiocFrame.py:591: UserWarning: Setting property 'metadata' is an in-place operation, use 'set_metadata' instead
   warn(</code></pre>
@@ -636,95 +639,141 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="r-6" class="level4">
-<h4 class="anchored" data-anchor-id="r-6">R</h4>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(SingleR))</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cell_labels <span class="ot">&lt;-</span> <span class="fu">SingleR</span>(<span class="at">test =</span> <span class="fu">assay</span>(sce, <span class="st">"counts"</span>), <span class="at">ref =</span> mouse_rnaseq_ref, <span class="at">labels =</span> mouse_rnaseq_ref<span class="sc">$</span>label.main)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cell_labels<span class="sc">$</span>labels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="r-5" class="level4">
+<h4 class="anchored" data-anchor-id="r-5">R</h4>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">library</span>(SingleR))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cell_labels <span class="ot">&lt;-</span> <span class="fu">SingleR</span>(<span class="at">test =</span> <span class="fu">assay</span>(sce, <span class="st">"counts"</span>), <span class="at">ref =</span> mouse_rnaseq_ref, <span class="at">labels =</span> mouse_rnaseq_ref<span class="sc">$</span>label.main)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cell_labels<span class="sc">$</span>labels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Give this is a brain dataset, the presence of neuron’s and other brain-related cell types makes sense.</p>
 </section>
 </section>
 </section>
 <section id="analyze-single-cell-rna-seq-datasets" class="level2">
-<h2 class="anchored" data-anchor-id="analyze-single-cell-rna-seq-datasets">4. Analyze Single-cell RNA-seq datasets</h2>
+<h2 class="anchored" data-anchor-id="analyze-single-cell-rna-seq-datasets">4. Analyze single-cell RNA-seq datasets</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/single-cell-space.jpg" class="img-fluid figure-img"></p>
 <figcaption>single-cell-methods</figcaption>
 </figure>
 </div>
-<p>Aaron has implemented the single-cell methods from scran in C++. This allows us to reuse the same implementation in JS and develop applications for analyzing single-cell data (<a href="https://github.com/kanaverse/kana">Kana</a>), or in Python through the <a href="https://github.com/BiocPy/scranpy">scranpy</a> package. This avoids different interpretations of the analysis results by switching programming languages (Pachter et al, <a href="https://www.biorxiv.org/content/10.1101/2024.04.04.588111v1">The impact of package selection and versioning on single-cell RNA-seq analysis | bioRxiv</a> )</p>
-<p>To analyze the dataset,</p>
-<div id="cell-27" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scranpy</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> scranpy.analyze_sce(sce)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># results is a complex object, lets explore the umap and tsne dimensions</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.tsne)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Aaron has implemented the single-cell methods from scran in C++. This allows us to reuse the same implementation in JS and develop applications for analyzing single-cell data (<a href="https://github.com/kanaverse/kana">Kana</a>), or in Python through the <a href="https://github.com/BiocPy/scranpy">scranpy</a> package.</p>
+<p>To analyze the dataset using the default parameters:</p>
+<div id="cell-28" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scranpy</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> scranpy.analyze_sce(sce)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># results is a complex object, </span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># let's explore the umap and tsne dimensions</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.tsne)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>TsneEmbedding(x=array([23.78283174, 23.20692407, 23.99748307, ..., 16.43261279,
        12.91835402, 20.38262289]), y=array([-15.02586205, -15.00463774, -14.18924958, ...,  -1.56177656,
          1.55240304,   3.51312435]))</code></pre>
 </div>
 </div>
-<section id="seems-like-magic" class="level3">
-<h3 class="anchored" data-anchor-id="seems-like-magic">4.1 Seems like magic?</h3>
+<section id="want-to-know-whats-happening-in-the-entire-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="want-to-know-whats-happening-in-the-entire-analysis">4.1 Want to know whats happening in the entire analysis</h3>
 <p>Running the <code>analyze_sce()</code> function uses the default parameters to run the single-cell workflow. If you want to customize or want to have fine-grained control on the analysis steps, set the parameter <code>dry_run=True</code>.</p>
-<pre class="{note}"><code>This prints out the exact series of steps the function does under the hood to perform the analysis. You can then use this to customize the analysis to your specific dataset or use case.</code></pre>
-<div id="cell-29" class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(scranpy.analyze_sce(sce, dry_run<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="{note}"><code>This prints out the exact series of steps the function runs under the hood to perform the analysis. You can then use this to customize the analysis to your specific dataset or use case.</code></pre>
+<div id="cell-30" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(scranpy.analyze_sce(sce, dry_run<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>import scranpy
+import numpy
+
+results = AnalyzeResults()
+results.rna_quality_control_metrics = scranpy.quality_control.per_cell_rna_qc_metrics(rna_matrix, options=update(options.per_cell_rna_qc_metrics_options, cell_names=options.miscellaneous_options.cell_names))
+results.rna_quality_control_thresholds = scranpy.quality_control.suggest_rna_qc_filters(results.rna_quality_control_metrics, options=update(options.suggest_rna_qc_filters_options, block=options.miscellaneous_options.block))
+results.rna_quality_control_filter = scranpy.quality_control.create_rna_qc_filter(results.rna_quality_control_metrics, results.rna_quality_control_thresholds, options=update(options.create_rna_qc_filter_options, block=options.miscellaneous_options.block))
+discard = numpy.zeros(rna_ptr.shape[1], dtype=bool)
+discard = numpy.logical_or(discard, results.rna_quality_control_filter)
+rna_filtered = scranpy.quality_control.filter_cells(rna_matrix, filter=discard)
+results.quality_control_retained = numpy.logical_not(discard)
+filtered_block = None
+raw_size_factors = results.rna_quality_control_metrics.column('sums')[results.quality_control_retained]
+(rna_normed, final_size_factors) = scranpy.normalization.log_norm_counts(rna_filtered, options=update(options.rna_log_norm_counts_options, size_factors=raw_size_factors, center_size_factors_options=update(options.rna_log_norm_counts_options.center_size_factors_options, block=filtered_block), with_size_factors=True))
+results.rna_size_factors = final_size_factors
+results.gene_variances = scranpy.feature_selection.model_gene_variances(rna_normed, options=update(options.model_gene_variances_options, block=filtered_block, feature_names=options.miscellaneous_options.rna_feature_names))
+results.hvgs = scranpy.feature_selection.choose_hvgs(results.gene_variances.column('residuals'), options=options.choose_hvgs_options)
+results.rna_pca = scranpy.dimensionality_reduction.run_pca(rna_normed, options=update(options.rna_run_pca_options, subset=results.hvgs, block=filtered_block))
+lowdim = results.rna_pca.principal_components
+(get_tsne, get_umap, graph, remaining_threads) = scranpy.run_neighbor_suite(lowdim, build_neighbor_index_options=options.build_neighbor_index_options, find_nearest_neighbors_options=options.find_nearest_neighbors_options, run_umap_options=options.run_umap_options, run_tsne_options=options.run_tsne_options, build_snn_graph_options=options.build_snn_graph_options, num_threads=options.find_nearest_neighbors_options.num_threads)
+results.snn_graph = graph
+results.clusters = results.snn_graph.community_multilevel(resolution=options.miscellaneous_options.snn_graph_multilevel_resolution).membership
+results.rna_markers = scranpy.marker_detection.score_markers(rna_normed, grouping=results.clusters, options=update(options.rna_score_markers_options, block=filtered_block, feature_names=options.miscellaneous_options.rna_feature_names, num_threads=remaining_threads))
+results.tsne = get_tsne()
+results.umap = get_umap()</code></pre>
 </div>
-<pre class="{tip}"><code>Users can also run individual steps from the analysis without having to perform the full analysis, e.g. compute log normalized counts or find markers, etc.</code></pre>
+</div>
+<pre class="{tip}"><code>Users can also run individual steps from the analysis without having to perform the full analysis, e.g. compute log-normalized counts or find markers.</code></pre>
 </section>
 </section>
 <section id="visualize-results" class="level2">
 <h2 class="anchored" data-anchor-id="visualize-results">5. Visualize Results</h2>
 <p>I can’t have a tutorial without a section on visualization or figures.</p>
 <p>We will use the seaborn and matplotlib packages in Python to create visualizations. We’ll plot the t-SNE embedding and color the cells by their cluster assignments.</p>
-<div id="cell-31" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>results.tsne.x, y<span class="op">=</span>results.tsne.y, </span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>results.clusters, palette<span class="op">=</span><span class="st">"deep"</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-32" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>results.tsne.x, y<span class="op">=</span>results.tsne.y, </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>results.clusters, palette<span class="op">=</span><span class="st">"Paired"</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="annotate_cell_types_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="annotate_cell_types_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>or the UMAP embedding with the cell types we identified from <code>celldex</code></p>
-<div id="cell-33" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>results.umap.x, y<span class="op">=</span>results.umap.y, </span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>matches[<span class="st">"best"</span>][:<span class="dv">3002</span>], palette<span class="op">=</span><span class="st">"deep"</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now’s lets color the embedding with the cell types we identified from <code>celldex</code>. We ran the singleR algorithm on the full datasets, but scranpy filtered a few cells during the QC step. Lets identify which cells were kept.</p>
+<div id="cell-34" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>to_keep <span class="op">=</span> [i <span class="cf">for</span> i,x <span class="kw">in</span> <span class="bu">enumerate</span>(results.rna_quality_control_filter) <span class="cf">if</span> x <span class="op">==</span> <span class="va">False</span>]</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>filtered_matches <span class="op">=</span> [matches[<span class="st">"best"</span>][i] <span class="cf">for</span> i <span class="kw">in</span> to_keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-35" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>results.tsne.x, y<span class="op">=</span>results.tsne.y, </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>filtered_matches, palette<span class="op">=</span><span class="st">"Paired"</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="annotate_cell_types_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="annotate_cell_types_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<pre class="{caution}"><code>During the QC step, some cells were filtered, hence we filter the matches and this is incorrect (since we don't know which cells were filtered). 
-
-We'll leave this as an exercise for the reader to change the order of steps: 1) run the dataset through the QC step 2) filter cells, and then 3) annotate using singleR.</code></pre>
+<p>Similarly also explore the UMAP embedding:</p>
+<div id="cell-37" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>results.umap.x, y<span class="op">=</span>results.umap.y, </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>filtered_matches, palette<span class="op">=</span><span class="st">"Paired"</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="annotate_cell_types_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">6. Exercises</h2>
 <ol type="1">
-<li>Share or Upload your datasets to scrna-seq, Instructions to upload are available in their respective <a href="https://bioconductor.org/packages/release/data/experiment/html/scRNAseq.html">R/Bioc</a> and <a href="https://github.com/BiocPy/scrnaseq">Python</a> packages.</li>
+<li>Share or upload your datasets to scrna-seq package. Instructions to upload are available in their respective <a href="https://bioconductor.org/packages/release/data/experiment/html/scRNAseq.html">R/Bioc</a> and <a href="https://github.com/BiocPy/scrnaseq">Python</a> packages.</li>
 <li>Explore top markers for each cluster identified by scranpy.</li>
-<li>Perform multi-modal analysis (scranpy supports RNA, ADT, CRISPR).</li>
-<li>save your results and explore in <a href="https://github.com/kanaverse/kana">Kana</a>.</li>
+<li>Save your results and explore in <a href="https://github.com/kanaverse/kana">Kana</a>.</li>
 </ol>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Congratulations! You have now completed the tutorial on accessing single-cell datasets using <code>scRNAseq</code> and <code>ArtifactDB</code>, and annotating cell types using reference datasets from <code>celldex</code>. For more detailed usage and advanced analyses, refer to the respective documentation of these packages.</p>
-<p>By integrating R and Python workflows, you can leverage the strengths of both languages and perform comprehensive single-cell analysis. Keep exploring and happy analyzing!</p>
 
 
 </section>

@@ -161,10 +161,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#interoperability-between-r-and-python-using-biocpy" id="toc-interoperability-between-r-and-python-using-biocpy" class="nav-link active" data-scroll-target="#interoperability-between-r-and-python-using-biocpy">Interoperability between R and Python using BiocPy</a>
   <ul class="collapse">
-  <li><a href="#welcome" id="toc-welcome" class="nav-link" data-scroll-target="#welcome">Welcome</a>
-  <ul class="collapse">
+  <li><a href="#welcome" id="toc-welcome" class="nav-link" data-scroll-target="#welcome">Welcome</a></li>
   <li><a href="#core-contributors" id="toc-core-contributors" class="nav-link" data-scroll-target="#core-contributors">Core contributors</a></li>
-  </ul></li>
   <li><a href="#other-resources" id="toc-other-resources" class="nav-link" data-scroll-target="#other-resources">Other resources</a></li>
   <li><a href="#developer-notes" id="toc-developer-notes" class="nav-link" data-scroll-target="#developer-notes">Developer notes</a></li>
   </ul></li>
@@ -181,22 +179,22 @@ ul.task-list li input[type="checkbox"] {
 <h1>Interoperability between R and Python using BiocPy</h1>
 <section id="welcome" class="level2">
 <h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
-<p>Welcome to our workshop on exploring the data structures and packages available in <a href="https://github.com/biocpy">BiocPy</a>, a project that aims to facilitate Bioconductor workflows in Python.</p>
+<p>Welcome to our workshop on exploring the data structures and methods available in <a href="https://github.com/biocpy">BiocPy</a>, a project that aims to facilitate Bioconductor workflows in Python.</p>
 <p>In this workshop, we will focus on interoperability between R and Python, covering two main topics:</p>
 <ul>
-<li>Reading an RDS file containing <code>GenomicRanges</code> and performing downstream range-based analyses.</li>
-<li>Annotating single-cell RNA-seq data using the <a href="https://github.com/biocpy/scrnaseq">scrnaseq</a> package.</li>
+<li>Perform range-based analyses using <a href="https://github.com/BiocPy/GenomicRanges">GenomicRanges</a>.</li>
+<li>Annotate cell types in single-cell RNA-seq data stored as <a href="https://github.com/BiocPy/SingleCellExperiment">SingleCellExperiment</a> object.</li>
 </ul>
 <p>Attendees will learn how to represent and manipulate their datasets in Python in the same manner as in R/Bioconductor. All packages in BiocPy are published to PyPI, and the code is open-source on <a href="https://github.com/BiocPy">GitHub</a>.</p>
-<p><img src="./assets/workshop.png" class="img-fluid"></p>
-<section id="core-contributors" class="level3">
-<h3 class="anchored" data-anchor-id="core-contributors">Core contributors</h3>
+<!-- ![](./assets/workshop.png) -->
+</section>
+<section id="core-contributors" class="level2">
+<h2 class="anchored" data-anchor-id="core-contributors">Core contributors</h2>
 <ul>
 <li><a href="https://github.com/jkanche">Jayaram Kancherla</a></li>
 <li><a href="https://github.com/LTLA">Aaron Lun</a></li>
 </ul>
 <p>We are looking for more contributions from the community to improve our packages! If you are interested, please check out the issues or discussion in our GitHub organization.</p>
-</section>
 </section>
 <section id="other-resources" class="level2">
 <h2 class="anchored" data-anchor-id="other-resources">Other resources</h2>
@@ -207,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="developer-notes" class="level2">
 <h2 class="anchored" data-anchor-id="developer-notes">Developer notes</h2>
-<p>This is a reproducible Quarto book with reusable snippets. Check out <a href="./tutorials/sessioninfo.html">sessioninfo</a> for packages installed during the build.</p>
+<p>This is a reproducible Quarto book with reusable snippets. Check out the <a href="./tutorials/sessioninfo.html">session information</a> for versions of installed packages.</p>
 
 
 </section>
