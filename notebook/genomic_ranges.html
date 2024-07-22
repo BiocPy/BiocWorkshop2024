@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#compare-exonic-vs.-intronic-binding" id="toc-compare-exonic-vs.-intronic-binding" class="nav-link" data-scroll-target="#compare-exonic-vs.-intronic-binding">5.1 Compare exonic vs.&nbsp;intronic binding</a></li>
   <li><a href="#find-overlaps-with-the-first-exon" id="toc-find-overlaps-with-the-first-exon" class="nav-link" data-scroll-target="#find-overlaps-with-the-first-exon">5.2 Find overlaps with the first exon</a></li>
-  <li><a href="#resizing-and-shifting-peaks" id="toc-resizing-and-shifting-peaks" class="nav-link" data-scroll-target="#resizing-and-shifting-peaks">4.3 Resizing and Shifting Peaks</a></li>
+  <li><a href="#resize-and-shift-peaks" id="toc-resize-and-shift-peaks" class="nav-link" data-scroll-target="#resize-and-shift-peaks">5.3 Resize and Shift Peaks</a></li>
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">6. Exercises</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -722,18 +722,18 @@ Percentage of peaks overlapping with exons: 19.36%</code></pre>
 <p>Let’s explore some more complex operations that are often used in genomic analyses.</p>
 <section id="compare-exonic-vs.-intronic-binding" class="level3">
 <h3 class="anchored" data-anchor-id="compare-exonic-vs.-intronic-binding">5.1 Compare exonic vs.&nbsp;intronic binding</h3>
-<p>Let’s first identify intron regions. There are two ways to find introns</p>
+<p>Let’s first identify intronic regions. There are two ways to find introns:</p>
 <ol type="1">
-<li><strong>Find introns for each gene</strong>, regions within each gene body that do not overlap to that gene’s exons (using <code>psetdiff</code> in R/Bioconductor).</li>
-<li><strong>Find introns globally</strong>, regions that don’t overlap with any exon (using <code>subtract</code>). To find these positions, we also ignore strand information.</li>
+<li><strong>Find introns for each gene</strong>, i.e.&nbsp;regions within each gene’s transcript body that do not overlap any of that gene’s exons (using <code>psetdiff</code> in R/Bioconductor).</li>
+<li><strong>Find intronic regions globally</strong>, i.e.&nbsp;regions that do not overlap with any exon (using <code>subtract</code>) for any gene. To find these positions, we ignore strand information, because there could be genes that overlap on different strands.</li>
 </ol>
-<p>We will find introns globally (2) for our tutorial today. If you are wondering why, we currently don’t have <code>psetdiff</code> implemented in BiocPy/GenomicRanges. If you are interested in contributing, check out <a href="https://github.com/BiocPy/GenomicRanges/issues/115">this issue</a>.</p>
+<p>We will find intronic regions globally (2) for our tutorial today.</p>
 <p>Let’s first get all transcript ranges, following the steps in <a href="#find-transcription-start-sites-tss">Section 3.1</a>:</p>
 <div id="cell-35" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the full extent of each gene</span></span>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the full extent of each transcript</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>tx_ranges <span class="op">=</span> by_tx.<span class="bu">range</span>().as_genomic_ranges()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We now subtract any exons that overlaps within each transcript by ignoring the strand. The result is a <code>GenomicRangesList</code> containing intron regions for each transcript. We simplify this by coercing this into a <code>GenomicRanges</code> object.</p>
+<p>We now subtract any exons that overlaps within each transcript by ignoring the strand. The result is a <code>GenomicRangesList</code> containing intronic regions for each transcript. We simplify this by coercing this into a <code>GenomicRanges</code> object.</p>
 <div id="cell-37" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>introns <span class="op">=</span> tx_ranges.subtract(all_exons, ignore_strand<span class="op">=</span><span class="va">True</span>).as_granges()</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -828,8 +828,8 @@ seqinfo(46 sequences): chr1 chr10 chr11 ... chrUn_KI270750v1 chrUn_KI270752v1 ch
 </div>
 </div>
 </section>
-<section id="resizing-and-shifting-peaks" class="level3">
-<h3 class="anchored" data-anchor-id="resizing-and-shifting-peaks">4.3 Resizing and Shifting Peaks</h3>
+<section id="resize-and-shift-peaks" class="level3">
+<h3 class="anchored" data-anchor-id="resize-and-shift-peaks">5.3 Resize and Shift Peaks</h3>
 <p>Resizing and shifting genomic ranges can be useful in various contexts. For example:</p>
 <ul>
 <li>Narrowing peaks might help focus on the center of ChIP-seq binding sites.</li>

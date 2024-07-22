@@ -728,7 +728,7 @@ results.umap = get_umap()</code></pre>
 </div>
 </div>
 </div>
-<p>Now’s lets color the embedding with the cell types we identified from <code>celldex</code>. We ran the singleR algorithm on the full datasets, but scranpy filtered a few cells during the QC step. Lets identify which cells were kept.</p>
+<p>Now let’s color the embedding with the cell types we identified from <code>celldex</code>. We ran the singleR algorithm on the full datasets, but scranpy filtered a few cells during the QC step. Let’s identify which cells were kept.</p>
 <div id="cell-34" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>to_keep <span class="op">=</span> [i <span class="cf">for</span> i,x <span class="kw">in</span> <span class="bu">enumerate</span>(results.rna_quality_control_filter) <span class="cf">if</span> x <span class="op">==</span> <span class="va">False</span>]</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>filtered_matches <span class="op">=</span> [matches[<span class="st">"best"</span>][i] <span class="cf">for</span> i <span class="kw">in</span> to_keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
