@@ -1,0 +1,17 @@
+FROM jupyter/r-notebook:r-4.3.1
+
+USER root
+
+RUN apt update -qq 
+RUN apt install python3-dev build-essential -y 
+
+# install bioc deps from @almahmoud
+RUN curl -O https://raw.githubusercontent.com/Bioconductor/bioconductor_docker/devel/bioc_scripts/install_bioc_sysdeps.sh
+RUN bash install_bioc_sysdeps.sh 3.18 
+
+# update conda
+RUN conda update -y -c conda-forge libsqlite
+
+# install bioc deps from @almahmoud
+RUN pip install -r <(curl -s https://raw.githubusercontent.com/BiocPy/BiocWorkshop2024/master/requirements.txt) 
+RUN curl -s https://raw.githubusercontent.com/BiocPy/BiocWorkshop2024/master/rpackages.R | Rscript -

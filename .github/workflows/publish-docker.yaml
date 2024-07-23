@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish_docker:
+  publish_docker_pythononly:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,7 +14,22 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         with:
-          name: ${{ github.repository }}/builder:${{ github.ref_name }}
+          name: ${{ github.repository }}/pythononly:${{ github.ref_name }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
+          dockerfile: Dockerfile.pythononly
+
+  publish_docker_bioc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@v5
+        with:
+          name: ${{ github.repository }}/bioc:${{ github.ref_name }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          dockerfile: Dockerfile.bioc
