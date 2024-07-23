@@ -1,4 +1,4 @@
-# Tutorial 2: Access single-cell datasets from `scRNAseq` collection and annotate cell types
+# Tutorial 2: Annotate cell types in single-cell RNA-seq data
 
 Welcome to this tutorial on annotating single-cell datasets with reference collections. The **scRNAseq** ([R/Bioc](https://bioconductor.org/packages/devel/data/experiment/html/scRNAseq.html), [Python](https://github.com/BiocPy/scrnaseq)) package provides access to public single-cell RNA-seq datasets for use by other Bioconductor/BiocPy packages and workflows. These datasets are stored in language-agnostic representations described in [ArtifactDB](https://github.com/artifactdb), enabling easy access to datasets and analysis results across multiple programming languages such as R and Python. We will showcase how to integrate and process single-cell datasets across languages, such as R and Python, and how to annotate cell types using reference datasets.
 
@@ -39,7 +39,7 @@ BiocManager::install(c("scRNAseq", "celldex", "SingleR"),
 ```
 :::
 
-## 1. Accessing and exploring single-cell datasets
+## 1. Access and explore single-cell datasets
 
 Let's explore the `scrnaseq` package and learn how to access public single-cell RNA-seq datasets. Datasets published to the `scrnaseq` package are decorated with metadata such as the study title, species, number of cells, etc., to facilitate discovery. Let's see how we can list and search for datasets.
 

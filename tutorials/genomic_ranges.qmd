@@ -1,4 +1,4 @@
-# Tutorial 1: `GenomicRanges` and range-based analyses
+# Tutorial 1: Perform range-based analyses using `GenomicRanges`
 
 Genomic range operations are fundamental to many bioinformatics analyses. They allow us to work with intervals of genomic coordinates, which is crucial for understanding the relationships between different genomic features such as genes, regulatory elements, and experimental data like ChIP-seq peaks. In this tutorial, we'll explore how to work with genomic interval data using BiocPy's [GenomicRanges](https://github.com/BiocPy/GenomicRanges/) package, which provides a Python implementation of the R/Bioconductor [GenomicRanges package](https://github.com/Bioconductor/GenomicRanges).
 
@@ -6,7 +6,7 @@ Genomic range operations are fundamental to many bioinformatics analyses. They a
 
 In this workshop, we'll walk through several aspects of working with genomic ranges in Python:
 
-1. **Reading genomic data**: we'll start by reading in genomic data from RDS files, including exon positions grouped by transcripts.
+1. **Load genomic data**: we'll start by reading in genomic data from RDS files, including exon positions grouped by transcripts.
 2. **Basic genomic operations**: we'll cover fundamental operations like finding transcription start sites (TSS) and promoter regions.
 3. **Overlap analysis**: we'll learn how to find overlaps between different genomic features, a common task in many analyses.
 4. **Advanced operations**: we'll explore more complex operations like finding peaks within specific regions and resizing genomic intervals.
@@ -19,7 +19,7 @@ Before we begin, please ensure that you have the following prerequisites install
 - R 4.4.0 and Bioconductor packages listed [here](https://github.com/BiocPy/BiocWorkshop2024/blob/master/rpackages.R).
 
 
-Install the Python packages using pip:
+Install the Python packages from PyPI:
 
 ::: {.panel-tabset}
 
@@ -98,11 +98,18 @@ hg38_robject = read_rds("./hg38_exons_by_tx.rds")
 
 # Only printing the keys
 print("Keys of the object:", hg38_robject.keys())
-print("Class name of the object:", hg38_robject["class_name"])
+print("Class name of the object:", hg38_robject["class_name"], "from package:", hg38_robject["package_name"])
 ```
 :::
 
-This object (`hg38_robject`) can then be coerced into a Python `GenomicRangesList` class.
+This dictionary object (`hg38_robject`) contains 4 keys:
+
+1) **class_name**: class name of the object
+2) **package_name**: name of the package containing the class definition
+3) **data**: contains the value if the object is a scalar
+4) **attributes**: if the object is an S4 class, contains various attributes and their values
+
+This dictionary can then be coerced into a Python `GenomicRangesList` class.
 
 ::: {.panel-tabset}
 
@@ -118,7 +125,7 @@ print(by_tx)
 :::
 
 :::{.callout-note}
-Currently this is a two step process, we are working on simplifying this to a one step process for supported Bioconductor classes.
+Currently this is a two step process, we are working on simplifying this to a single step for supported Bioconductor classes.
 :::
 
 ## 3. Define promoters and TSS
@@ -127,7 +134,7 @@ Now, let's perform some basic operations like finding transcription start sites 
 
 ### 3.1 Find transcription start sites (TSS)
 
-Transcription Start Sites (TSS) are the locations where transcription of a gene begins. Identifying TSS is crucial for understanding gene regulation, as many regulatory elements are located near the TSS. 
+Transcription start sites (TSS) are the locations where transcription of a gene begins. Identifying TSS is crucial for understanding gene regulation, as many regulatory elements are located near the TSS. 
 
 First, we use the `range()` method to get the full extent of each transcript, i.e. from the start of the first exon to the end of the last exon. This should give us exactly one range per transcript.
 
@@ -143,7 +150,7 @@ print(ranges_by_tx)
 ```
 :::
 
-Since the range gives us exactly one range per transcript, so we can simplify our list to a `GenomicRanges` object. This is similar to `unlist` in R.
+Since the `range()` gives us exactly one range per transcript, so we can simplify our list to a `GenomicRanges` object. This is similar to `unlist` in R.
 
 ::: {.panel-tabset}
 
@@ -226,7 +233,7 @@ print(peaks_chr22)
 
 ### 4.2 Find overlaps with TSS
 
-Here, we're identifying ChIP-seq peaks that overlap with TSS. This analysis can help us understand if the protein of interest tends to bind near the start of genes, which could suggest a role in transcription initiation.
+Here, we are identifying ChIP-seq peaks that overlap with TSS. This analysis can help us understand if the protein of interest tends to bind near the start of genes, which could suggest a role in transcription initiation.
 
 ::: {.panel-tabset}
 
@@ -260,7 +267,7 @@ print(peaks_by_tss)
 ```
 :::
 
-Alternatively, we can use `subset_by_overlaps` method to more conveniently overlap the peaks that overlap with any TSS:
+Alternatively, we can use `subset_by_overlaps` method to more conveniently subset the peaks that overlap with any TSS:
 
 ::: {.panel-tabset}
 
@@ -273,7 +280,7 @@ print(peaks_by_tss2)
 
 ### 4.3 Find overlaps with promoters
 
-This operation finds ChIP-seq peaks that overlap with our defined promoter regions. If a significant number of peaks fall within promoters, it might suggest that the protein plays a role in gene regulation.
+This operation finds ChIP-seq peaks that overlap with any of our defined promoter regions. If a significant number of peaks fall within promoters, it might suggest that the protein plays a role in gene regulation.
 
 ::: {.panel-tabset}
 
@@ -384,7 +391,6 @@ percent_intronic = (len(peaks_by_introns) / len(peaks_chr22)) * 100
 print(f"Percentage of peaks overlapping with exons: {percent_exonic:.2f}%")
 print(f"Percentage of peaks overlapping with introns: {percent_intronic:.2f}%")
 ```
-
 :::
 
 :::{.callout-note}
@@ -409,6 +415,8 @@ for txid, grl in by_tx:
         all_first.append(grl.sort()[-1])
     else:
         all_first.append(grl.sort()[0])
+
+print(all_first[:3])
 ```
 
 Then we combine all the individual genomic elements. The [biocutils](https://github.com/BiocPy/BiocUtils) package provides utilities for convenient aspects of R that aren't provided by base Python and generics. One of these generics is the `combine_sequences` operation that merges or concatenates 1-dimensional Bioconductor classes.
@@ -416,6 +424,8 @@ Then we combine all the individual genomic elements. The [biocutils](https://git
 ```{python}
 from biocutils import combine_sequences
 first_exons = combine_sequences(*all_first)
+
+print(first_exons)
 ```
 
 We can now subset peaks that overlap with the first exon:
@@ -425,7 +435,7 @@ peaks_with_first_exons = peaks_chr22.subset_by_overlaps(first_exons)
 print(peaks_with_first_exons)
 ```
 
-### 5.3 Resizing and Shifting Peaks
+### 5.3 Resize and shift peaks
 
 Resizing and shifting genomic ranges can be useful in various contexts. For example:
 
