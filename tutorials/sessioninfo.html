@@ -169,13 +169,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tutorials/genomic_ranges.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial 1: <code>GenomicRanges</code> and range-based analyses</span></a>
+ <span class="menu-text">Tutorial 1: Perform range-based analyses using <code>GenomicRanges</code></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tutorials/annotate_cell_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial 2: Access single-cell datasets from <code>scRNAseq</code> collection and annotate cell types</span></a>
+ <span class="menu-text">Tutorial 2: Annotate cell types in single-cell RNA-seq data</span></a>
   </div>
 </li>
       </ul>
@@ -196,8 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pre-requisites" id="toc-pre-requisites" class="nav-link active" data-scroll-target="#pre-requisites">Pre-requisites</a></li>
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link active" data-scroll-target="#python">Python</a></li>
   <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BiocPy/BiocWorkshop2024/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -224,32 +223,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The code base for this repository is available at <a href="https://github.com/BiocPy/tutorial">https://github.com/BiocPy/tutorial</a>.</p>
-<p>This book is automatically built to identify issues caused by changes in the dependencies. We use <a href="https://quarto.org/docs/books">quarto</a> for reproducing the scripts provided in this book.</p>
-<section id="pre-requisites" class="level2">
-<h2 class="anchored" data-anchor-id="pre-requisites">Pre-requisites</h2>
-<div id="320ab3c1" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
+<p>The code base for this repository is available at <a href="https://github.com/BiocPy/BiocWorkshop2024">https://github.com/BiocPy/BiocWorkshop2024</a>.</p>
 <section id="python" class="level2">
 <h2 class="anchored" data-anchor-id="python">Python</h2>
-<p>The Python version on the GitHub runner</p>
-<div id="2da8fada" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.version_info)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #800080; text-decoration-color: #800080; font-weight: bold">sys.version_info</span><span style="font-weight: bold">(</span><span style="color: #808000; text-decoration-color: #808000">major</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>, <span style="color: #808000; text-decoration-color: #808000">minor</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">11</span>, <span style="color: #808000; text-decoration-color: #808000">micro</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">9</span>, <span style="color: #808000; text-decoration-color: #808000">releaselevel</span>=<span style="color: #008000; text-decoration-color: #008000">'final'</span>, <span style="color: #808000; text-decoration-color: #808000">serial</span>=<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>
-</pre>
+<p>The Python version on the GitHub runner:</p>
+<div id="eb45dc9d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.version_info)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sys.version_info(major=3, minor=11, micro=9, releaselevel='final', serial=0)</code></pre>
 </div>
 </div>
 </section>
 <section id="packages" class="level2">
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
-<p>Versions of packages installed for generating this build</p>
-<div id="4df72171" class="cell" data-execution_count="3">
+<p>Versions of packages installed during the build process:</p>
+<div id="ecbc93a5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> genomicranges</span>
@@ -263,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>session_info.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <details>
 <summary>Click to view session information</summary>
 <pre>-----
@@ -271,7 +260,6 @@ celldex                     0.1.1
 genomicranges               0.4.28
 multiassayexperiment        0.4.2
 rds2py                      0.4.4
-rich                        NA
 scrnaseq                    0.2.0
 session_info                1.0.0
 singlecellexperiment        0.4.6
@@ -387,7 +375,7 @@ notebook            7.2.1
 Python 3.11.9 (main, Jun 25 2024, 18:25:01) [GCC 11.4.0]
 Linux-6.5.0-1023-azure-x86_64-with-glibc2.35
 -----
-Session information updated at 2024-07-23 17:52
+Session information updated at 2024-07-23 22:31
 </pre>
 </details>
 </div>
