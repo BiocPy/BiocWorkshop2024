@@ -1,4 +1,4 @@
-name: Publish Docker image
+name: Publish Docker Image
 
 on:
   push:
@@ -20,16 +20,16 @@ jobs:
           registry: ghcr.io
           dockerfile: Dockerfile.pythononly
 
-  publish_docker_bioc:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@v5
-        with:
-          name: ${{ github.repository }}/bioc:${{ github.ref_name }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ghcr.io
-          dockerfile: Dockerfile.bioc
+  # publish_docker_bioc:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Publish to Registry
+  #       uses: elgohr/Publish-Docker-Github-Action@v5
+  #       with:
+  #         name: ${{ github.repository }}/bioc:${{ github.ref_name }}
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #         registry: ghcr.io
+  #         dockerfile: Dockerfile.bioc

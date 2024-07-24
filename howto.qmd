@@ -1,22 +1,27 @@
 # How to run the notebooks
 
-## Option 1: Run notebooks locally
+## Option 1. Using BiocWorkshop (Preferred)
 
-If you want to run locally, please clone the repository and install the python packages used for the workshop.
+If you are attending the workshop at Bioconductor:
 
-```sh
-git clone https://github.com/BiocPy/BiocWorkshop2024
-cd BiocWorkshop2024
+1. Open [BiocWorkshops](https://workshop.bioconductor.org/) in a new tab.
+2. Select "R/Bioconductor Jupyter Workshop" as shown in the screenshot.
 
-# Assuming python is available
-# You are free to use mamba, conda or virtualenv's
-pip install -r requirements.txt
+![](./assets/biocworkshop_select_rjupyter.png)
 
-# Start the jupyter server
-jupyter lab
-```
+3. Click the "Run the tool".
 
-Then checkout the [notebook](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) directory that contain Jupyter notebooks.
+![](./assets/biocworkshop_run_tool.png)
+
+4. Click on "Interactive Tools" in the left sidebar to check on the status of the session. Once the session is ready, click on the "BiocPy" to open the Jupyter notebook.
+
+![](./assets/biocworkshop_open_session.png)
+
+5. You should be able to see the BiocWorkshop repository cloned into the session.
+
+![](./assets/biocworkshop_jupyter.png)
+
+----
 
 ## Option 2: Using Google Colab
 
@@ -36,3 +41,23 @@ To open the session in Google Colab:
 :::{.callout-important}
 This process does not download the [RDS file](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) available in the repository. Folks might have to manually download this to their Google Colab sessions.
 :::
+
+----
+
+## Option 3: Run notebooks locally
+
+If you want to run locally, please clone the repository and install the python packages used for the workshop.
+
+```sh
+git clone https://github.com/BiocPy/BiocWorkshop2024
+cd BiocWorkshop2024
+
+# Assuming python is available
+# You are free to use mamba, conda or virtualenv's
+pip install -r requirements.txt
+
+# Start the jupyter server
+jupyter lab
+```
+
+Then checkout the [notebook](https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook) directory that contain Jupyter notebooks.
