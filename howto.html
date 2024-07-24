@@ -195,8 +195,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#how-to-run-the-notebooks" id="toc-how-to-run-the-notebooks" class="nav-link active" data-scroll-target="#how-to-run-the-notebooks">How to run the notebooks</a>
   <ul class="collapse">
-  <li><a href="#option-1-run-notebooks-locally" id="toc-option-1-run-notebooks-locally" class="nav-link" data-scroll-target="#option-1-run-notebooks-locally">Option 1: Run notebooks locally</a></li>
+  <li><a href="#option-1.-using-biocworkshop-preferred" id="toc-option-1.-using-biocworkshop-preferred" class="nav-link" data-scroll-target="#option-1.-using-biocworkshop-preferred">Option 1. Using BiocWorkshop (Preferred)</a></li>
   <li><a href="#option-2-using-google-colab" id="toc-option-2-using-google-colab" class="nav-link" data-scroll-target="#option-2-using-google-colab">Option 2: Using Google Colab</a></li>
+  <li><a href="#option-3-run-notebooks-locally" id="toc-option-3-run-notebooks-locally" class="nav-link" data-scroll-target="#option-3-run-notebooks-locally">Option 3: Run notebooks locally</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BiocPy/BiocWorkshop2024/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -209,19 +210,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="how-to-run-the-notebooks" class="level1">
 <h1>How to run the notebooks</h1>
-<section id="option-1-run-notebooks-locally" class="level2">
-<h2 class="anchored" data-anchor-id="option-1-run-notebooks-locally">Option 1: Run notebooks locally</h2>
-<p>If you want to run locally, please clone the repository and install the python packages used for the workshop.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/BiocPy/BiocWorkshop2024</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> BiocWorkshop2024</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming python is available</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You are free to use mamba, conda or virtualenv's</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the jupyter server</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then checkout the <a href="https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook">notebook</a> directory that contain Jupyter notebooks.</p>
+<section id="option-1.-using-biocworkshop-preferred" class="level2">
+<h2 class="anchored" data-anchor-id="option-1.-using-biocworkshop-preferred">Option 1. Using BiocWorkshop (Preferred)</h2>
+<p>If you are attending the workshop at Bioconductor:</p>
+<ol type="1">
+<li>Open <a href="https://workshop.bioconductor.org/">BiocWorkshops</a> in a new tab.</li>
+<li>Select “R/Bioconductor Jupyter Workshop” as shown in the screenshot.</li>
+</ol>
+<p><img src="./assets/biocworkshop_select_rjupyter.png" class="img-fluid"></p>
+<ol start="3" type="1">
+<li>Click the “Run the tool”.</li>
+</ol>
+<p><img src="./assets/biocworkshop_run_tool.png" class="img-fluid"></p>
+<ol start="4" type="1">
+<li>Click on “Interactive Tools” in the left sidebar to check on the status of the session. Once the session is ready, click on the “BiocPy” to open the Jupyter notebook.</li>
+</ol>
+<p><img src="./assets/biocworkshop_open_session.png" class="img-fluid"></p>
+<ol start="5" type="1">
+<li>You should be able to see the BiocWorkshop repository cloned into the session.</li>
+</ol>
+<p><img src="./assets/biocworkshop_jupyter.png" class="img-fluid"></p>
+<hr>
 </section>
 <section id="option-2-using-google-colab" class="level2">
 <h2 class="anchored" data-anchor-id="option-2-using-google-colab">Option 2: Using Google Colab</h2>
@@ -252,6 +261,21 @@ Important
 <p>This process does not download the <a href="https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook">RDS file</a> available in the repository. Folks might have to manually download this to their Google Colab sessions.</p>
 </div>
 </div>
+<hr>
+</section>
+<section id="option-3-run-notebooks-locally" class="level2">
+<h2 class="anchored" data-anchor-id="option-3-run-notebooks-locally">Option 3: Run notebooks locally</h2>
+<p>If you want to run locally, please clone the repository and install the python packages used for the workshop.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/BiocPy/BiocWorkshop2024</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> BiocWorkshop2024</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming python is available</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You are free to use mamba, conda or virtualenv's</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the jupyter server</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then checkout the <a href="https://github.com/BiocPy/BiocWorkshop2024/tree/master/notebook">notebook</a> directory that contain Jupyter notebooks.</p>
 
 
 </section>
